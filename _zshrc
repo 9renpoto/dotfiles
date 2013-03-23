@@ -32,6 +32,9 @@ e_normal=`echo -e "¥033[0;30m"`
 e_RED=`echo -e "¥033[1;31m"`
 e_BLUE=`echo -e "¥033[1;36m"`
 
+# 3秒以上かかった処理は詳細表示
+REPORTTIME=3
+
 autoload -Uz colors; colors
 RPROMPT=$'%{\e[35m%}%/%{\e[m%}'
 PROMPT="%(?.%{$fg[green]%}.%{$fg[blue]%})%(?!('A\`) <!(´-\`%)?) %{${reset_color}%} "
