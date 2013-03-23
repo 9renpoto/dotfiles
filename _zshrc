@@ -51,3 +51,5 @@ zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+export PATH="$HOME/.plenv/bin:$PATH"
+eval "$(plenv init -)"
