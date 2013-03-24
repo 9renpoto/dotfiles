@@ -1,6 +1,8 @@
 " plugin
 source ~/dotfiles/_vimrc_bundle
 
+source ~/dotfiles/_vimrc_neocomplcache
+
 "全角スペース
 highlight JpSpace cterm=underline ctermfg=7 guifg=7
 au BufRead,BufNew * match JpSpace /■/
@@ -73,5 +75,3 @@ autocmd BufWritePre * :%s/\s\+$//ge
 autocmd BufWritePre * :%s/\t/    /ge
 
 syntax on
-
-au InsertEnter * hi StatusLine guifg=DarkBlue guibg=DarkYellow gui=none
