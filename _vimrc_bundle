@@ -19,5 +19,29 @@ NeoBundle 'git://github.com/Shougo/vimfiler.git'
 NeoBundle 'git://github.com/Shougo/vimshell.git'
 NeoBundle 'git://github.com/Shougo/vinarise.git'
 
+" haml
+NeoBundle 'haml.zip'
+
+" JavaScript
+NeoBundle 'JavaScript-syntax'
+
+" jQuery
+NeoBundle 'jQuery'
+
+" nginx conf
+NeoBundle 'nginx.vim'
+
+" markdown
+NeoBundle 'tpope/vim-markdown'
+
+" coffee script
+NeoBundle 'kchmck/vim-coffee-script'
+
+" python
+NeoBundle 'yuroyoro/vim-python'
+
+" syntax checking plugins exist for eruby, haml, html, javascript, php, python, ruby and sass.
+NeoBundle 'scrooloose/syntastic'
+
 filetype plugin on
 filetype indent on

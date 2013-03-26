@@ -69,6 +69,9 @@ set whichwrap=b,s,h,l,<,>,[,]
 "検索をファイルの先頭へループしない
 set nowrapscan
 
+"ヤンクした文字は、システムのクリップボードに入れる"
+set clipboard=unnamed
+
 " 保存時に行末の空白を除去する
 autocmd BufWritePre * :%s/\s\+$//ge
 " 保存時にtabをスペースに変換する
