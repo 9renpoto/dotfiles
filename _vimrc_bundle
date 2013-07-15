@@ -20,6 +20,8 @@ NeoBundle 'git://github.com/Shougo/vimshell.git'
 NeoBundle 'git://github.com/Shougo/vinarise.git'
 NeoBundle 'git://github.com/elixir-lang/vim-elixir.git'
 
+NeoBundle 'git://github.com/thinca/vim-localrc'
+
 " haml
 NeoBundle 'haml.zip'
 

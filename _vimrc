@@ -1,4 +1,5 @@
 " plugin
+
 source ~/dotfiles/_vimrc_bundle
 
 source ~/dotfiles/_vimrc_neocomplcache
@@ -6,6 +7,7 @@ source ~/dotfiles/_vimrc_neocomplcache
 "全角スペース
 highlight JpSpace cterm=underline ctermfg=7 guifg=7
 au BufRead,BufNew * match JpSpace /■/
+
 " 全角スペースの表示
 highlight ZenkakuSpace cterm=underline ctermbg=red guibg=#666666
 au BufWinEnter * let w:m3 = matchadd("ZenkakuSpace", '　')
@@ -70,7 +72,10 @@ set whichwrap=b,s,h,l,<,>,[,]
 set nowrapscan
 
 "ヤンクした文字は、システムのクリップボードに入れる"
-set clipboard=unnamed
+"set clipboard=unnamed
+
+au InsertEnter * hi StatusLine guifg=DarkBlue guibg=DarkYellow gui=none ctermfg=blue ctermbg=Yellow cterm=none
+au InsertLeave * hi StatusLine guifg=DarkBlue guibg=DarkGray gui=none ctermfg=blue ctermbg=DarkGray cterm=none
 
 " 保存時に行末の空白を除去する
 autocmd BufWritePre * :%s/\s\+$//ge
