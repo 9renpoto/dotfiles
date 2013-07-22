@@ -70,9 +70,10 @@ set tabstop=4
 set whichwrap=b,s,h,l,<,>,[,]
 "検索をファイルの先頭へループしない
 set nowrapscan
-
+"検索結果文字列のハイライトを有効にする
+set hlsearch
 "ヤンクした文字は、システムのクリップボードに入れる"
-"set clipboard=unnamed
+set clipboard=unnamed
 
 au InsertEnter * hi StatusLine guifg=DarkBlue guibg=DarkYellow gui=none ctermfg=blue ctermbg=Yellow cterm=none
 au InsertLeave * hi StatusLine guifg=DarkBlue guibg=DarkGray gui=none ctermfg=blue ctermbg=DarkGray cterm=none
