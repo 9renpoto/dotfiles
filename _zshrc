@@ -63,6 +63,7 @@ zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="$HOME/.plenv/bin:$PATH"
 eval "$(plenv init -)"
+export PATH="$HOME/.plenv/shims:$PATH"
 
 # golang
 export PATH="$PATH:/usr/local/go/bin"

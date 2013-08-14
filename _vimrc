@@ -65,7 +65,7 @@ set smartindent
 "行頭の余白内で Tab を打ち込むと、'shiftwidth' の数だけインデントする。
 set smarttab
 "ファイル内の <Tab> が対応する空白の数
-set tabstop=4
+set tabstop=2
 "カーソルを行頭、行末で止まらないようにする
 set whichwrap=b,s,h,l,<,>,[,]
 "検索をファイルの先頭へループしない
@@ -73,7 +73,7 @@ set nowrapscan
 "検索結果文字列のハイライトを有効にする
 set hlsearch
 "ヤンクした文字は、システムのクリップボードに入れる"
-set clipboard=unnamed
+" set clipboard=unnamed
 
 au InsertEnter * hi StatusLine guifg=DarkBlue guibg=DarkYellow gui=none ctermfg=blue ctermbg=Yellow cterm=none
 au InsertLeave * hi StatusLine guifg=DarkBlue guibg=DarkGray gui=none ctermfg=blue ctermbg=DarkGray cterm=none
@@ -81,6 +81,6 @@ au InsertLeave * hi StatusLine guifg=DarkBlue guibg=DarkGray gui=none ctermfg=bl
 " 保存時に行末の空白を除去する
 autocmd BufWritePre * :%s/\s\+$//ge
 " 保存時にtabをスペースに変換する
-autocmd BufWritePre * :%s/\t/    /ge
+autocmd BufWritePre * :%s/\t/  /ge
 
 syntax on
