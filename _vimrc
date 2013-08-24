@@ -66,6 +66,8 @@ set smartindent
 set smarttab
 "ファイル内の <Tab> が対応する空白の数
 set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 "カーソルを行頭、行末で止まらないようにする
 set whichwrap=b,s,h,l,<,>,[,]
 "検索をファイルの先頭へループしない
@@ -75,8 +77,10 @@ set hlsearch
 "ヤンクした文字は、システムのクリップボードに入れる"
 " set clipboard=unnamed
 
-au InsertEnter * hi StatusLine guifg=DarkBlue guibg=DarkYellow gui=none ctermfg=blue ctermbg=Yellow cterm=none
-au InsertLeave * hi StatusLine guifg=DarkBlue guibg=DarkGray gui=none ctermfg=blue ctermbg=DarkGray cterm=none
+let hi_insert = 'hi StatusLine guifg=DarkBlue guibg=DarkYellow gui=none ctermfg=Blue ctermbg=Yellow cterm=none'
+
+" au InsertEnter * hi StatusLine guifg=DarkBlue guibg=DarkYellow gui=none ctermfg=blue ctermbg=Yellow cterm=none
+" au InsertLeave * hi StatusLine guifg=DarkBlue guibg=DarkGray gui=none ctermfg=blue ctermbg=DarkGray cterm=none
 
 " 保存時に行末の空白を除去する
 autocmd BufWritePre * :%s/\s\+$//ge

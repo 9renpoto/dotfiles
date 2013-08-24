@@ -22,6 +22,10 @@ NeoBundle 'git://github.com/elixir-lang/vim-elixir.git'
 
 NeoBundle 'git://github.com/thinca/vim-localrc'
 
+NeoBundle 'rking/ag.vim'
+
+NeoBundle 'git://github.com/fuenor/vim-statusline.vim.git'
+
 " haml
 NeoBundle 'haml.zip'
 
