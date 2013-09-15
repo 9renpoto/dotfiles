@@ -35,6 +35,10 @@ e_BLUE=`echo -e "¥033[1;36m"`
 # 3秒以上かかった処理は詳細表示
 REPORTTIME=3
 
+if [[ -n "$TMUX" ]]; then
+  cut -c3- ~/.tmux.conf | sh -s on_login
+fi
+
 autoload -Uz colors; colors
 RPROMPT=$'%{\e[35m%}%/%{\e[m%}'
 PROMPT="%(?.%{$fg[green]%}.%{$fg[blue]%})%(?!('A\`) <!(´-\`%)?) %{${reset_color}%} "

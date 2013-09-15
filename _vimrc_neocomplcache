@@ -1,7 +1,8 @@
 "------------------------------------
-"" neocomplecache.vim
+" neocomplecache.vim
 "------------------------------------
-"" AutoComplPopを無効にする
+
+" AutoComplPopを無効にする
 let g:acp_enableAtStartup = 0
 " NeoComplCacheを有効にする
 let g:neocomplcache_enable_at_startup = 1

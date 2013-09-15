@@ -74,17 +74,21 @@ set whichwrap=b,s,h,l,<,>,[,]
 set nowrapscan
 "検索結果文字列のハイライトを有効にする
 set hlsearch
-"ヤンクした文字は、システムのクリップボードに入れる"
-" set clipboard=unnamed
-
-let hi_insert = 'hi StatusLine guifg=DarkBlue guibg=DarkYellow gui=none ctermfg=Blue ctermbg=Yellow cterm=none'
-
-" au InsertEnter * hi StatusLine guifg=DarkBlue guibg=DarkYellow gui=none ctermfg=blue ctermbg=Yellow cterm=none
-" au InsertLeave * hi StatusLine guifg=DarkBlue guibg=DarkGray gui=none ctermfg=blue ctermbg=DarkGray cterm=none
 
 " 保存時に行末の空白を除去する
 autocmd BufWritePre * :%s/\s\+$//ge
 " 保存時にtabをスペースに変換する
 autocmd BufWritePre * :%s/\t/  /ge
+
+set guifont=MyFont\ for\ Powerline
+let g:Powerline_symbols = 'fancy'
+
+" tmux
+if !has('gui_running') && $TMUX !=# ''
+  augroup Tmux
+    autocmd!
+    autocmd VimEnter,VimLeave * silent !tmux set status
+  augroup END
+endif
 
 syntax on
