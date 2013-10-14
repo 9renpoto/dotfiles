@@ -54,20 +54,25 @@ set list
 set listchars=tab:>\ ,extends:<
 "行番号を表示する
 set number
-"シフト移動幅
-set shiftwidth=4
 "閉じ括弧が入力されたとき、対応する括弧を表示する
 set showmatch
 "検索時に大文字を含んでいたら大/小を区別
 set smartcase
 "新しい行を作ったときに高度な自動インデントを行う
 set smartindent
+
+" 保存時に行末の空白を除去する
+autocmd BufWritePre * :%s/\s\+$//ge
+" 保存時にtabをスペースに変換する
+autocmd BufWritePre * :%s/\t/  /ge
+
+"シフト移動幅
+set shiftwidth=4
+"ファイル内の <Tab> が対応する空白の数
+au BufNewFile,BufRead *.rb set tabstop=2 set softtabstop=2 set shiftwidth=2
+
 "行頭の余白内で Tab を打ち込むと、'shiftwidth' の数だけインデントする。
 set smarttab
-"ファイル内の <Tab> が対応する空白の数
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
 "カーソルを行頭、行末で止まらないようにする
 set whichwrap=b,s,h,l,<,>,[,]
 "検索をファイルの先頭へループしない
@@ -75,10 +80,6 @@ set nowrapscan
 "検索結果文字列のハイライトを有効にする
 set hlsearch
 
-" 保存時に行末の空白を除去する
-autocmd BufWritePre * :%s/\s\+$//ge
-" 保存時にtabをスペースに変換する
-autocmd BufWritePre * :%s/\t/  /ge
 
 set guifont=MyFont\ for\ Powerline
 let g:Powerline_symbols = 'fancy'
