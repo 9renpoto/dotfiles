@@ -41,10 +41,10 @@ fi
 
 autoload -Uz colors; colors
 RPROMPT=$'%{\e[35m%}%/%{\e[m%}'
-PROMPT="%(?.%{$fg[green]%}.%{$fg[blue]%})%(?!('A\`) <!(´-\`%)?) %{${reset_color}%} "
+PROMPT="%(?.%{$fg[green]%}.%{$fg[blue]%})%(?!('A\`) <!(´-\`%) ?) %{${reset_color}%} "
 PROMPT2="%{$fg[blue]%}%_>%{$reset_color%}%b "
 setopt correct
-SPROMPT="%{$fg[red]%}%{$suggest%}(-_-%)? %B %r is correct? [n,y,a,e]:%{${reset_color}%}%b "
+SPROMPT="%{$fg[red]%}%{$suggest%}(-_-%) ? %B %r is correct? [n,y,a,e]:%{${reset_color}%}%b "
 
 function make() {
     LANG=C command make "$@" 2>&1 | sed -e "s@[Ee]rror:.*@$e_RED&$e_normal@g" -e "s@cannot¥sfind.*@$e_RED&$e_normal@g" -e "s@[Ww]arning:.*@$e_BLUE&$e_normal@g"

@@ -64,12 +64,13 @@ set smartindent
 " 保存時に行末の空白を除去する
 autocmd BufWritePre * :%s/\s\+$//ge
 " 保存時にtabをスペースに変換する
-autocmd BufWritePre * :%s/\t/  /ge
+" autocmd BufWritePre * :%s/\t/  /ge
 
 "シフト移動幅
 set shiftwidth=4
 "ファイル内の <Tab> が対応する空白の数
 au BufNewFile,BufRead *.rb set tabstop=2 set softtabstop=2 set shiftwidth=2
+au BufNewFile,BufRead *.cs set tabstop=4 set softtabstop=4 set shiftwidth=4
 
 "行頭の余白内で Tab を打ち込むと、'shiftwidth' の数だけインデントする。
 set smarttab
