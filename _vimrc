@@ -85,12 +85,13 @@ set hlsearch
 set guifont=MyFont\ for\ Powerline
 let g:Powerline_symbols = 'fancy'
 
+" http://qiita.com/Linda_pp/items/89aa2e4b55ea51ecdd59
 " tmux
-if !has('gui_running') && $TMUX !=# ''
-  augroup Tmux
-    autocmd!
-    autocmd VimEnter,VimLeave * silent !tmux set status
-  augroup END
-endif
+" if !has('gui_running') && $TMUX !=# ''
+"   augroup Tmux
+"     autocmd!
+"     autocmd VimEnter,VimLeave * silent !tmux set status
+"   augroup END
+" endif
 
 syntax on
