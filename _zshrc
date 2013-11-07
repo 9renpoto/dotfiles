@@ -62,6 +62,9 @@ alias ls='ls -G'
 alias grep='grep --color'
 alias diff='colordiff'
 
+# http://qiita.com/STAR_ZERO/items/860b3f141e6f7e2cc3ca
+printf "\033k$(hostname -s)\033\\"
+
 # ## tmux自動起動
 # # http://d.hatena.ne.jp/tyru/20100828/run_tmux_or_screen_at_shell_startup
 # is_screen_running() {
