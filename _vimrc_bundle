@@ -17,16 +17,46 @@ NeoBundle 'git://github.com/Shougo/vim-vcs.git'
 NeoBundle 'git://github.com/Shougo/vimfiler.git'
 NeoBundle 'git://github.com/Shougo/vimshell.git'
 NeoBundle 'git://github.com/Shougo/vinarise.git'
-NeoBundle 'git://github.com/elixir-lang/vim-elixir.git'
 
-NeoBundle 'git://github.com/thinca/vim-localrc'
+
+NeoBundle 'git://github.com/thinca/vim-localrc.git'
+
+NeoBundle 'git://github.com/tpope/vim-rails.git'
+NeoBundle 'git://github.com/scrooloose/nerdtree.git'
+
+NeoBundle 'git://github.com/elixir-lang/vim-elixir.git'
 
 NeoBundle 'rking/ag.vim'
 
-NeoBundle 'itchyny/lightline.vim'
+" http://cocopon.me/blog/?p=841
+NeoBundle 'tomasr/molokai'
+colorscheme molokai
+
+" http://chiiiiiiiii.hatenablog.com/entry/2012/12/02/102815
+NeoBundle 'git://github.com/nathanaelkane/vim-indent-guides.git'
+" vim立ち上げたときに、自動的にvim-indent-guidesをオンにする
+let g:indent_guides_enable_on_vim_startup=1
+" ガイドをスタートするインデントの量
+let g:indent_guides_start_level=2
+" 自動カラーを無効にする
+let g:indent_guides_auto_colors=0
+" 奇数インデントのカラー
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#262626 ctermbg=black
+" 偶数インデントのカラー
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=black
+
+" ハイライト色の変化の幅
+let g:indent_guides_color_change_percent = 30
+" ガイドの幅
+let g:indent_guides_guide_size = 1
+
+
+" http://vimblog.hatenablog.com/entry/vim_plugin_surround_vim
+NeoBundle 'tpope/vim-surround'
 set laststatus=2
 set t_Co=256
 
+NeoBundle 'itchyny/lightline.vim'
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'mode_map': { 'c': 'NORMAL' },
