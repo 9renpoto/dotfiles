@@ -81,6 +81,17 @@ set nowrapscan
 "検索結果文字列のハイライトを有効にする
 set hlsearch
 
+" カーソル行をハイライト
+set cursorline
+set cursorcolumn
+augroup cch
+        autocmd! cch
+            autocmd WinLeave * set nocursorline
+                autocmd WinEnter,BufRead * set cursorline
+            augroup END
+            :hi clear CursorLine
+            :hi CursorLine gui=underline
+            hi CursorLine ctermbg=black guibg=black
 
 set guifont=MyFont\ for\ Powerline
 let g:Powerline_symbols = 'fancy'
