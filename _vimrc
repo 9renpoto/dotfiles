@@ -83,7 +83,8 @@ set hlsearch
 
 " カーソル行をハイライト
 set cursorline
-set cursorcolumn
+" 縦行ハイライト
+" set cursorcolumn
 augroup cch
         autocmd! cch
             autocmd WinLeave * set nocursorline
