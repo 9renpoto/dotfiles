@@ -18,7 +18,6 @@ NeoBundle 'git://github.com/Shougo/vimfiler.git'
 NeoBundle 'git://github.com/Shougo/vimshell.git'
 NeoBundle 'git://github.com/Shougo/vinarise.git'
 
-
 NeoBundle 'git://github.com/thinca/vim-localrc.git'
 
 NeoBundle 'git://github.com/tpope/vim-rails.git'
@@ -27,6 +26,15 @@ NeoBundle 'git://github.com/scrooloose/nerdtree.git'
 NeoBundle 'git://github.com/elixir-lang/vim-elixir.git'
 
 NeoBundle 'rking/ag.vim'
+
+" http://qiita.com/PSP_T/items/3a1af1301ee197b32a8a
+NeoBundle 'osyo-manga/vim-over'
+
+" http://blog.glidenote.com/blog/2012/04/01/new-gist.vim/
+NeoBundle 'mattn/gist-vim'
+NeoBundle 'mattn/webapi-vim'
+let g:gist_show_privates = 1
+let g:gist_post_private = 1
 
 " http://qiita.com/yuku_t/items/0ac33cea18e10f14e185
 NeoBundle 'scrooloose/syntastic'
@@ -148,6 +156,10 @@ NeoBundle 'yuroyoro/vim-python'
 
 " syntax checking plugins exist for eruby, haml, html, javascript, php, python, ruby and sass.
 NeoBundle 'scrooloose/syntastic'
+
+" http://blog.glidenote.com/blog/2011/12/23/vim-octopress/
+NeoBundle 'tangledhelix/vim-octopress'
+autocmd BufNewFile,BufRead *.markdown setfiletype octopress
 
 filetype plugin on
 filetype indent on
