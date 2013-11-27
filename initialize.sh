@@ -5,12 +5,17 @@ cd ~/
 mkdir ~/vimbackup
 mkdir ~/github
 mkdir ~/bitbucket
+
 mkdir ~/.zsh
 git clone git://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting
+
+mkdir -p ~/.vim/bundle
+git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 
 ln -s ~/dotfiles/_bashrc ~/.bashrc
 ln -s ~/dotfiles/_tmux.conf ~/.tmux.conf
 ln -s ~/dotfiles/_zshrc ~/.zshrc
+ln -s ~/dotfiles/_zsh ~/.zsh
 
 ln -s ~/dotfiles/_vimrc ~/.vimrc
 
