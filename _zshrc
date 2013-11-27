@@ -61,6 +61,7 @@ zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 alias ls='ls -G'
 alias grep='grep --color'
 alias diff='colordiff'
+alias gist='gist -p'
 
 # http://qiita.com/STAR_ZERO/items/860b3f141e6f7e2cc3ca
 printf "\033k$(hostname -s)\033\\"
