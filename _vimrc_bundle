@@ -41,6 +41,7 @@ NeoBundle 'scrooloose/syntastic'
 let g:syntastic_mode_map = { 'mode': 'passive',
             \ 'active_filetypes': ['ruby'] }
 let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_javascript_checker = "jshint"
 let g:syntastic_quiet_warnings = 0
 
 " http://cocopon.me/blog/?p=841
@@ -70,6 +71,9 @@ let g:indent_guides_guide_size = 1
 NeoBundle 'tpope/vim-surround'
 set laststatus=2
 set t_Co=256
+
+" http://yuku-tech.hatenablog.com/entry/20110427/1303868482
+NeoBundle 'git://github.com/tpope/vim-fugitive.git'
 
 NeoBundle 'itchyny/lightline.vim'
 let g:lightline = {
