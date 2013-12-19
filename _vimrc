@@ -34,6 +34,7 @@ command! WEuc w ++enc=euc-jp | e
 command! WSjis w ++enc=cp932 | e
 command! WJis w ++enc=iso-2022-jp | e
 
+set encoding=utf-8
 "新しい行のインデントを現在行と同じにする
 set autoindent
 "ファイル保存ダイアログの初期ディレクトリをバッファファイル位置に設定
