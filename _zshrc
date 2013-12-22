@@ -77,7 +77,7 @@ function rprompt-git-current-branch {
 # プロンプトが表示されるたびにプロンプト文字列を評価、置換する
 setopt prompt_subst
 
-RPROMPT='`rprompt-git-current-branch` %~'
+RPROMPT='`rprompt-git-current-branch` %~ %{$fg_bold[blue]%}${HOST}'
 
 function make() {
     LANG=C command make "$@" 2>&1 | sed -e "s@[Ee]rror:.*@$e_RED&$e_normal@g" -e "s@cannot¥sfind.*@$e_RED&$e_normal@g" -e "s@[Ww]arning:.*@$e_BLUE&$e_normal@g"
