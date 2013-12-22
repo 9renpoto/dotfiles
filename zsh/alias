@@ -1,0 +1,4 @@
+alias ls='ls -G'
+alias grep='grep --color'
+alias diff='colordiff'
+alias gist='gist -p'

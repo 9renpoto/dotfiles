@@ -17,6 +17,7 @@ git clone git://github.com/erikw/tmux-powerline.git ~/.tmux/tmux-powerline
 
 ln -s ~/dotfiles/_bashrc ~/.bashrc
 ln -s ~/dotfiles/_tmux.conf ~/.tmux.conf
+ln -s ~/dotfiles/_zshenv ~/.zshenv
 ln -s ~/dotfiles/_zshrc ~/.zshrc
 
 ln -s ~/dotfiles/_vimrc ~/.vimrc
