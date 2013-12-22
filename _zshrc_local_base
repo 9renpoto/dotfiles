@@ -1,5 +1,4 @@
-RPROMPT=$'%{\e[35m%}%/%{\e[m%}'
-PROMPT="%(?.%{$fg[green]%}.%{$fg[cyan]%})%(?!('A\`) <!(´-\`%) ?) %{${reset_color}%} "
+PROMPT="%(?.%{$fg[green]%}.%{$fg[cyan]%})%(?!('A') <!('-'%) ?) %{${reset_color}%} "
 PROMPT2="%{$fg[cyan]%}%_>%{$reset_color%}%b "
 setopt correct
 SPROMPT="%{$fg[red]%}%{$suggest%}(-_-%) ? %B %r is correct? [n,y,a,e]:%{${reset_color}%}%b "
