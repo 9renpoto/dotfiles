@@ -65,11 +65,6 @@ export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
 zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 
-alias ls='ls -G'
-alias grep='grep --color'
-alias diff='colordiff'
-alias gist='gist -p'
-
 # http://qiita.com/STAR_ZERO/items/860b3f141e6f7e2cc3ca
 printf "\033k$(hostname -s)\033\\"
 
@@ -77,6 +72,8 @@ printf "\033k$(hostname -s)\033\\"
 if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
     source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
+
+source ~/dotfiles/zsh/alias
 
 # ## tmux自動起動
 # # http://d.hatena.ne.jp/tyru/20100828/run_tmux_or_screen_at_shell_startup
