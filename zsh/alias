@@ -1,4 +1,5 @@
-alias ls='ls -G'
+alias ls='ls -GS'
 alias grep='grep --color'
 alias diff='colordiff'
 alias gist='gist -p'
+alias cprove='carton exec prove -Ilib'
