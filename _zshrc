@@ -47,11 +47,37 @@ if [[ -n "$TMUX" ]]; then
 fi
 
 autoload -Uz colors; colors
-RPROMPT=$'%{\e[35m%}%/%{\e[m%}'
-PROMPT="%(?.%{$fg[green]%}.%{$fg[cyan]%})%(?!('A\`) <!(´-\`%) ?) %{${reset_color}%} "
-PROMPT2="%{$fg[cyan]%}%_>%{$reset_color%}%b "
-setopt correct
-SPROMPT="%{$fg[red]%}%{$suggest%}(-_-%) ? %B %r is correct? [n,y,a,e]:%{${reset_color}%}%b "
+
+function rprompt-git-current-branch {
+  local name st color
+
+  if [[ "$PWD" =~ '/\.git(/.*)?$' ]]; then
+    return
+  fi
+    name=$(basename "$(git symbolic-ref HEAD 2> /dev/null)")
+  if [[ -z $name ]]; then
+    return
+  fi
+  st=$(git status 2> /dev/null)
+  if [[ -n $(echo "$st" | grep "^nothing to") ]]; then
+    color=${fg[green]}
+  elif [[ -n $(echo "$st" | grep "^nothing added") ]]; then
+    color=${fg[yellow]}
+  elif [[ -n $(echo "$st" | grep "^# Untracked") ]]; then
+    color=${fg_bold[red]}
+  else
+    color=${fg[red]}
+  fi
+
+  # %{...%} は囲まれた文字列がエスケープシーケンスであることを明示する
+  # これをしないと右プロンプトの位置がずれる
+  echo "%{$color%}$name%{$reset_color%} "
+}
+
+# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
+setopt prompt_subst
+
+RPROMPT='`rprompt-git-current-branch` %~ %{$fg_bold[blue]%}${HOST}'
 
 function make() {
     LANG=C command make "$@" 2>&1 | sed -e "s@[Ee]rror:.*@$e_RED&$e_normal@g" -e "s@cannot¥sfind.*@$e_RED&$e_normal@g" -e "s@[Ww]arning:.*@$e_BLUE&$e_normal@g"
@@ -65,11 +91,6 @@ export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
 zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 
-alias ls='ls -G'
-alias grep='grep --color'
-alias diff='colordiff'
-alias gist='gist -p'
-
 # http://qiita.com/STAR_ZERO/items/860b3f141e6f7e2cc3ca
 printf "\033k$(hostname -s)\033\\"
 
@@ -77,6 +98,8 @@ printf "\033k$(hostname -s)\033\\"
 if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
     source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
+
+source ~/dotfiles/zsh/alias
 
 # ## tmux自動起動
 # # http://d.hatena.ne.jp/tyru/20100828/run_tmux_or_screen_at_shell_startup
@@ -114,30 +137,5 @@ fi
 #   done
 # fi
 
-export PATH="$PATH:$HOME/bin"
-
-# python
-[[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc
-
-# ruby
-export PATH="/usr/local/bin:$PATH"
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init - zsh)"
-
-# perl
-export PATH="$HOME/.plenv/bin:$PATH"
-eval "$(plenv init - zsh)"
-export PATH="$HOME/.plenv/shims:$PATH"
-
-# golang
-export PATH="$PATH:/usr/local/go/bin"
-
-# packer
-export PATH="$HOME/packer:$PATH"
-
-# heroku
-export PATH="/usr/local/heroku/bin:$PATH"
-
-# elixir
-export PATH="$HOME/.exenv/bin:$PATH"
-eval "$(exenv init - zsh)"
+# http://qiita.com/awakia/items/1d5cd440ce58ef4fb8ae
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
