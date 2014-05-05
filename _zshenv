@@ -25,7 +25,13 @@ eval "$(plenv init - zsh)"
 export PATH="$HOME/.plenv/shims:$PATH"
 
 # golang
-export PATH="$PATH:/usr/local/go/bin"
+export PATH="/usr/local/go/bin:$PATH"
+export GOENVTARGET="$HOME/.goenvtarget"
+export PATH="$GOENVTARGET:$PATH"
+
+export GOENVGOROOT="$HOME/.goenvs"
+export GOENVTARGET="$HOME/bin"
+export GOENVHOME="$HOME/workspace"
 
 # packer
 export PATH="$HOME/packer:$PATH"
@@ -36,3 +42,4 @@ export PATH="/usr/local/heroku/bin:$PATH"
 # elixir
 export PATH="$HOME/.exenv/bin:$PATH"
 eval "$(exenv init - zsh)"
+
