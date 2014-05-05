@@ -37,12 +37,12 @@ let g:gist_show_privates = 1
 let g:gist_post_private = 1
 
 " http://qiita.com/yuku_t/items/0ac33cea18e10f14e185
-NeoBundle 'scrooloose/syntastic'
-let g:syntastic_mode_map = { 'mode': 'passive',
-            \ 'active_filetypes': ['ruby'] }
-let g:syntastic_ruby_checkers = ['rubocop']
-let g:syntastic_javascript_checker = "jshint"
-let g:syntastic_quiet_warnings = 0
+" NeoBundle 'scrooloose/syntastic'
+" let g:syntastic_mode_map = { 'mode': 'passive',
+"             \ 'active_filetypes': ['ruby'] }
+" let g:syntastic_ruby_checkers = ['rubocop']
+" let g:syntastic_javascript_checker = "jshint"
+" let g:syntastic_quiet_warnings = 0
 
 " http://cocopon.me/blog/?p=841
 NeoBundle 'tomasr/molokai'
