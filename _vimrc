@@ -1,8 +1,7 @@
 " plugin
 
-source ~/dotfiles/_vimrc_bundle
-
-source ~/dotfiles/_vimrc_neocomplcache
+source ~/github/dotfiles/_vimrc_bundle
+source ~/github/dotfiles/_vimrc_neocomplcache
 
 "全角スペース
 highlight JpSpace cterm=underline ctermfg=7 guifg=7
