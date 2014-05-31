@@ -2,3 +2,39 @@ PROMPT="%(?.%{$fg[green]%}.%{$fg[cyan]%})%(?!('A') <!('-'%) ?) %{${reset_color}%
 PROMPT2="%{$fg[cyan]%}%_>%{$reset_color%}%b "
 setopt correct
 SPROMPT="%{$fg[red]%}%{$suggest%}(-_-%) ? %B %r is correct? [n,y,a,e]:%{${reset_color}%}%b "
+
+## tmux自動起動
+# http://d.hatena.ne.jp/tyru/20100828/run_tmux_or_screen_at_shell_startup
+is_screen_running() {
+# tscreen also uses this varariable.
+  [ ! -z "$WINDOW" ]
+}
+is_tmux_runnning() {
+  [ ! -z "$TMUX" ]
+}
+is_screen_or_tmux_running() {
+  is_screen_running || is_tmux_runnning
+}
+shell_has_started_interactively() {
+  [ ! -z "$PS1" ]
+}
+resolve_alias() {
+  cmd="$1"
+  while \
+    whence "$cmd" >/dev/null 2>/dev/null \
+    && [ "$(whence "$cmd")" != "$cmd" ]
+  do
+    cmd=$(whence "$cmd")
+  done
+  echo "$cmd"
+}
+
+
+if ! is_screen_or_tmux_running && shell_has_started_interactively; then
+  for cmd in tmux tscreen screen; do
+    if whence $cmd >/dev/null 2>/dev/null; then
+      $(resolve_alias "$cmd")
+      break
+    fi
+  done
+fi
