@@ -9,6 +9,10 @@ if has('vim_starting')
     call neobundle#rc(expand('~/.vim/bundle/'))
 endif
 
+" http://cocopon.me/blog/?p=841
+NeoBundle 'tomasr/molokai'
+colorscheme molokai
+
 NeoBundle 'git://github.com/Shougo/echodoc.git'
 NeoBundle 'git://github.com/Shougo/neocomplcache.git'
 NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
@@ -43,10 +47,6 @@ let g:gist_post_private = 1
 " let g:syntastic_ruby_checkers = ['rubocop']
 " let g:syntastic_javascript_checker = "jshint"
 " let g:syntastic_quiet_warnings = 0
-
-" http://cocopon.me/blog/?p=841
-NeoBundle 'tomasr/molokai'
-colorscheme molokai
 
 " http://chiiiiiiiii.hatenablog.com/entry/2012/12/02/102815
 NeoBundle 'git://github.com/nathanaelkane/vim-indent-guides.git'
@@ -165,5 +165,8 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'tangledhelix/vim-octopress'
 autocmd BufNewFile,BufRead *.markdown setfiletype octopress
 
-filetype plugin on
-filetype indent on
+" gitの差分を表示するぜ
+NeoBundle 'airblade/vim-gitgutter'
+nnoremap <silent> ,gg :<C-u>GitGutterToggle<CR>
+nnoremap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
+

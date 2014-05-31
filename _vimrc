@@ -108,4 +108,22 @@ let g:Powerline_symbols = 'fancy'
 "   augroup END
 " endif
 
+" http://qiita.com/methane/items/4905f40e4772afec3e60
+" :Fmt などで gofmt の代わりに goimports を使う
+let g:gofmt_command = 'goimports'
+
+filetype off
+filetype plugin indent off
+" Go に付属の plugin と gocode を有効にする
+if $GOROOT != ''
+    set rtp+=$GOROOT/misc/vim
+endif
+
+filetype plugin indent on
+
+" 保存時に :Fmt する
+au BufWritePre *.go Fmt
+au BufNewFile,BufRead *.go set sw=4 noexpandtab ts=4
+au FileType go compiler go
+
 syntax on
