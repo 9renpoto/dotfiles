@@ -5,7 +5,6 @@ cd ~/
 mkdir -p ~/vimbackup
 mkdir -p ~/github
 mkdir -p ~/bitbucket
-mkdir -p ~/.tmux
 
 ln -s ~/github/dotfiles/_bash_profile ~/.bash_profile
 ln -s ~/github/dotfiles/_bashrc ~/.bashrc
