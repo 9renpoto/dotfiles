@@ -13,8 +13,12 @@ typeset -U path
 
 export PATH="$PATH:$HOME/bin"
 
-# python
-[[ -s $HOME/.pythonbrew/etc/bashrc ]] && source $HOME/.pythonbrew/etc/bashrc
+# pyenv
+export PYENV_ROOT="${HOME}/.pyenv"
+if [ -d "${PYENV_ROOT}" ]; then
+  export PATH=${PYENV_ROOT}/bin:$PATH
+  eval "$(pyenv init - zsh)"
+fi
 
 # ruby
 export PATH="/usr/local/bin:$PATH"
