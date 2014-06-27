@@ -1,0 +1,10 @@
+apm install Sublime-Style-Column-Selection
+apm install atom-soda-dark-ui
+apm install autocomplete-plus
+apm install editor-stats
+apm install editorconfig
+apm install file-icons
+apm install gist-it
+apm install monokai
+apm install vim-mode
+apm install jellybeans
