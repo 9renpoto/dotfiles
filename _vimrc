@@ -33,6 +33,9 @@ command! WEuc w ++enc=euc-jp | e
 command! WSjis w ++enc=cp932 | e
 command! WJis w ++enc=iso-2022-jp | e
 
+" ESCでIMEを確実にOFF http://nobeans.hatenablog.com/entry/20090211/1234326782
+inoremap <ESC> <ESC>:set iminsert=0<CR>
+
 set encoding=utf-8
 "新しい行のインデントを現在行と同じにする
 set autoindent

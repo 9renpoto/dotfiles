@@ -8,3 +8,7 @@ apm install gist-it
 apm install monokai
 apm install vim-mode
 apm install jellybeans
+apm install linter
+apm install linter-pylint
+apm install go-plus
+apm install syntax-settings
