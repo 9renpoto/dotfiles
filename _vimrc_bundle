@@ -165,6 +165,11 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'tangledhelix/vim-octopress'
 autocmd BufNewFile,BufRead *.markdown setfiletype octopress
 
+" http://ichyo.jp/blog/2014/03/14/how-to-comment-out-with-vim/
+NeoBundle "tyru/caw.vim.git"
+nmap <Leader>c <Plug>(caw:i:toggle)
+vmap <Leader>c <Plug>(caw:i:toggle)
+
 " gitの差分を表示するぜ
 NeoBundle 'airblade/vim-gitgutter'
 nnoremap <silent> ,gg :<C-u>GitGutterToggle<CR>

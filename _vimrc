@@ -52,9 +52,9 @@ set hidden
 "インクリメンタルサーチを行う
 set incsearch
 "タブ文字、行末など不可視文字を表示する
-set list
+" set list
 "listで表示される文字のフォーマットを指定する
-set listchars=tab:>\ ,extends:<
+" set listchars=tab:>\ ,extends:<
 "行番号を表示する
 set number
 "閉じ括弧が入力されたとき、対応する括弧を表示する
@@ -100,15 +100,6 @@ augroup cch
 
 set guifont=MyFont\ for\ Powerline
 let g:Powerline_symbols = 'fancy'
-
-" http://qiita.com/Linda_pp/items/89aa2e4b55ea51ecdd59
-" tmux
-" if !has('gui_running') && $TMUX !=# ''
-"   augroup Tmux
-"     autocmd!
-"     autocmd VimEnter,VimLeave * silent !tmux set status
-"   augroup END
-" endif
 
 " http://qiita.com/methane/items/4905f40e4772afec3e60
 " :Fmt などで gofmt の代わりに goimports を使う
