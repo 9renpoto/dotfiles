@@ -1,6 +1,3 @@
-"mkdir -p ~/.vim/bundle
-"git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
-
 set nocompatible
 filetype off
 
@@ -17,6 +14,7 @@ NeoBundle 'git://github.com/Shougo/echodoc.git'
 NeoBundle 'git://github.com/Shougo/neocomplcache.git'
 NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
 NeoBundle 'git://github.com/Shougo/unite.vim.git'
+NeoBundle 'git://github.com/Shougo/unite-outline'
 NeoBundle 'git://github.com/Shougo/vim-vcs.git'
 NeoBundle 'git://github.com/Shougo/vimfiler.git'
 NeoBundle 'git://github.com/Shougo/vimshell.git'
@@ -24,7 +22,6 @@ NeoBundle 'git://github.com/Shougo/vinarise.git'
 
 NeoBundle 'git://github.com/thinca/vim-localrc.git'
 
-NeoBundle 'git://github.com/tpope/vim-rails.git'
 NeoBundle 'git://github.com/scrooloose/nerdtree.git'
 
 NeoBundle 'git://github.com/elixir-lang/vim-elixir.git'
@@ -41,10 +38,9 @@ let g:gist_show_privates = 1
 let g:gist_post_private = 1
 
 " http://qiita.com/yuku_t/items/0ac33cea18e10f14e185
-" NeoBundle 'scrooloose/syntastic'
-" let g:syntastic_mode_map = { 'mode': 'passive',
-"             \ 'active_filetypes': ['ruby'] }
-" let g:syntastic_ruby_checkers = ['rubocop']
+NeoBundle 'scrooloose/syntastic'
+let g:syntastic_enable_signs=1
+let g:syntastic_auto_loc_list=2
 " let g:syntastic_javascript_checker = "jshint"
 " let g:syntastic_quiet_warnings = 0
 
@@ -65,7 +61,6 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=black
 let g:indent_guides_color_change_percent = 30
 " ガイドの幅
 let g:indent_guides_guide_size = 1
-
 
 " http://vimblog.hatenablog.com/entry/vim_plugin_surround_vim
 NeoBundle 'tpope/vim-surround'
@@ -137,9 +132,6 @@ function! MyMode()
   return winwidth('.') > 60 ? lightline#mode() : ''
 endfunction
 
-" haml
-NeoBundle 'haml.zip'
-
 " JavaScript
 NeoBundle 'JavaScript-syntax'
 
@@ -157,13 +149,6 @@ NeoBundle 'kchmck/vim-coffee-script'
 
 " python
 NeoBundle 'yuroyoro/vim-python'
-
-" syntax checking plugins exist for eruby, haml, html, javascript, php, python, ruby and sass.
-NeoBundle 'scrooloose/syntastic'
-
-" http://blog.glidenote.com/blog/2011/12/23/vim-octopress/
-NeoBundle 'tangledhelix/vim-octopress'
-autocmd BufNewFile,BufRead *.markdown setfiletype octopress
 
 " http://ichyo.jp/blog/2014/03/14/how-to-comment-out-with-vim/
 NeoBundle "tyru/caw.vim.git"
