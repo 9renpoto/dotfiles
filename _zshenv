@@ -16,7 +16,7 @@ export PATH="$PATH:$HOME/bin"
 # pyenv
 export PYENV_ROOT="${HOME}/.pyenv"
 if [ -d "${PYENV_ROOT}" ]; then
-  export PATH=${PYENV_ROOT}/bin:$PATH
+  export PATH="${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:$PATH"
   eval "$(pyenv init - zsh)"
 fi
 
@@ -38,10 +38,6 @@ export PATH="/usr/local/go/bin:$PATH"
 export GOENVTARGET="$HOME/.goenvtarget"
 export PATH="$GOENVTARGET:$PATH"
 
-
-# packer
-export PATH="$HOME/packer:$PATH"
-
 # heroku
 export PATH="/usr/local/heroku/bin:$PATH"
 
@@ -49,4 +45,5 @@ export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="$HOME/.exenv/bin:$PATH"
 eval "$(exenv init - zsh)"
 
-export HOMEBREW_CASK_OPTS="--appdir=/Applications”
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
