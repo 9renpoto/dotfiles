@@ -112,6 +112,9 @@ if $GOROOT != ''
     set rtp+=$GOROOT/misc/vim
 endif
 
+exe "set rtp+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
+set completeopt=menu,preview
+
 filetype plugin indent on
 
 " 保存時に :Fmt する
