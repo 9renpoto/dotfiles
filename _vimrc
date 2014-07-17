@@ -75,6 +75,7 @@ set shiftwidth=4
 au BufNewFile,BufRead *.haml set tabstop=2 softtabstop=2 shiftwidth=2
 au BufNewFile,BufRead *.rb set tabstop=2 softtabstop=2 shiftwidth=2
 au BufNewFile,BufRead *.cs set tabstop=4 softtabstop=4 shiftwidth=4
+au BufNewFile,BufRead *.md set tabstop=2 softtabstop=2 shiftwidth=2
 
 "行頭の余白内で Tab を打ち込むと、'shiftwidth' の数だけインデントする。
 set smarttab
