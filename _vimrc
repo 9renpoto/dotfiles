@@ -36,7 +36,7 @@ command! WJis w ++enc=iso-2022-jp | e
 " ESCでIMEを確実にOFF http://nobeans.hatenablog.com/entry/20090211/1234326782
 inoremap <ESC> <ESC>:set iminsert=0<CR>
 
-http://qiita.com/knt45/items/9717e30ca6a0f1fdad0f
+" http://qiita.com/knt45/items/9717e30ca6a0f1fdad0f
 set guioptions-=r
 set guioptions-=R
 set guioptions-=l
@@ -105,7 +105,7 @@ augroup cch
             :hi CursorLine gui=underline
             hi CursorLine ctermbg=black guibg=black
 
-set guifont=MyFont\ for\ Powerline
+" set guifont=MyFont\ for\ Powerline
 let g:Powerline_symbols = 'fancy'
 
 " http://qiita.com/methane/items/4905f40e4772afec3e60

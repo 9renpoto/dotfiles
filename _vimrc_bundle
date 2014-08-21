@@ -8,7 +8,14 @@ endif
 
 " http://cocopon.me/blog/?p=841
 NeoBundle 'tomasr/molokai'
-colorscheme molokai
+" colorscheme molokai
+" カラースキーム
+let scheme = 'molokai'
+augroup guicolorscheme
+  autocmd!
+  execute 'autocmd GUIEnter * colorscheme' scheme
+augroup END
+execute 'colorscheme' scheme
 
 NeoBundle 'git://github.com/Shougo/echodoc.git'
 NeoBundle 'git://github.com/Shougo/neocomplcache.git'
@@ -49,7 +56,7 @@ NeoBundle 'git://github.com/nathanaelkane/vim-indent-guides.git'
 " vim立ち上げたときに、自動的にvim-indent-guidesをオンにする
 let g:indent_guides_enable_on_vim_startup=1
 " ガイドをスタートするインデントの量
-let g:indent_guides_start_level=2
+let g:indent_guides_start_level=1
 " 自動カラーを無効にする
 let g:indent_guides_auto_colors=0
 " 奇数インデントのカラー
