@@ -97,13 +97,13 @@ set cursorline
 " 縦行ハイライト
 " set cursorcolumn
 augroup cch
-        autocmd! cch
-            autocmd WinLeave * set nocursorline
-                autocmd WinEnter,BufRead * set cursorline
-            augroup END
-            :hi clear CursorLine
-            :hi CursorLine gui=underline
-            hi CursorLine ctermbg=black guibg=black
+  autocmd! cch
+  autocmd WinLeave * set nocursorline
+  autocmd WinEnter,BufRead * set cursorline
+augroup END
+:hi clear CursorLine
+:hi CursorLine gui=underline
+hi CursorLine ctermbg=black guibg=black
 
 " set guifont=MyFont\ for\ Powerline
 let g:Powerline_symbols = 'fancy'
@@ -130,3 +130,4 @@ au BufNewFile,BufRead *.go set sw=4 noexpandtab ts=4
 au FileType go compiler go
 
 syntax on
+

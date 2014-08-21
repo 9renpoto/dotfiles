@@ -31,8 +31,6 @@ NeoBundle 'git://github.com/thinca/vim-localrc.git'
 
 NeoBundle 'git://github.com/scrooloose/nerdtree.git'
 
-NeoBundle 'git://github.com/elixir-lang/vim-elixir.git'
-
 NeoBundle 'rking/ag.vim'
 
 " http://qiita.com/PSP_T/items/3a1af1301ee197b32a8a
@@ -142,17 +140,18 @@ endfunction
 " JavaScript
 NeoBundle 'JavaScript-syntax'
 
-" jQuery
-NeoBundle 'jQuery'
-
 " nginx conf
 NeoBundle 'nginx.vim'
 
-" markdown
-NeoBundle 'tpope/vim-markdown'
+" elixir
+NeoBundle 'git://github.com/elixir-lang/vim-elixir.git'
 
-" coffee script
-NeoBundle 'kchmck/vim-coffee-script'
+" perl
+augroup filetypedetect
+  au BufNewFile,BufRead *.psgi    setf perl
+  au BufNewFile,BufRead *.t       setf perl
+  au BufNewFile,BufRead cpanfile  setf perl
+augroup END
 
 " python
 NeoBundle 'yuroyoro/vim-python'
