@@ -4,6 +4,8 @@ export LANG=ja_JP.UTF-8;
 autoload -U compinit
 compinit
 
+eval "$(direnv hook zsh)"
+
 # 補完メッセージを読みやすくする
 # http://qiita.com/PSP_T/items/82b080920a4241e96aed
 zstyle ':completion:*' verbose yes
@@ -119,3 +121,6 @@ source ~/github/dotfiles/zsh_local/alias
 
 # http://qiita.com/awakia/items/1d5cd440ce58ef4fb8ae
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+typeset -U path PATH
+
