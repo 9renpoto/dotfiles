@@ -8,7 +8,14 @@ endif
 
 " http://cocopon.me/blog/?p=841
 NeoBundle 'tomasr/molokai'
-colorscheme molokai
+" colorscheme molokai
+" カラースキーム
+let scheme = 'molokai'
+augroup guicolorscheme
+  autocmd!
+  execute 'autocmd GUIEnter * colorscheme' scheme
+augroup END
+execute 'colorscheme' scheme
 
 NeoBundle 'git://github.com/Shougo/echodoc.git'
 NeoBundle 'git://github.com/Shougo/neocomplcache.git'
@@ -23,8 +30,6 @@ NeoBundle 'git://github.com/Shougo/vinarise.git'
 NeoBundle 'git://github.com/thinca/vim-localrc.git'
 
 NeoBundle 'git://github.com/scrooloose/nerdtree.git'
-
-NeoBundle 'git://github.com/elixir-lang/vim-elixir.git'
 
 NeoBundle 'rking/ag.vim'
 
@@ -49,7 +54,7 @@ NeoBundle 'git://github.com/nathanaelkane/vim-indent-guides.git'
 " vim立ち上げたときに、自動的にvim-indent-guidesをオンにする
 let g:indent_guides_enable_on_vim_startup=1
 " ガイドをスタートするインデントの量
-let g:indent_guides_start_level=2
+let g:indent_guides_start_level=1
 " 自動カラーを無効にする
 let g:indent_guides_auto_colors=0
 " 奇数インデントのカラー
@@ -135,17 +140,19 @@ endfunction
 " JavaScript
 NeoBundle 'JavaScript-syntax'
 
-" jQuery
-NeoBundle 'jQuery'
-
 " nginx conf
 NeoBundle 'nginx.vim'
 
-" markdown
-NeoBundle 'tpope/vim-markdown'
+" elixir
+NeoBundle 'git://github.com/elixir-lang/vim-elixir.git'
 
-" coffee script
-NeoBundle 'kchmck/vim-coffee-script'
+" http://kazuph.github.io/presentation/yapc_vim_2013_github/#/46
+" perl
+augroup filetypedetect
+  au BufNewFile,BufRead *.psgi    setf perl
+  au BufNewFile,BufRead *.t       setf perl
+  au BufNewFile,BufRead cpanfile  setf perl
+augroup END
 
 " python
 NeoBundle 'yuroyoro/vim-python'
