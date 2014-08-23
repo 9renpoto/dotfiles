@@ -122,6 +122,14 @@ endif
 exe "set rtp+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
 set completeopt=menu,preview
 
+" http://kazuph.github.io/presentation/yapc_vim_2013_github/#/46
+" perl
+augroup filetypedetect
+  au BufNewFile,BufRead *.psgi    setf perl
+  au BufNewFile,BufRead *.t       setf perl
+  au BufNewFile,BufRead cpanfile  setf perl
+augroup END
+
 filetype plugin indent on
 
 " 保存時に :Fmt する

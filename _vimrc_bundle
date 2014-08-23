@@ -146,14 +146,6 @@ NeoBundle 'nginx.vim'
 " elixir
 NeoBundle 'git://github.com/elixir-lang/vim-elixir.git'
 
-" http://kazuph.github.io/presentation/yapc_vim_2013_github/#/46
-" perl
-augroup filetypedetect
-  au BufNewFile,BufRead *.psgi    setf perl
-  au BufNewFile,BufRead *.t       setf perl
-  au BufNewFile,BufRead cpanfile  setf perl
-augroup END
-
 " python
 NeoBundle 'yuroyoro/vim-python'
 
