@@ -115,7 +115,7 @@ darwin*) # Mac OS X
 esac
 
 
-source ~/github/dotfiles/zsh_local/alias
+source ~/github/9renpoto/dotfiles/zsh_local/alias
 
 # http://qiita.com/awakia/items/1d5cd440ce58ef4fb8ae
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local

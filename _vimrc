@@ -1,7 +1,9 @@
 " plugin
 
-source ~/github/dotfiles/_vimrc_bundle
-source ~/github/dotfiles/_vimrc_neocomplcache
+source ~/github/9renpoto/dotfiles/_vimrc_bundle
+source ~/github/9renpoto/dotfiles/_vimrc_neocomplcache
+
+set noundofile
 
 "全角スペース
 highlight JpSpace cterm=underline ctermfg=7 guifg=7
@@ -50,6 +52,8 @@ set browsedir=buffer
 "Vi互換をオフ
 set nocompatible
 "スワップファイル用のディレクトリ
+set backup
+set backupdir=$HOME/vimbackup
 set directory=$HOME/vimbackup
 "タブの代わりに空白文字を挿入する
 set expandtab
@@ -138,4 +142,3 @@ au BufNewFile,BufRead *.go set sw=4 noexpandtab ts=4
 au FileType go compiler go
 
 syntax on
-
