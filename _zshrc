@@ -94,7 +94,9 @@ function rprompt-mercurial-current-branch {
   #   return
   # fi
   st=$(hg status 2> /dev/null)
-  if [[ -n $(echo "$st" | grep "^M") ]]; then
+  if [[ -n $(echo "$st" | grep "^!") ]]; then
+    color=${fg_bold[red]}
+  elif [[ -n $(echo "$st" | grep "^M") ]]; then
     color=${fg_bold[red]}
   elif [[ -n $(echo "$st" | grep "^?") ]]; then
     color=${fg[yellow]}
