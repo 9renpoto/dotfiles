@@ -49,6 +49,12 @@ if [[ -n "$TMUX" ]]; then
 fi
 
 autoload -Uz colors; colors
+autoload -Uz vcs_info
+
+zstyle ':vcs_info:*' max-exports 3
+zstyle ':vcs_info:*' enable hg
+zstyle ':vcs_info:*' formats '[%s] %b'
+precmd () { vcs_info }
 
 function rprompt-git-current-branch {
   local name st color
@@ -73,13 +79,38 @@ function rprompt-git-current-branch {
 
   # %{...%} は囲まれた文字列がエスケープシーケンスであることを明示する
   # これをしないと右プロンプトの位置がずれる
+  echo "%{$color%}[git] $name%{$reset_color%} "
+}
+
+function rprompt-mercurial-current-branch {
+  local name st color
+
+  if [[ "$PWD" =~ '/\.hg(/.*)?$' ]]; then
+    return
+  fi
+
+  name="$vcs_info_msg_0_"
+  # if [[ -z $name ]]; then
+  #   return
+  # fi
+  st=$(hg status 2> /dev/null)
+  if [[ -n $(echo "$st" | grep "^M") ]]; then
+    color=${fg_bold[red]}
+  elif [[ -n $(echo "$st" | grep "^?") ]]; then
+    color=${fg[yellow]}
+  else
+    color=${fg[green]}
+  fi
+
+  # %{...%} は囲まれた文字列がエスケープシーケンスであることを明示する
+  # これをしないと右プロンプトの位置がずれる
   echo "%{$color%}$name%{$reset_color%} "
 }
 
 # プロンプトが表示されるたびにプロンプト文字列を評価、置換する
 setopt prompt_subst
 
-RPROMPT='`rprompt-git-current-branch` %~ %{$fg_bold[blue]%}${HOST}'
+RPROMPT='`rprompt-mercurial-current-branch` `rprompt-git-current-branch` %~ %{$fg_bold[blue]%}${HOST}'
 
 function make() {
     LANG=C command make "$@" 2>&1 | sed -e "s@[Ee]rror:.*@$e_RED&$e_normal@g" -e "s@cannot¥sfind.*@$e_RED&$e_normal@g" -e "s@[Ww]arning:.*@$e_BLUE&$e_normal@g"
