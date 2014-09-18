@@ -42,12 +42,8 @@ NeoBundle 'mattn/webapi-vim'
 let g:gist_show_privates = 1
 let g:gist_post_private = 1
 
-" http://qiita.com/yuku_t/items/0ac33cea18e10f14e185
 NeoBundle 'scrooloose/syntastic'
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_loc_list=2
-" let g:syntastic_javascript_checker = "jshint"
-" let g:syntastic_quiet_warnings = 0
+let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 
 " http://chiiiiiiiii.hatenablog.com/entry/2012/12/02/102815
 NeoBundle 'git://github.com/nathanaelkane/vim-indent-guides.git'
@@ -147,15 +143,30 @@ NeoBundle 'nginx.vim'
 NeoBundle 'git://github.com/elixir-lang/vim-elixir.git'
 
 " python
+" http://qiita.com/kiyotaman/items/995fb04b615097bcdbd9
+NeoBundle 'Flake8-vim'
+NeoBundle 'davidhalter/jedi-vim'
+NeoBundle 'hynek/vim-python-pep8-indent'
+NeoBundle 'Townk/vim-autoclose'
 NeoBundle 'yuroyoro/vim-python'
+
+"保存時に自動でチェック
+let g:PyFlakeOnWrite = 1
+let g:PyFlakeCheckers = 'pep8,mccabe,pyflakes'
+let g:PyFlakeDefaultComplexity=10
 
 " http://ichyo.jp/blog/2014/03/14/how-to-comment-out-with-vim/
 NeoBundle "tyru/caw.vim.git"
 nmap <Leader>c <Plug>(caw:i:toggle)
 vmap <Leader>c <Plug>(caw:i:toggle)
 
-" gitの差分を表示するぜ
-NeoBundle 'airblade/vim-gitgutter'
-nnoremap <silent> ,gg :<C-u>GitGutterToggle<CR>
-nnoremap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
-
+" http://deris.hatenablog.jp/entry/2013/12/15/235606
+NeoBundle "mhinz/vim-signify"
+" 次の差分箇所に移動
+nmap <Leader>gj <Plug>(signify-next-hunk)zz
+" 前の差分箇所に移動
+nmap <Leader>gk <Plug>(signify-prev-hunk)zz
+" 差分箇所をハイライト
+nmap <Leader>gh <Plug>(signify-toggle-highlight)
+" 差分表示をトグルする(:SignifyToggleコマンドと同じ)
+nmap <Leader>gt <Plug>(signify-toggle)
