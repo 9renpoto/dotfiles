@@ -1,7 +1,7 @@
 " plugin
 
-source ~/github/9renpoto/dotfiles/_vimrc_bundle
-source ~/github/9renpoto/dotfiles/_vimrc_neocomplcache
+source ~/src/github.com/9renpoto/dotfiles/_vimrc_bundle
+source ~/src/github.com/9renpoto/dotfiles/_vimrc_neocomplcache
 
 set noundofile
 
