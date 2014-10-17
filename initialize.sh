@@ -1,10 +1,6 @@
 #!/user/bin/sh
 
-cd ~/
-
 mkdir -p ~/vimbackup
-mkdir -p ~/src/github.com/9renpoto
-mkdir -p ~/src/bitbucket/9renpoto
 
 ln -s ~/src/github.com/9renpoto/dotfiles/_bash_profile ~/.bash_profile
 ln -s ~/src/github.com/9renpoto/dotfiles/_bashrc ~/.bashrc
