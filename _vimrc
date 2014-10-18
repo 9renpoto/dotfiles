@@ -3,7 +3,9 @@
 source ~/src/github.com/9renpoto/dotfiles/_vimrc_bundle
 source ~/src/github.com/9renpoto/dotfiles/_vimrc_neocomplcache
 
-set noundofile
+if has('gui_macvim')
+    set noundofile
+endif
 
 "全角スペース
 highlight JpSpace cterm=underline ctermfg=7 guifg=7
