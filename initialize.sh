@@ -13,6 +13,8 @@ ln -s ~/src/github.com/9renpoto/dotfiles/_zshenv ~/.zshenv
 ln -s ~/src/github.com/9renpoto/dotfiles/_zshrc ~/.zshrc
 ln -s ~/src/github.com/9renpoto/dotfiles/_vimrc ~/.vimrc
 
+ln -s ~/src/github.com/9renpoto/dotfiles/.gitconfig ~/.gitconfig
+
 ln -s ~/src/github.com/9renpoto/dotfiles/vim ~/.vim
 ln -s ~/src/github.com/9renpoto/dotfiles/zsh ~/.zsh
 ln -s ~/src/github.com/9renpoto/dotfiles/tmux ~/.tmux

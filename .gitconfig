@@ -1,0 +1,11 @@
+[user]
+    name = Kan Keisuke
+    email = 9renpoto@gmail.com
+[color]
+    ui = auto
+[github]
+    user = 9renpoto
+[ghq]
+    root = ~/src
+[core]
+    excludesfile = ~/.gitignore
