@@ -9,6 +9,9 @@ ln -s ~/src/github.com/9renpoto/dotfiles/_zshenv ~/.zshenv
 ln -s ~/src/github.com/9renpoto/dotfiles/_zshrc ~/.zshrc
 ln -s ~/src/github.com/9renpoto/dotfiles/_vimrc ~/.vimrc
 
+ln -s ~/src/github.com/9renpoto/dotfiles/.hgrc ~/.hgrc
+ln -s ~/src/github.com/9renpoto/dotfiles/.hgignore_global ~/.hgignore_global
+
 ln -s ~/src/github.com/9renpoto/dotfiles/.gitconfig ~/.gitconfig
 ln -s ~/src/github.com/9renpoto/dotfiles/_gitignore ~/.gitignore
 
