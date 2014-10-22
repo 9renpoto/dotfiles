@@ -1,7 +1,7 @@
 " plugin
 
 source ~/src/github.com/9renpoto/dotfiles/_vimrc_bundle
-source ~/src/github.com/9renpoto/dotfiles/_vimrc_neocomplcache
+source ~/src/github.com/9renpoto/dotfiles/_vimrc_neocomplete
 
 if has('gui_macvim')
     set noundofile
