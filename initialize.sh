@@ -10,6 +10,8 @@ ln -s ~/src/github.com/9renpoto/dotfiles/_zshrc ~/.zshrc
 ln -s ~/src/github.com/9renpoto/dotfiles/_vimrc ~/.vimrc
 
 ln -s ~/src/github.com/9renpoto/dotfiles/.hgrc ~/.hgrc
+cp ~/src/github.com/9renpoto/dotfiles/.hgrc_auth.base ~/src/github.com/9renpoto/dotfiles/.hgrc_auth
+ln -s ~/src/github.com/9renpoto/dotfiles/.hgrc_auth ~/.hgrc_auth
 ln -s ~/src/github.com/9renpoto/dotfiles/.hgignore_global ~/.hgignore_global
 
 ln -s ~/src/github.com/9renpoto/dotfiles/.gitconfig ~/.gitconfig

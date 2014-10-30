@@ -10,3 +10,5 @@ mode = auto
 
 [ui]
 ignore = ~/.hgignore_global
+
+%include ~/.hgrc_auth
