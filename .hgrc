@@ -2,6 +2,7 @@
 
 [extensions]
 color =
+graphlog =
 hgshelve = ~/src/bitbucket.org/astiob/hgshelve/hgshelve.py
 
 [color]
