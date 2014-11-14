@@ -33,8 +33,7 @@ export PATH="$HOME/.plenv/shims:$PATH"
 
 # golang
 export GOPATH="$HOME"
-export GOROOT="/usr/local/opt/go/libexec"
-export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
+export PATH="$GOPATH/bin:$PATH"
 export PATH="/usr/local/go/bin:$PATH"
 export GOENVTARGET="$HOME/.goenvtarget"
 export PATH="$GOENVTARGET:$PATH"
