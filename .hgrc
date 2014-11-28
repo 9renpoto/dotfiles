@@ -1,5 +1,3 @@
-
-
 [extensions]
 color =
 graphlog =
@@ -10,6 +8,7 @@ hgshelve = ~/src/bitbucket.org/astiob/hgshelve/hgshelve.py
 mode = auto
 
 [ui]
+username = Keisuke Kan <9renpoto@gmail.com>
 ignore = ~/.hgignore_global
 
 %include ~/.hgrc_auth
