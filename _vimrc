@@ -84,6 +84,7 @@ autocmd BufWritePre * :%s/\s\+$//ge
 "シフト移動幅
 set shiftwidth=4
 "ファイル内の <Tab> が対応する空白の数
+au BufNewFile,BufRead *.html set tabstop=2 softtabstop=2 shiftwidth=2
 au BufNewFile,BufRead *.haml set tabstop=2 softtabstop=2 shiftwidth=2
 au BufNewFile,BufRead *.rb set tabstop=2 softtabstop=2 shiftwidth=2
 au BufNewFile,BufRead *.cs set tabstop=4 softtabstop=4 shiftwidth=4
