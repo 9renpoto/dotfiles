@@ -1,3 +1,10 @@
+" http://rbtnn.hateblo.jp/entry/2014/11/30/174749
+scriptencoding utf-8
+
+augroup vimrc
+  autocmd!
+augroup END
+
 " plugin
 
 source ~/src/github.com/9renpoto/dotfiles/_vimrc_bundle
