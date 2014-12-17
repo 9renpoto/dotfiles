@@ -46,7 +46,10 @@ set guioptions-=R
 set guioptions-=l
 set guioptions-=L
 
+set termencoding=utf-8
 set encoding=utf-8
+set fileformats=unix,mac,dos
+set ambiwidth=double
 "新しい行のインデントを現在行と同じにする
 set autoindent
 "ファイル保存ダイアログの初期ディレクトリをバッファファイル位置に設定
