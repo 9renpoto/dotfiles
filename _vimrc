@@ -1,7 +1,14 @@
+" http://rbtnn.hateblo.jp/entry/2014/11/30/174749
+scriptencoding utf-8
+
+augroup vimrc
+  autocmd!
+augroup END
+
 " plugin
 
 source ~/src/github.com/9renpoto/dotfiles/_vimrc_bundle
-source ~/src/github.com/9renpoto/dotfiles/_vimrc_neocomplcache
+source ~/src/github.com/9renpoto/dotfiles/_vimrc_neocomplete
 
 if has('gui_macvim')
     set noundofile
@@ -87,6 +94,7 @@ autocmd BufWritePre * :%s/\s\+$//ge
 "シフト移動幅
 set shiftwidth=4
 "ファイル内の <Tab> が対応する空白の数
+au BufNewFile,BufRead *.html set tabstop=2 softtabstop=2 shiftwidth=2
 au BufNewFile,BufRead *.haml set tabstop=2 softtabstop=2 shiftwidth=2
 au BufNewFile,BufRead *.rb set tabstop=2 softtabstop=2 shiftwidth=2
 au BufNewFile,BufRead *.cs set tabstop=4 softtabstop=4 shiftwidth=4
