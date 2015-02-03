@@ -1,2 +1,5 @@
 syntax: glob
 *.lock
+.DS_Store
+.python-version
+vim/.netrwhist

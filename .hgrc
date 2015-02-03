@@ -1,7 +1,6 @@
 [extensions]
 color =
 graphlog =
-hgshelve = ~/src/bitbucket.org/astiob/hgshelve/hgshelve.py
 
 [color]
 # 有効なモードは、win32, ansi, auto, off の4種
