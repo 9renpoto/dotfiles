@@ -1,5 +1,5 @@
-syntax: glob
 *.lock
 .DS_Store
 .python-version
+syntax: glob
 vim/.netrwhist
