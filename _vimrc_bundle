@@ -137,6 +137,9 @@ endfunction
 " JavaScript
 NeoBundle 'JavaScript-syntax'
 
+" Coffee Script
+NeoBundle 'kchmck/vim-coffee-script'
+
 " nginx conf
 NeoBundle 'nginx.vim'
 
