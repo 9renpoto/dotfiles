@@ -1,4 +1,0 @@
-# if which zsh 1> /dev/null 2> /dev/null; then
-#     export SHELL=`which zsh`
-#     exec $(which zsh)
-# fi
