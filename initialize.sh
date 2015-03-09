@@ -12,10 +12,10 @@ ln -s ~/src/github.com/9renpoto/dotfiles/_vimrc ~/.vimrc
 ln -s ~/src/github.com/9renpoto/dotfiles/.hgrc ~/.hgrc
 cp ~/src/github.com/9renpoto/dotfiles/.hgrc_auth.base ~/src/github.com/9renpoto/dotfiles/.hgrc_auth
 ln -s ~/src/github.com/9renpoto/dotfiles/.hgrc_auth ~/.hgrc_auth
-ln -s ~/src/github.com/9renpoto/dotfiles/.hgignore_global ~/.hgignore_global
+ln -s ~/src/github.com/9renpoto/dotfiles/.ignore ~/.hgignore_global
 
 ln -s ~/src/github.com/9renpoto/dotfiles/.gitconfig ~/.gitconfig
-ln -s ~/src/github.com/9renpoto/dotfiles/_gitignore ~/.gitignore
+ln -s ~/src/github.com/9renpoto/dotfiles/.ignore ~/.gitignore
 
 ln -s ~/src/github.com/9renpoto/dotfiles/vim ~/.vim
 ln -s ~/src/github.com/9renpoto/dotfiles/zsh ~/.zsh
