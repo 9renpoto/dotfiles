@@ -169,7 +169,7 @@ NeoBundleLazy "lambdalisue/vim-pyenv", {
 
 "保存時に自動でチェック
 let g:PyFlakeOnWrite = 1
-let g:PyFlakeCheckers = 'pep8,mccabe,pyflakes'
+let g:PyFlakeCheckers = 'mccabe,pyflakes'  " 'pep8,mccabe,pyflakes'
 let g:PyFlakeDefaultComplexity=10
 
 " http://ichyo.jp/blog/2014/03/14/how-to-comment-out-with-vim/
