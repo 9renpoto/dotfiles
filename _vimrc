@@ -96,6 +96,7 @@ set shiftwidth=4
 "ファイル内の <Tab> が対応する空白の数
 au BufNewFile,BufRead *.html set tabstop=2 softtabstop=2 shiftwidth=2
 au BufNewFile,BufRead *.coffee set tabstop=2 softtabstop=2 shiftwidth=2
+au BufNewFile,BufRead *.js set tabstop=2 softtabstop=2 shiftwidth=2
 au BufNewFile,BufRead *.rb set tabstop=2 softtabstop=2 shiftwidth=2
 au BufNewFile,BufRead *.cs set tabstop=4 softtabstop=4 shiftwidth=4
 au BufNewFile,BufRead *.md set tabstop=2 softtabstop=2 shiftwidth=2
