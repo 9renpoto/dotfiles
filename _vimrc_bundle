@@ -44,6 +44,7 @@ let g:gist_post_private = 1
 
 NeoBundle 'scrooloose/syntastic'
 let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+let g:syntastic_javascript_jshint_conf = ['jshint']
 
 " http://chiiiiiiiii.hatenablog.com/entry/2012/12/02/102815
 NeoBundle 'git://github.com/nathanaelkane/vim-indent-guides.git'
