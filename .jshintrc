@@ -2,7 +2,7 @@
 {
   "strict" : true,  // "use strict" を強制
   "indent" : 2,  // インデントの深さ
-  "maxlen" : 80,  // 一行の最大長
+  "maxlen" : 100,  // 一行の最大長
   "unused" : true,  // 宣言したきり使っていない変数を検出
 
   // グローバル変数へのアクセスの管理
@@ -12,8 +12,8 @@
   "devel": true,  //  consoleやalertを許可
   "debug": true,  // debugger を許可
   "globals":{
-      "_": false,
-      "Backbone": false
+    "_": false,
+    "Backbone": false
   },
 
   // Relaxing Options - 危険性を認識した上で設定すること
