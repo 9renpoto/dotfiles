@@ -13,7 +13,11 @@
   "debug": true,  // debugger を許可
   "globals":{
     "_": false,
-    "Backbone": false
+    "Backbone": false,
+    "gettext" : false,
+    "describe": false,
+    "it": false,
+    "beforeEach": false
   },
 
   // Relaxing Options - 危険性を認識した上で設定すること
