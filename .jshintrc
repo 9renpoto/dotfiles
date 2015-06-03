@@ -17,10 +17,13 @@
     "gettext" : false,
     "describe": false,
     "it": false,
-    "beforeEach": false
+    "beforeEach": false,
+    "afterEach": false,
+    "sinon": false
   },
 
   // Relaxing Options - 危険性を認識した上で設定すること
   "eqnull" : true,  // == null を許可
-  "expr" : true  // x || (x = 1); とかができるようにする
+  "expr" : true,  // x || (x = 1); とかができるようにする
+  "es3": true // http://qiita.com/martini3oz/items/708d598b7601534beb36
 }
