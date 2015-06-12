@@ -2,3 +2,5 @@
 .python-version
 syntax: glob
 vim/.netrwhist
+bower_components
+node_modules
