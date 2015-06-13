@@ -3,8 +3,8 @@
 mkdir -p ~/vimbackup
 
 ln -s ~/src/github.com/9renpoto/dotfiles/_tmux.conf ~/.tmux.conf
-ln -s ~/src/github.com/9renpoto/dotfiles/_zshenv ~/.zshenv
-ln -s ~/src/github.com/9renpoto/dotfiles/_zshrc ~/.zshrc
+ln -s ~/src/github.com/9renpoto/dotfiles/.zshenv ~/.zshenv
+ln -s ~/src/github.com/9renpoto/dotfiles/.zshrc ~/.zshrc
 ln -s ~/src/github.com/9renpoto/dotfiles/_vimrc ~/.vimrc
 
 ln -s ~/src/github.com/9renpoto/dotfiles/.hgrc ~/.hgrc
