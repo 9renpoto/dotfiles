@@ -23,6 +23,9 @@ export PATH="$PATH:$HOME/bin"
 
 export PATH="/usr/local/bin:$PATH"
 
+# npm
+export PATH="./node_modules/.bin:$PATH"
+
 # ruby
 # export RBENV_ROOT="${HOME}/.rbenv"
 # if [ -d "${RBENV_ROOT}" ]; then
