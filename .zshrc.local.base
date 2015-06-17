@@ -1,7 +1,7 @@
 PROMPT="%(?.%{$fg[green]%}.%{$fg[cyan]%})%(?!('A') <!('-'%) ?) %{${reset_color}%} "
 PROMPT2="%{$fg[cyan]%}%_>%{$reset_color%}%b "
-setopt correct
-SPROMPT="%{$fg[red]%}%{$suggest%}(-_-%) ? %B %r is correct? [n,y,a,e]:%{${reset_color}%}%b "
+# setopt correct
+# SPROMPT="%{$fg[red]%}%{$suggest%}(-_-%) ? %B %r is correct? [n,y,a,e]:%{${reset_color}%}%b "
 
 ## tmux自動起動
 # http://d.hatena.ne.jp/tyru/20100828/run_tmux_or_screen_at_shell_startup
