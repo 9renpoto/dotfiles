@@ -14,12 +14,12 @@ typeset -U path
 export PATH="$PATH:$HOME/bin"
 
 # pyenv
-# export PYENV_ROOT="${HOME}/.pyenv"
-# if [ -d "${PYENV_ROOT}" ]; then
-#   export PATH="${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:$PATH"
-#   eval "$(pyenv init - zsh)"
-#   eval "$(pyenv virtualenv-init -)"
-# fi
+export PYENV_ROOT="${HOME}/.pyenv"
+if [ -d "${PYENV_ROOT}" ]; then
+  export PATH="${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:$PATH"
+  eval "$(pyenv init - zsh)"
+  eval "$(pyenv virtualenv-init -)"
+fi
 
 export PATH="/usr/local/bin:$PATH"
 
