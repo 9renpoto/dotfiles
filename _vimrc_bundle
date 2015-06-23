@@ -44,6 +44,7 @@ let g:gist_post_private = 1
 
 NeoBundle 'scrooloose/syntastic'
 let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+let g:syntastic_javascript_checkers = ['eslint']
 
 NeoBundle 'maksimr/vim-karma'
 map <Leader>a :call RunAllSpecs()<CR>
