@@ -15,10 +15,48 @@
     "semi": [
       2,
       "always"
-    ]
+    ],
+    "valid-jsdoc": [
+      2,
+      {
+        "prefer": {
+          "return": "returns"
+        }
+      }
+    ],
+    "key-spacing": [
+      2,
+      {
+        "beforeColon": false,
+        "afterColon": true
+      }
+    ],
+    "camelcase": [
+      2,
+      {
+        "properties": "always"
+      }
+    ],
+    "strict": 2,
+    "no-catch-shadow": 2,
+    "no-else-return": 2,
+    "new-cap": 2,
+    "no-alert": 2,
+    "consistent-return": 2,
+    "brace-style": 2,
+    "sort-vars": 2,
+    "vars-on-top": 2,
+    "yoda": 0
   },
+  "globals": {},
   "env": {
-    "es6": true,
-    "browser": true
+    "browser": true,
+    "amd": true,
+    "phantomjs": true,
+    "jquery": true,
+    "mocha": true
+  },
+  "ecmaFeatures": {
+    "modules": true
   }
 }
