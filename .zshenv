@@ -52,11 +52,11 @@ export PATH="$GOENVTARGET:$PATH"
 export PATH="/usr/local/heroku/bin:$PATH"
 
 # elixir
-# export EXENV_ROOT="${HOME}/.exenv"
-# if [ -d "${EXENV_ROOT}" ]; then
-#   export PATH="${EXENV_ROOT}/bin:$PATH"
-#   eval "$(exenv init - zsh)"
-# fi
+export EXENV_ROOT="${HOME}/.exenv"
+if [ -d "${EXENV_ROOT}" ]; then
+  export PATH="${EXENV_ROOT}/bin:$PATH"
+  eval "$(exenv init - zsh)"
+fi
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
