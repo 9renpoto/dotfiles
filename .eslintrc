@@ -51,9 +51,7 @@
   "globals": {},
   "env": {
     "browser": true,
-    "amd": true,
     "phantomjs": true,
-    "jquery": true,
     "mocha": true
   },
   "ecmaFeatures": {
