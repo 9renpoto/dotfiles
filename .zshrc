@@ -56,6 +56,11 @@ plugins=(git)
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
+# http://qiita.com/puttyo_bubu/items/0cf94ca5a764aa22827e
+if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+    source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
 source $ZSH/oh-my-zsh.sh
 source ~/src/github.com/9renpoto/dotfiles/zsh_local/alias
 
