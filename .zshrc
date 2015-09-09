@@ -49,7 +49,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git zsh-syntax-highlighting)
 
 # User configuration
 
@@ -60,6 +60,9 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
     source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
+
+# 3秒以上かかった処理は詳細表示
+REPORTTIME=3
 
 source $ZSH/oh-my-zsh.sh
 source ~/src/github.com/9renpoto/dotfiles/zsh_local/alias
