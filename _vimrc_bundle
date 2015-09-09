@@ -1,10 +1,24 @@
 set nocompatible
 filetype off
 
+" Note: Skip initialization for vim-tiny or vim-small.
+if 0 | endif
+
 if has('vim_starting')
-    set runtimepath+=~/.vim/bundle/neobundle.vim
-    call neobundle#rc(expand('~/.vim/bundle/'))
+  if &compatible
+    set nocompatible               " Be iMproved
+  endif
+
+  " Required:
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
+
+" Required:
+call neobundle#begin(expand('~/.vim/bundle/'))
+
+" Let NeoBundle manage NeoBundle
+" Required:
+NeoBundleFetch 'Shougo/neobundle.vim'
 
 " http://cocopon.me/blog/?p=841
 NeoBundle 'tomasr/molokai'
@@ -191,3 +205,13 @@ nmap <Leader>gk <Plug>(signify-prev-hunk)zz
 nmap <Leader>gh <Plug>(signify-toggle-highlight)
 " 差分表示をトグルする(:SignifyToggleコマンドと同じ)
 nmap <Leader>gt <Plug>(signify-toggle)
+
+" My Bundles here:
+" Refer to |:NeoBundle-examples|.
+" Note: You don't set neobundle setting in .gvimrc!
+
+call neobundle#end()
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+NeoBundleCheck
