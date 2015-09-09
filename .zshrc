@@ -1,159 +1,87 @@
-export LANG=ja_JP.UTF-8;
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/src/github.com/9renpoto/dotfiles/oh-my-zsh
 
-# 補完機能
-autoload -U compinit
-compinit
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="robbyrussell"
 
-# eval "$(direnv hook zsh)"
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
 
-# 補完メッセージを読みやすくする
-# http://qiita.com/PSP_T/items/82b080920a4241e96aed
-zstyle ':completion:*' verbose yes
-zstyle ':completion:*' format '%B%d%b'
-zstyle ':completion:*:warnings' format 'No matches for: %d'
-zstyle ':completion:*' group-name ''
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
 
-# コマンド履歴
-HISTFILE=~/.zsh_history
-HISTSIZE=6000000
-SAVEHIST=6000000
-setopt hist_ignore_dups     # ignore duplication command history list
-setopt share_history        # share command history data
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
 
-# コマンド履歴検索
-autoload history-search-end
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
-bindkey "^P" history-beginning-search-backward-end
-bindkey "^N" history-beginning-search-forward-end
+# Uncomment the following line to change how often to auto-update (in days).
+export UPDATE_ZSH_DAYS=13
 
-# 補完候補を詰めて表示する
-setopt list_packed
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
 
-# 補完候補表示時などにピッピとビープ音をならないように設定
-setopt nolistbeep
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
 
-# カッコの対応などを自動的に補完する
-setopt auto_param_keys
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
 
-# エラーメッセージ本文出力に色付け
-e_normal=`echo -e "¥033[0;30m"`
-e_RED=`echo -e "¥033[1;31m"`
-e_BLUE=`echo -e "¥033[1;36m"`
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
 
-# 3秒以上かかった処理は詳細表示
-REPORTTIME=3
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# if [[ -n "$TMUX" ]]; then
-#   cut -c3- ~/.tmux.conf | sh -s on_login
-# fi
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# HIST_STAMPS="mm/dd/yyyy"
 
-autoload -Uz colors; colors
-autoload -Uz vcs_info
+# Would you like to use another custom folder than $ZSH/custom?
+ZSH_CUSTOM=~/src/github.com/9renpoto/dotfiles/zsh/
 
-zstyle ':vcs_info:*' max-exports 3
-zstyle ':vcs_info:*' enable hg
-zstyle ':vcs_info:*' formats '[%s] %b'
-precmd () { vcs_info }
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git github tmux bower zsh-syntax-highlighting)
 
-function rprompt-git-current-branch {
-  local name st color
+# User configuration
 
-  if [[ "$PWD" =~ '/\.git(/.*)?$' ]]; then
-    return
-  fi
-    name=$(basename "$(git symbolic-ref HEAD 2> /dev/null)")
-  if [[ -z $name ]]; then
-    return
-  fi
-  st=$(git status 2> /dev/null)
-  if [[ -n $(echo "$st" | grep "^nothing to") ]]; then
-    color=${fg[green]}
-  elif [[ -n $(echo "$st" | grep "^nothing added") ]]; then
-    color=${fg[yellow]}
-  elif [[ -n $(echo "$st" | grep "^# Untracked") ]]; then
-    color=${fg_bold[red]}
-  else
-    color=${fg[red]}
-  fi
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export MANPATH="/usr/local/man:$MANPATH"
 
-  # %{...%} は囲まれた文字列がエスケープシーケンスであることを明示する
-  # これをしないと右プロンプトの位置がずれる
-  echo "%{$color%}[git] $name%{$reset_color%} "
-}
-
-function rprompt-mercurial-current-branch {
-  local name st color
-
-  if [[ "$PWD" =~ '/\.hg(/.*)?$' ]]; then
-    return
-  fi
-
-  name="$vcs_info_msg_0_"
-  # if [[ -z $name ]]; then
-  #   return
-  # fi
-  st=$(hg status 2> /dev/null)
-  if [[ -n $(echo "$st" | grep "^!") ]]; then
-    color=${fg_bold[red]}
-  elif [[ -n $(echo "$st" | grep "^M") ]]; then
-    color=${fg_bold[red]}
-  elif [[ -n $(echo "$st" | grep "^?") ]]; then
-    color=${fg[yellow]}
-  else
-    color=${fg[green]}
-  fi
-
-  # %{...%} は囲まれた文字列がエスケープシーケンスであることを明示する
-  # これをしないと右プロンプトの位置がずれる
-  echo "%{$color%}$name%{$reset_color%} "
-}
-
-# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
-setopt prompt_subst
-
-RPROMPT='`rprompt-mercurial-current-branch` `rprompt-git-current-branch` %~ %{$fg_bold[blue]%}${HOST}'
-
-function make() {
-    LANG=C command make "$@" 2>&1 | sed -e "s@[Ee]rror:.*@$e_RED&$e_normal@g" -e "s@cannot¥sfind.*@$e_RED&$e_normal@g" -e "s@[Ww]arning:.*@$e_BLUE&$e_normal@g"
-}
-function cwaf() {
-    LANG=C command ./waf "$@" 2>&1 | sed -e "s@[Ee]rror:.*@$e_RED&$e_normal@g" -e "s@cannot¥sfind.*@$e_RED&$e_normal@g" -e "s@[Ww]arning:.*@$e_BLUE&$e_normal@g"
-}
-
-#色の設定
-export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
-export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
-zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
-
-# http://qiita.com/STAR_ZERO/items/860b3f141e6f7e2cc3ca
-printf "\033k$(hostname -s)\033\\"
-
-# http://qiita.com/puttyo_bubu/items/0cf94ca5a764aa22827e
-if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-    source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
-
-case ${OSTYPE} in
-darwin*) # Mac OS X
-  function macvim () {
-      if [ -d /Applications/MacVim.app ]
-      then
-        [ ! -f $1 ] && touch $1
-        open -a MacVim $1
-      else
-        vim $1
-      fi
-  }
-  alias vim='macvim'
-  ;;
-esac
-
-
-source ~/src/github.com/9renpoto/dotfiles/zsh_local/alias
+source $ZSH/oh-my-zsh.sh
 
 # http://qiita.com/awakia/items/1d5cd440ce58ef4fb8ae
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
-typeset -U path PATH
+# You may need to manually set your language environment
+export LANG=en_US.UTF-8
 
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/dsa_id"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
