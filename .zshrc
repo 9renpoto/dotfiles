@@ -49,7 +49,7 @@ ZSH_CUSTOM=~/src/github.com/9renpoto/dotfiles/zsh/
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git github tmux bower zsh-syntax-highlighting)
+plugins=(git zsh-syntax-highlighting)
 
 # User configuration
 
