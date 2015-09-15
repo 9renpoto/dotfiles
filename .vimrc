@@ -28,22 +28,6 @@ highlight WhitespaceEOL ctermbg=red guibg=red
 match WhitespaceEOL /\s\+$/
 autocmd WinEnter * match WhitespaceEOL /\s\+$/
 
-command! Utf8 e ++enc=utf-8
-command! Euc e ++enc=euc-jp
-command! Sjis e ++enc=cp932
-command! Jis e ++enc=iso-2022-jp
-command! WUtf8 w ++enc=utf-8 | e
-command! WEuc w ++enc=euc-jp | e
-command! WSjis w ++enc=cp932 | e
-command! WJis w ++enc=iso-2022-jp | ecommand! Utf8 e ++enc=utf-8
-command! Euc e ++enc=euc-jp
-command! Sjis e ++enc=cp932
-command! Jis e ++enc=iso-2022-jp
-command! WUtf8 w ++enc=utf-8 | e
-command! WEuc w ++enc=euc-jp | e
-command! WSjis w ++enc=cp932 | e
-command! WJis w ++enc=iso-2022-jp | e
-
 " ESCでIMEを確実にOFF http://nobeans.hatenablog.com/entry/20090211/1234326782
 inoremap <ESC> <ESC>:set iminsert=0<CR>
 
@@ -113,8 +97,6 @@ set hlsearch
 
 " カーソル行をハイライト
 set cursorline
-" 縦行ハイライト
-" set cursorcolumn
 augroup cch
   autocmd! cch
   autocmd WinLeave * set nocursorline
