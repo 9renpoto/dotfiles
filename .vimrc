@@ -5,10 +5,9 @@ augroup vimrc
   autocmd!
 augroup END
 
-" plugin
 
-" source ~/src/github.com/9renpoto/dotfiles/_vimrc_bundle
-" source ~/src/github.com/9renpoto/dotfiles/_vimrc_neocomplete
+source ~/src/github.com/9renpoto/dotfiles/vim/neobundle
+" source ~/src/github.com/9renpoto/dotfiles/vim/neocomplete
 
 if has('gui_macvim')
     set noundofile
