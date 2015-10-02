@@ -11,6 +11,7 @@ fi
 # 重複したパスを登録しない。
 typeset -U path
 
+export PATH="$PATH:/opt/homebrew/bin"
 export PATH="$PATH:$HOME/bin"
 
 # pyenv
@@ -20,8 +21,6 @@ if [ -d "${PYENV_ROOT}" ]; then
   eval "$(pyenv init - zsh)"
   eval "$(pyenv virtualenv-init -)"
 fi
-
-export PATH="/usr/local/bin:$PATH"
 
 # npm
 export PATH="./node_modules/.bin:$PATH"
@@ -44,12 +43,9 @@ export PATH="./node_modules/.bin:$PATH"
 export GOPATH="$HOME"
 export GOROOT=`go env GOROOT`
 export PATH="$GOROOT/bin:$GOPATH/bin:$PATH"
-export PATH="/usr/local/go/bin:$PATH"
+export PATH="/opt/homebrew/go/bin:$PATH"
 export GOENVTARGET="$HOME/.goenvtarget"
 export PATH="$GOENVTARGET:$PATH"
-
-# heroku
-export PATH="/usr/local/heroku/bin:$PATH"
 
 # elixir
 export EXENV_ROOT="${HOME}/.exenv"
