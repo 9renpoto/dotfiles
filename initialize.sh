@@ -1,5 +1,10 @@
 #!/user/bin/sh
 
+# http://qiita.com/usamik26/items/601f5612bd3f8a21cc41
+cd /opt
+sudo mkdir homebrew
+sudo chown ${USER}:staff homebrew
+
 mkdir -p ~/vimbackup
 
 ln -s ~/src/github.com/9renpoto/dotfiles/_tmux.conf ~/.tmux.conf
