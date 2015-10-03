@@ -13,6 +13,7 @@ typeset -U path
 
 export PATH="$PATH:/opt/homebrew/bin"
 export PATH="$PATH:$HOME/bin"
+export PATH="/usr/local/bin:$PATH"
 
 # pyenv
 export PYENV_ROOT="${HOME}/.pyenv"
