@@ -6,6 +6,7 @@ build:
         code: |
           echo "pip install --upgrade pip"
           echo "pip install -U -r requirements.txt"
+          echo "vint .vimrc"
 
   after-steps:
     - wantedly/pretty-slack-notify:
