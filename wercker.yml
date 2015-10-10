@@ -1,0 +1,13 @@
+box: python
+build:
+  steps:
+    - script:
+        name: lint vimrc
+        code: |
+          pip install --upgrade pip
+          pip install -U -r requirements.txt
+          vint .vimrc
+
+  after-steps:
+    - wantedly/pretty-slack-notify:
+        webhook_url: $SLACK_WEBHOOK_URL

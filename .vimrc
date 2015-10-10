@@ -1,4 +1,5 @@
 " http://rbtnn.hateblo.jp/entry/2014/11/30/174749
+set encoding=utf-8
 scriptencoding utf-8
 
 augroup vimrc
@@ -17,12 +18,19 @@ highlight JpSpace cterm=underline ctermfg=7 guifg=7
 au BufRead,BufNew * match JpSpace /■/
 
 highlight ZenkakuSpace cterm=underline ctermbg=red guibg=#666666
-au BufWinEnter * let w:m3 = matchadd("ZenkakuSpace", '　')
-au WinEnter * let w:m3 = matchadd("ZenkakuSpace", '　')
+
+augroup space
+  autocmd BufWinEnter * let w:m3 = matchadd("ZenkakuSpace", '　')
+  autocmd WinEnter * let w:m3 = matchadd("ZenkakuSpace", '　')
+augroup END
 
 highlight WhitespaceEOL ctermbg=red guibg=red
 match WhitespaceEOL /\s\+$/
-autocmd WinEnter * match WhitespaceEOL /\s\+$/
+
+augroup EndSpace
+  autocmd WinEnter * match WhitespaceEOL /\s\+$/
+augroup END
+
 
 " http://qiita.com/knt45/items/9717e30ca6a0f1fdad0f
 set guioptions-=r
@@ -31,12 +39,10 @@ set guioptions-=l
 set guioptions-=L
 
 set termencoding=utf-8
-set encoding=utf-8
 set fileformats=unix,mac,dos
 set ambiwidth=double
 set autoindent
 set browsedir=buffer
-set nocompatible
 set backup
 set backupdir=$HOME/vimbackup
 set directory=$HOME/vimbackup
@@ -48,7 +54,9 @@ set showmatch
 set smartcase
 set smartindent
 
-autocmd BufWritePre * :%s/\s\+$//ge
+augroup bufWritePre
+  autocmd BufWritePre * :%s/\s\+$//ge
+augroup END
 
 set shiftwidth=2
 set smarttab
