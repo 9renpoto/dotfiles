@@ -4,9 +4,9 @@ build:
     - script:
         name: lint vimrc
         code: |
-          echo "pip install --upgrade pip"
-          echo "pip install -U -r requirements.txt"
-          echo "vint .vimrc"
+          pip install --upgrade pip
+          pip install -U -r requirements.txt
+          vint .vimrc
 
   after-steps:
     - wantedly/pretty-slack-notify:
