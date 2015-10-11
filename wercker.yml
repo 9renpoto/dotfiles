@@ -8,6 +8,7 @@ build:
           pip install -U -r requirements.txt
           vint .vimrc
           vint vim/neobundle
+          vint vim/neocomplete
 
   after-steps:
     - wantedly/pretty-slack-notify:
