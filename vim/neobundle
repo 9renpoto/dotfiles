@@ -10,7 +10,7 @@ if has('vim_starting')
 endif
 
 " Required:
-call g:neobundle#begin(expand('~/.vim/bundle/'))
+call neobundle#begin(expand('~/.vim/bundle/'))
 
 " Let NeoBundle manage NeoBundle
 " Required:
@@ -146,7 +146,7 @@ NeoBundle "tyru/caw.vim.git"  " http://ichyo.jp/blog/2014/03/14/how-to-comment-o
 nmap <Leader>c <Plug>(caw:i:toggle)
 vmap <Leader>c <Plug>(caw:i:toggle)
 
-call g:neobundle#end()
+call neobundle#end()
 
 " Required:
 filetype plugin indent on
