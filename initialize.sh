@@ -25,4 +25,4 @@ ln -s ~/src/github.com/9renpoto/dotfiles/vim ~/.vim
 ln -s ~/src/github.com/9renpoto/dotfiles/tmux ~/.tmux
 
 # http://qiita.com/tatsuya6502@github/items/a356db103f3b654d6f27
-# ln -s ~/dotfiles/_kerlrc ~/.kerlrc
+# ln -s ~/src/github.com/9renpoto/dotfiles/.kerlrc ~/.kerlrc
