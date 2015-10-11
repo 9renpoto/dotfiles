@@ -14,12 +14,15 @@ let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 " http://dackdive.hateblo.jp/entry/2014/08/13/130000
 
-autocmd FileType python setlocal omnifunc=jedi#completions
+augroup space
+  autocmd FileType python setlocal omnifunc=jedi#completions
+augroup END
+
 let g:jedi#completions_enabled = 0
 let g:jedi#auto_vim_configuration = 0
 
 if !exists('g:neocomplete#force_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
+  let g:neocomplete#force_omni_input_patterns = {}
 endif
 
 let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^.\t]\.\w*'

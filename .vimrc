@@ -11,7 +11,7 @@ source ~/src/github.com/9renpoto/dotfiles/vim/neobundle
 " source ~/src/github.com/9renpoto/dotfiles/vim/neocomplete
 
 if has('gui_macvim')
-    set noundofile
+  set noundofile
 endif
 
 highlight JpSpace cterm=underline ctermfg=7 guifg=7
