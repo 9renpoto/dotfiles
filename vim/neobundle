@@ -1,26 +1,21 @@
-" set nocompatible
-" filetype off
-"
-" " Note: Skip initialization for vim-tiny or vim-small.
-" if 0 | endif
-"
-" if has('vim_starting')
-"   if &compatible
-"     set nocompatible               " Be iMproved
-"   endif
-"
-"   " Required:
-"   set runtimepath+=~/.vim/bundle/neobundle.vim/
-" endif
-"
-" " Required:
-" call neobundle#begin(expand('~/.vim/bundle/'))
-"
-" " Let NeoBundle manage NeoBundle
-" " Required:
-" NeoBundleFetch 'Shougo/neobundle.vim'
-"
-" " http://cocopon.me/blog/?p=841
+set encoding=utf-8
+scriptencoding utf-8
+
+" Note: Skip initialization for vim-tiny or vim-small.
+if 0 | endif
+
+if has('vim_starting')
+  " Required:
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+
+" Required:
+call g:neobundle#begin(expand('~/.vim/bundle/'))
+
+" Let NeoBundle manage NeoBundle
+" Required:
+NeoBundleFetch 'Shougo/neobundle.vim'
+
 " NeoBundle 'tomasr/molokai'
 " " colorscheme molokai
 " " カラースキーム
@@ -30,188 +25,132 @@
 "   execute 'autocmd GUIEnter * colorscheme' scheme
 " augroup END
 " execute 'colorscheme' scheme
-"
-" NeoBundle 'git://github.com/Shougo/echodoc.git'
-" NeoBundle 'git://github.com/Shougo/neocomplete.git'
-" NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
-" NeoBundle 'git://github.com/Shougo/unite.vim.git'
-" NeoBundle 'git://github.com/Shougo/unite-outline'
-" NeoBundle 'git://github.com/Shougo/vim-vcs.git'
-" NeoBundle 'git://github.com/Shougo/vimfiler.git'
-" NeoBundle 'git://github.com/Shougo/vimshell.git'
-" NeoBundle 'git://github.com/Shougo/vinarise.git'
-"
-" NeoBundle 'git://github.com/thinca/vim-localrc.git'
-"
-" NeoBundle 'git://github.com/scrooloose/nerdtree.git'
-"
-" NeoBundle 'rking/ag.vim'
-"
-" " http://qiita.com/PSP_T/items/3a1af1301ee197b32a8a
-" NeoBundle 'osyo-manga/vim-over'
-"
-" " http://blog.glidenote.com/blog/2012/04/01/new-gist.vim/
-" NeoBundle 'mattn/gist-vim'
-" NeoBundle 'mattn/webapi-vim'
-" let g:gist_show_privates = 1
-" let g:gist_post_private = 1
-"
-" NeoBundle 'scrooloose/syntastic'
-" let g:syntastic_python_checkers = ['pyflakes', 'pep8']
-" let g:syntastic_javascript_checkers = ['eslint']
-"
-" NeoBundle 'maksimr/vim-karma'
-" map <Leader>a :call RunAllSpecs()<CR>
-"
-" " http://chiiiiiiiii.hatenablog.com/entry/2012/12/02/102815
-" NeoBundle 'git://github.com/nathanaelkane/vim-indent-guides.git'
-" " vim立ち上げたときに、自動的にvim-indent-guidesをオンにする
-" let g:indent_guides_enable_on_vim_startup=1
-" " ガイドをスタートするインデントの量
-" let g:indent_guides_start_level=1
-" " 自動カラーを無効にする
+
+NeoBundle 'git://github.com/elixir-lang/vim-elixir.git'
+NeoBundle 'git://github.com/scrooloose/nerdtree.git'
+NeoBundle 'git://github.com/Shougo/neocomplete.git'
+NeoBundle 'git://github.com/Shougo/unite-outline'
+NeoBundle 'git://github.com/Shougo/unite.vim.git'
+NeoBundle 'git://github.com/Shougo/vim-vcs.git'
+NeoBundle 'git://github.com/Shougo/vimfiler.git'
+NeoBundle 'git://github.com/thinca/vim-localrc.git'
+NeoBundle 'JavaScript-syntax'
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'nginx.vim'
+NeoBundle 'rking/ag.vim'
+NeoBundle 'Townk/vim-autoclose'
+NeoBundle 'yuroyoro/vim-python'
+NeoBundle "mhinz/vim-signify" " http://deris.hatenablog.jp/entry/2013/12/15/235606
+NeoBundle 'osyo-manga/vim-over'  " http://qiita.com/PSP_T/items/3a1af1301ee197b32a8a
+
+" http://blog.glidenote.com/blog/2012/04/01/new-gist.vim/
+NeoBundle 'mattn/gist-vim'
+NeoBundle 'mattn/webapi-vim'
+let g:gist_show_privates = 1
+let g:gist_post_private = 1
+
+NeoBundle 'scrooloose/syntastic'
+let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+let g:syntastic_javascript_checkers = ['eslint']
+
+NeoBundle 'git://github.com/nathanaelkane/vim-indent-guides.git'  " http://chiiiiiiiii.hatenablog.com/entry/2012/12/02/102815'
 " let g:indent_guides_auto_colors=0
-" " 奇数インデントのカラー
+" let g:indent_guides_color_change_percent=30
+" let g:indent_guides_enable_on_vim_startup=1
+" let g:indent_guides_guide_size=1
+" let g:indent_guides_start_level=1
 " autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#262626 ctermbg=black
-" " 偶数インデントのカラー
 " autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=black
-"
-" " ハイライト色の変化の幅
-" let g:indent_guides_color_change_percent = 30
-" " ガイドの幅
-" let g:indent_guides_guide_size = 1
-"
-" " http://vimblog.hatenablog.com/entry/vim_plugin_surround_vim
-" NeoBundle 'tpope/vim-surround'
-" set laststatus=2
-" set t_Co=256
-"
-" " http://yuku-tech.hatenablog.com/entry/20110427/1303868482
-" NeoBundle 'git://github.com/tpope/vim-fugitive.git'
-"
-" NeoBundle 'itchyny/lightline.vim'
-" let g:lightline = {
-"       \ 'colorscheme': 'wombat',
-"       \ 'mode_map': { 'c': 'NORMAL' },
-"       \ 'active': {
-"       \   'left': [ [ 'mode', 'paste' ], [ 'pyenv' ], [ 'fugitive', 'filename' ] ]
-"       \ },
-"       \ 'component_function': {
-"       \   'modified': 'MyModified',
-"       \   'readonly': 'MyReadonly',
-"       \   'fugitive': 'MyFugitive',
-"       \   'filename': 'MyFilename',
-"       \   'fileformat': 'MyFileformat',
-"       \   'filetype': 'MyFiletype',
-"       \   'fileencoding': 'MyFileencoding',
-"       \   'mode': 'MyMode',
-"       \   'pyenv': 'pyenv#statusline#component',
-"       \ },
-"       \ 'separator': { 'left': '', 'right': '' },
-"       \ 'subseparator': { 'left': '', 'right': '' }
-"       \ }
-"
-" function! MyModified()
-"   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-" endfunction
-"
-" function! MyReadonly()
-"   return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
-" endfunction
-"
-" function! MyFilename()
-"   return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
-"         \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-"         \  &ft == 'unite' ? unite#get_status_string() :
-"         \  &ft == 'vimshell' ? vimshell#get_status_string() :
-"         \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
-"         \ ('' != MyModified() ? ' ' . MyModified() : '')
-" endfunction
-"
-" function! MyFugitive()
-"   if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
-"     let _ = fugitive#head()
-"     return strlen(_) ? ''._ : ''
-"   endif
-"   return ''
-" endfunction
-"
-" function! MyFileformat()
-"   return winwidth('.') > 70 ? &fileformat : ''
-" endfunction
-"
-" function! MyFiletype()
-"   return winwidth('.') > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
-" endfunction
-"
-" function! MyFileencoding()
-"   return winwidth('.') > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
-" endfunction
-"
-" function! MyMode()
-"   return winwidth('.') > 60 ? lightline#mode() : ''
-" endfunction
-"
-" " JavaScript
-" NeoBundle 'JavaScript-syntax'
-"
-" " Coffee Script
-" NeoBundle 'kchmck/vim-coffee-script'
-"
-" " nginx conf
-" NeoBundle 'nginx.vim'
-"
-" " elixir
-" NeoBundle 'git://github.com/elixir-lang/vim-elixir.git'
-"
-" " python
-" " http://qiita.com/kiyotaman/items/995fb04b615097bcdbd9
-" NeoBundle 'Flake8-vim'
-" NeoBundle 'davidhalter/jedi-vim'
-" NeoBundle 'hynek/vim-python-pep8-indent'
-" NeoBundle 'Townk/vim-autoclose'
-" NeoBundle 'yuroyoro/vim-python'
-"
+
+NeoBundle 'tpope/vim-surround'
+set laststatus=2
+set t_Co=256
+
+" http://yuku-tech.hatenablog.com/entry/20110427/1303868482
+NeoBundle 'git://github.com/tpope/vim-fugitive.git'
+
+NeoBundle 'itchyny/lightline.vim'
+let g:lightline = {
+    \ 'colorscheme': 'wombat',
+    \ 'mode_map': { 'c': 'NORMAL' },
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ], [ 'pyenv' ], [ 'fugitive', 'filename' ] ]
+    \ },
+    \ 'component_function': {
+    \   'modified': 'MyModified',
+    \   'readonly': 'MyReadonly',
+    \   'fugitive': 'MyFugitive',
+    \   'filename': 'MyFilename',
+    \   'fileformat': 'MyFileformat',
+    \   'filetype': 'MyFiletype',
+    \   'fileencoding': 'MyFileencoding',
+    \   'mode': 'MyMode',
+    \   'pyenv': 'pyenv#statusline#component',
+    \ },
+    \ 'separator': { 'left': '', 'right': '' },
+    \ 'subseparator': { 'left': '', 'right': '' }
+    \ }
+
+function! g:MyModified()
+  return &ft =~? 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! g:MyReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
+endfunction
+
+function! g:MyFilename()
+  return ('' !=? g:MyReadonly() ? g:MyReadonly() . ' ' : '') .
+        \ (&ft ==? 'vimfiler' ? g:vimfiler#get_status_string() :
+        \  &ft ==? 'unite' ? g:unite#get_status_string() :
+        \  &ft ==? 'vimshell' ? g:vimshell#get_status_string() :
+        \ '' !=? expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ ('' !=? g:MyModified() ? ' ' . g:MyModified() : '')
+endfunction
+
+function! g:MyFugitive()
+  if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+    let l:_ = g:fugitive#head()
+    return strlen(l:_) ? ''.l:_ : ''
+  endif
+  return ''
+endfunction
+
+function! g:MyFileformat()
+  return winwidth('.') > 70 ? &fileformat : ''
+endfunction
+
+function! g:MyFiletype()
+  return winwidth('.') > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! g:MyFileencoding()
+  return winwidth('.') > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! g:MyMode()
+  return winwidth('.') > 60 ? g:lightline#mode() : ''
+endfunction
+
 " " http://lambdalisue.hatenablog.com/entry/2014/05/21/065845
 " " ~/.pyenv/shimsを$PATHに追加
 " " jedi-vim や vim-pyenc のロードよりも先に行う必要がある、はず。
 " let $PATH = "~/.pyenv/shims:".$PATH
 "
-" " pyenv 処理用に vim-pyenv を追加
-" " Note: depends が指定されているため jedi-vim より後にロードされる（ことを期待）
-" NeoBundleLazy "lambdalisue/vim-pyenv", {
-"       \ "depends": ['davidhalter/jedi-vim'],
-"       \ "autoload": {
-"       \   "filetypes": ["python", "python3", "djangohtml"]
-"       \ }}
-"
 " "保存時に自動でチェック
 " let g:PyFlakeOnWrite = 1
-" let g:PyFlakeCheckers = 'mccabe,pyflakes'  " 'pep8,mccabe,pyflakes'
+" let g:PyFlakeCheckers = ''  " 'pep8,mccabe,pyflakes'
 " let g:PyFlakeDefaultComplexity=10
-"
-" " http://ichyo.jp/blog/2014/03/14/how-to-comment-out-with-vim/
-" NeoBundle "tyru/caw.vim.git"
-" nmap <Leader>c <Plug>(caw:i:toggle)
-" vmap <Leader>c <Plug>(caw:i:toggle)
-"
-" " http://deris.hatenablog.jp/entry/2013/12/15/235606
-" NeoBundle "mhinz/vim-signify"
-" " 次の差分箇所に移動
-" nmap <Leader>gj <Plug>(signify-next-hunk)zz
-" " 前の差分箇所に移動
-" nmap <Leader>gk <Plug>(signify-prev-hunk)zz
-" " 差分箇所をハイライト
-" nmap <Leader>gh <Plug>(signify-toggle-highlight)
-" " 差分表示をトグルする(:SignifyToggleコマンドと同じ)
-" nmap <Leader>gt <Plug>(signify-toggle)
-"
-" " My Bundles here:
-" " Refer to |:NeoBundle-examples|.
-" " Note: You don't set neobundle setting in .gvimrc!
-"
-" call neobundle#end()
-"
-" " If there are uninstalled bundles found on startup,
-" " this will conveniently prompt you to install them.
-" NeoBundleCheck
+
+NeoBundle "tyru/caw.vim.git"  " http://ichyo.jp/blog/2014/03/14/how-to-comment-out-with-vim/
+nmap <Leader>c <Plug>(caw:i:toggle)
+vmap <Leader>c <Plug>(caw:i:toggle)
+
+call g:neobundle#end()
+
+" Required:
+filetype plugin indent on
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+NeoBundleCheck
