@@ -6,9 +6,8 @@ augroup vimrc
   autocmd!
 augroup END
 
-
 source ~/src/github.com/9renpoto/dotfiles/vim/neobundle
-" source ~/src/github.com/9renpoto/dotfiles/vim/neocomplete
+source ~/src/github.com/9renpoto/dotfiles/vim/neocomplete
 
 if has('gui_macvim')
   set noundofile
@@ -30,7 +29,6 @@ match WhitespaceEOL /\s\+$/
 augroup EndSpace
   autocmd WinEnter * match WhitespaceEOL /\s\+$/
 augroup END
-
 
 " http://qiita.com/knt45/items/9717e30ca6a0f1fdad0f
 set guioptions-=r
