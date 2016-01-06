@@ -1,2 +1,4 @@
-/vim/bundle/
+vim/bundle/
+node_modules/
 .hgrc_auth
+.python-version
