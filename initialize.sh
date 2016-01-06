@@ -19,7 +19,7 @@ ln -s ~/src/github.com/9renpoto/dotfiles/.ignore ~/.hgignore_global
 
 ln -s ~/src/github.com/9renpoto/dotfiles/.gitconfig ~/.gitconfig
 ln -s ~/src/github.com/9renpoto/dotfiles/.ignore ~/.gitignore
-ln -s ~/src/github.com/9renpoto/dotfiles/.ignore ~/.agignore
+ln -s ~/src/github.com/9renpoto/dotfiles/.agignore ~/.agignore
 
 ln -s ~/src/github.com/9renpoto/dotfiles/vim ~/.vim
 ln -s ~/src/github.com/9renpoto/dotfiles/tmux ~/.tmux
