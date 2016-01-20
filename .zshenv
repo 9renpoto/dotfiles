@@ -16,6 +16,7 @@ export PATH="$PATH:$HOME/bin"
 export PATH="/usr/local/bin:$PATH"
 
 # pyenv
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PYENV_ROOT="${HOME}/.pyenv"
 if [ -d "${PYENV_ROOT}" ]; then
   export PATH="${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:$PATH"
