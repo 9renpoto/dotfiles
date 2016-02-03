@@ -84,3 +84,6 @@ export LANG=en_US.UTF-8
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# added by travis gem
+[ -f /Users/9renpoto/.travis/travis.sh ] && source /Users/9renpoto/.travis/travis.sh
