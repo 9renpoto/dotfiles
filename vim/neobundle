@@ -39,7 +39,6 @@ NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'nginx.vim'
 NeoBundle 'rking/ag.vim'
 NeoBundle 'Townk/vim-autoclose'
-NeoBundle 'yuroyoro/vim-python'
 NeoBundle "mhinz/vim-signify" " http://deris.hatenablog.jp/entry/2013/12/15/235606
 NeoBundle 'osyo-manga/vim-over'  " http://qiita.com/PSP_T/items/3a1af1301ee197b32a8a
 
@@ -50,7 +49,6 @@ let g:gist_show_privates = 1
 let g:gist_post_private = 1
 
 NeoBundle 'scrooloose/syntastic'
-let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 let g:syntastic_javascript_checkers = ['eslint']
 
 NeoBundle 'git://github.com/nathanaelkane/vim-indent-guides.git'  " http://chiiiiiiiii.hatenablog.com/entry/2012/12/02/102815'
@@ -131,16 +129,6 @@ endfunction
 function! g:MyMode()
   return winwidth('.') > 60 ? g:lightline#mode() : ''
 endfunction
-
-" " http://lambdalisue.hatenablog.com/entry/2014/05/21/065845
-" " ~/.pyenv/shimsを$PATHに追加
-" " jedi-vim や vim-pyenc のロードよりも先に行う必要がある、はず。
-" let $PATH = "~/.pyenv/shims:".$PATH
-"
-" "保存時に自動でチェック
-" let g:PyFlakeOnWrite = 1
-" let g:PyFlakeCheckers = ''  " 'pep8,mccabe,pyflakes'
-" let g:PyFlakeDefaultComplexity=10
 
 NeoBundle "tyru/caw.vim.git"  " http://ichyo.jp/blog/2014/03/14/how-to-comment-out-with-vim/
 nmap <Leader>c <Plug>(caw:i:toggle)
