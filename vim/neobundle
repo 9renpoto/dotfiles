@@ -15,17 +15,6 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 " Let NeoBundle manage NeoBundle
 " Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
-
-" NeoBundle 'tomasr/molokai'
-" " colorscheme molokai
-" " カラースキーム
-" let scheme = 'molokai'
-" augroup guicolorscheme
-"   autocmd!
-"   execute 'autocmd GUIEnter * colorscheme' scheme
-" augroup END
-" execute 'colorscheme' scheme
-
 NeoBundle 'git://github.com/elixir-lang/vim-elixir.git'
 NeoBundle 'git://github.com/scrooloose/nerdtree.git'
 NeoBundle 'git://github.com/Shougo/neocomplete.git'
@@ -134,7 +123,17 @@ NeoBundle "tyru/caw.vim.git"  " http://ichyo.jp/blog/2014/03/14/how-to-comment-o
 nmap <Leader>c <Plug>(caw:i:toggle)
 vmap <Leader>c <Plug>(caw:i:toggle)
 
+NeoBundle 'tomasr/molokai'
+
 call neobundle#end()
+
+" カラースキーム
+let scheme = 'molokai'
+augroup guicolorscheme
+  autocmd!
+  execute 'autocmd GUIEnter * colorscheme' scheme
+augroup END
+execute 'colorscheme' scheme
 
 " Required:
 filetype plugin indent on
