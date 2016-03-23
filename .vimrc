@@ -6,8 +6,8 @@ augroup vimrc
   autocmd!
 augroup END
 
-source ~/src/github.com/9renpoto/dotfiles/vim/neobundle
-source ~/src/github.com/9renpoto/dotfiles/vim/neocomplete
+source ~/src/github.com/9renpoto/dotfiles/vim/neobundle.setting.vim
+source ~/src/github.com/9renpoto/dotfiles/vim/neocomplete.setting.vim
 
 if has('gui_macvim')
   set noundofile
