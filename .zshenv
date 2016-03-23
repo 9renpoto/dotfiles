@@ -8,12 +8,9 @@ if ! type vim > /dev/null 2>&1; then
   alias vim=vi
 fi
 
-# 重複したパスを登録しない。
-typeset -U path
-
-export PATH="$PATH:/opt/homebrew/bin"
+export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$PATH:$HOME/bin"
-export PATH="/usr/local/bin:$PATH"
+# export PATH="/usr/local/bin:$PATH"
 
 # pyenv
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
@@ -58,3 +55,5 @@ fi
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
+# 重複したパスを登録しない。
+typeset -U path
