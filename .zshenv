@@ -55,5 +55,8 @@ fi
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
+export NVM_DIR=~/.nvm
+. $(brew --prefix nvm)/nvm.sh
+
 # 重複したパスを登録しない。
 typeset -U path
