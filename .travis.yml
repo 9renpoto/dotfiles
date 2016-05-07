@@ -1,0 +1,12 @@
+language: python
+sudo: false
+python:
+    - '3.5'
+
+script:
+    - vint .vimrc
+    - vint neocomplete.setting.vim
+
+notifications:
+    email: false
+    slack: true
