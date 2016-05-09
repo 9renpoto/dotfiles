@@ -1,11 +1,15 @@
 [user]
-    name = Keisuke Kan
-    email = 9renpoto@gmail.com
+  name = Keisuke Kan
+  email = 9renpoto@gmail.com
 [color]
-    ui = auto
+  ui = auto
 [github]
-    user = 9renpoto
+  user = 9renpoto
 [ghq]
-    root = ~/src
+  root = ~/src
 [core]
-    excludesfile = ~/.gitignore
+  excludesfile = ~/.gitignore
+[filter "lfs"]
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
+  required = true
