@@ -25,11 +25,11 @@ fi
 export PATH="./node_modules/.bin:$PATH"
 
 # ruby
-# export RBENV_ROOT="${HOME}/.rbenv"
-# if [ -d "${RBENV_ROOT}" ]; then
-#   export PATH="$HOME/.rbenv/bin:$PATH"
-#   eval "$(rbenv init - zsh)"
-# fi
+export RBENV_ROOT="${HOME}/.rbenv"
+if [ -d "${RBENV_ROOT}" ]; then
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init - zsh)"
+fi
 
 # perl
 # export PLENV_ROOT="${HOME}/.pyenv"
