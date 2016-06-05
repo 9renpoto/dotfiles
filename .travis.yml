@@ -8,7 +8,7 @@ git:
 script:
 - vint .vimrc
 - vint vim/neocomplete.setting.vim
-- vint vim/neobundle.settings.vim
+- vint vim/neobundle.setting.vim
 notifications:
   email: false
   slack:
