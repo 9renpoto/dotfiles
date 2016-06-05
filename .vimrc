@@ -13,9 +13,6 @@ if has('gui_macvim')
   set noundofile
 endif
 
-highlight JpSpace cterm=underline ctermfg=7 guifg=7
-au BufRead,BufNew * match JpSpace /■/
-
 highlight ZenkakuSpace cterm=underline ctermbg=red guibg=#666666
 
 augroup space
