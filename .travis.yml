@@ -1,12 +1,15 @@
 language: python
 sudo: false
 python:
-    - '3.5'
-
+- '3.5'
+- '2.7'
+git:
+  submodules: false
 script:
-    - vint .vimrc
-    - vint neocomplete.setting.vim
-
+- vint .vimrc
+- vint vim/neocomplete.setting.vim
+- vint vim/neobundle.setting.vim
 notifications:
-    email: false
-    slack: true
+  email: false
+  slack:
+    secure: nmOIpab0cL7c2nrPRAao9912jAukP6byF3IZEwC7w4h158upnHZxrOEeugT630qhTHC7VAddglxh/Lzl9iXGY+L4+P/FytYr4ZVqSGr3iDo7l7FZtCoJJwPYKLQBavc4Z/kzP1PlZusY67mrqL98BmQ08EuubQP3pvtgLlP8KEUSLwuiHFfHYuDpO/syMUvPwCU3qqeJOwz/tBCSFpPCZfqu0w8aEue2WXTMD7yf37zKLx0c4MfBjd0takaP36sLGuqZXFavDVNi2aIEL6EIU97kVNZ83HM4rwLL+Iwcjg6wgbMmSjCldEr8mwi5eiBIu+5Cr0MMp400rQf3eoPLeEIc8QtpOvfHmBQD/7aUr7iUu/HfpYU/SWvgof/E0I1uUZXpOurpN1LpkdMBveoQbdqRR0CPb9PzIx8vnOnOk110CNDlp8JTYiX/akB4oVKRnqhq+TjwIo6xtkfsSDP3d0bBYeZeTS3s6/916Wk7u2CK849+h4luDXq/JACYM5tBTeFf7rqQLeDf+N/dTYPj4XQA+QjtyRjpD0LoEcW8BpBO1nL3PQV05/vHSq9Le3xg5YLJ4KyHHGR1dE1/ZoCXyTPwba7ZO0BbJr+2/jjQOFDZnhoip63Zl9O6jJqi/S5KsFBKrja7i3SRFeBACwP3Mqys5EL4ydwrZNcdYwN3TPQ=
