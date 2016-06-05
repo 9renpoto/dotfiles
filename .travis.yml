@@ -3,6 +3,8 @@ sudo: false
 python:
 - '3.5'
 - '2.7'
+git:
+  submodules: false
 script:
 - vint .vimrc
 - vint neocomplete.setting.vim
