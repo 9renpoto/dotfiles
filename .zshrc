@@ -87,3 +87,6 @@ export LANG=en_US.UTF-8
 
 # added by travis gem
 [ -f /Users/9renpoto/.travis/travis.sh ] && source /Users/9renpoto/.travis/travis.sh
+
+# added by travis gem
+[ -f /Users/k_kan/.travis/travis.sh ] && source /Users/k_kan/.travis/travis.sh
