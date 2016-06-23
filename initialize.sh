@@ -7,7 +7,8 @@ sudo chown ${USER}:staff homebrew
 
 mkdir -p ~/vimbackup
 
-ln -s ~/src/github.com/9renpoto/dotfiles/_tmux.conf ~/.tmux.conf
+ln -s ~/src/github.com/9renpoto/dotfiles/.editorconfig ~/.editorconfig
+ln -s ~/src/github.com/9renpoto/dotfiles/.tmux.conf ~/.tmux.conf
 ln -s ~/src/github.com/9renpoto/dotfiles/.zshenv ~/.zshenv
 ln -s ~/src/github.com/9renpoto/dotfiles/.zshrc ~/.zshrc
 ln -s ~/src/github.com/9renpoto/dotfiles/.vimrc ~/.vimrc
