@@ -1,1 +1,1 @@
-vim-vint==0.3.6
+vim-vint==0.3.7
