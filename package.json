@@ -1,0 +1,28 @@
+{
+  "name": "dotfiles",
+  "version": "0.0.0",
+  "description": "global packages",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "npm-run-all": "^3.1.0"
+  },
+  "scripts": {
+    "postinstall": "npm-run-all -p install:*",
+    "install:py": "pip install -r requirements.txt",
+    "install:pkg": "npm i -g fixpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/9renpoto/dotfiles.git"
+  },
+  "author": "9renpoto",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/9renpoto/dotfiles/issues"
+  },
+  "homepage": "https://github.com/9renpoto/dotfiles#readme"
+}
