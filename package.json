@@ -24,7 +24,7 @@
     "url": "git+https://github.com/9renpoto/dotfiles.git"
   },
   "scripts": {
-    "install:pkg": "npm i -g fixpack",
+    "install:pkg": "npm i -g fixpack dts-gen",
     "install:py": "pip install -r requirements.txt",
     "postinstall": "npm-run-all -p install:*"
   }
