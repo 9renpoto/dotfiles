@@ -90,3 +90,5 @@ export LANG=en_US.UTF-8
 
 # added by travis gem
 [ -f /Users/k_kan/.travis/travis.sh ] && source /Users/k_kan/.travis/travis.sh
+
+[ -f ~/src/bitbucket.org/9renpoto/ssh/.keychain ] && source ~/src/bitbucket.org/9renpoto/ssh/.keychain

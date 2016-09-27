@@ -55,5 +55,7 @@ fi
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
+export HOSTNAME=`hostname`
+
 # 重複したパスを登録しない。
 typeset -U path
