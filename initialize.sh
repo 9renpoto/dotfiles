@@ -25,5 +25,7 @@ ln -s ~/src/github.com/9renpoto/dotfiles/.agignore ~/.agignore
 ln -s ~/src/github.com/9renpoto/dotfiles/vim ~/.vim
 ln -s ~/src/github.com/9renpoto/dotfiles/.tmux.conf ~/.tmux.conf
 
+ln -s ~/src/github.com/9renpoto/dotfiles/.hyper.js ~/.hyper.js
+
 # http://qiita.com/tatsuya6502@github/items/a356db103f3b654d6f27
 # ln -s ~/src/github.com/9renpoto/dotfiles/.kerlrc ~/.kerlrc
