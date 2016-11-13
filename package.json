@@ -8,6 +8,8 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@9renpoto/eslint-config": "^1.4.0",
+    "eslint": "^3.10.0",
     "npm-run-all": "^3.1.0"
   },
   "directories": {
@@ -27,6 +29,7 @@
   "scripts": {
     "install:pkg": "npm i -g npm fixpack npm-check-updates",
     "install:py": "pip install -r requirements.txt",
-    "postinstall": "npm-run-all -p install:*"
+    "postinstall": "npm-run-all -p install:*",
+    "test": "eslint ."
   }
 }

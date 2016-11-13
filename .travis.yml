@@ -3,12 +3,15 @@ sudo: false
 python:
 - 'nightly'
 - '2.7'
+node_js:
+- stable
 git:
   submodules: false
 script:
 - vint .vimrc
 - vint vim/neocomplete.setting.vim
 - vint vim/neobundle.setting.vim
+- npm t
 notifications:
   email: false
   slack:
