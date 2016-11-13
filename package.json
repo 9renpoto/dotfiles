@@ -19,12 +19,13 @@
   ],
   "license": "MIT",
   "main": "package.json",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/9renpoto/dotfiles.git"
   },
   "scripts": {
-    "install:pkg": "npm i -g fixpack npm-check-updates",
+    "install:pkg": "npm i -g npm fixpack npm-check-updates",
     "install:py": "pip install -r requirements.txt",
     "postinstall": "npm-run-all -p install:*"
   }
