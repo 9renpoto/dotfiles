@@ -13,11 +13,6 @@ ln -s ~/src/github.com/9renpoto/dotfiles/.zshenv ~/.zshenv
 ln -s ~/src/github.com/9renpoto/dotfiles/.zshrc ~/.zshrc
 ln -s ~/src/github.com/9renpoto/dotfiles/.vimrc ~/.vimrc
 
-ln -s ~/src/github.com/9renpoto/dotfiles/.hgrc ~/.hgrc
-cp ~/src/github.com/9renpoto/dotfiles/.hgrc_auth.base ~/src/github.com/9renpoto/dotfiles/.hgrc_auth
-ln -s ~/src/github.com/9renpoto/dotfiles/.hgrc_auth ~/.hgrc_auth
-ln -s ~/src/github.com/9renpoto/dotfiles/.ignore ~/.hgignore_global
-
 ln -s ~/src/github.com/9renpoto/dotfiles/.gitconfig ~/.gitconfig
 ln -s ~/src/github.com/9renpoto/dotfiles/.ignore ~/.gitignore
 ln -s ~/src/github.com/9renpoto/dotfiles/.agignore ~/.agignore
