@@ -7,8 +7,6 @@ git:
   submodules: false
 script:
 - vint .vimrc
-- vint vim/neocomplete.setting.vim
-- vint vim/neobundle.setting.vim
 notifications:
   email: false
   slack:
