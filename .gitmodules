@@ -10,3 +10,6 @@
 [submodule ".asdf"]
 	path = .asdf
 	url = git@github.com:asdf-vm/asdf.git
+[submodule ".tmux/plugins/tpm"]
+	path = .tmux/plugins/tpm
+	url = git@github.com:tmux-plugins/tpm.git

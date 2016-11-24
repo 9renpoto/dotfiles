@@ -13,6 +13,7 @@ ln -s ~/src/github.com/9renpoto/dotfiles/.editorconfig ~/.editorconfig
 ln -s ~/src/github.com/9renpoto/dotfiles/.gitconfig ~/.gitconfig
 ln -s ~/src/github.com/9renpoto/dotfiles/.hyper.js ~/.hyper.js
 ln -s ~/src/github.com/9renpoto/dotfiles/.ignore ~/.gitignore
+ln -s ~/src/github.com/9renpoto/dotfiles/.tmux ~/.tmux
 ln -s ~/src/github.com/9renpoto/dotfiles/.tmux.conf ~/.tmux.conf
 ln -s ~/src/github.com/9renpoto/dotfiles/.tool-versions ~/.tool-versions
 ln -s ~/src/github.com/9renpoto/dotfiles/.vimrc ~/.vimrc
