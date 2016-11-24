@@ -1,4 +1,5 @@
-vim/bundle/
-node_modules/
-.hgrc_auth
 .python-version
+.tmux/plugins/
+.tool-versions
+node_modules/
+vim/bundle/

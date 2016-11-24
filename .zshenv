@@ -1,7 +1,7 @@
 export LC_CTYPE='ja_JP.UTF-8'
 
 # vimを使う。
-export EDITOR=vim
+export EDITOR=nvim
 
 # vimがなくてもvimでviを起動する。
 if ! type vim > /dev/null 2>&1; then
@@ -10,7 +10,6 @@ fi
 
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$PATH:$HOME/bin"
-# export PATH="/usr/local/bin:$PATH"
 
 # pyenv
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
@@ -31,13 +30,6 @@ if [ -d "${RBENV_ROOT}" ]; then
   eval "$(rbenv init - zsh)"
 fi
 
-# perl
-# export PLENV_ROOT="${HOME}/.pyenv"
-# if [ -d "${PLENV_ROOT}" ]; then
-#   export PATH="${PLENV_ROOT}/shims:${PLENV_ROOT}/bin:$PATH"
-#   eval "$(plenv init - zsh)"
-# fi
-
 # golang
 export GOPATH="$HOME"
 export GOROOT=`go env GOROOT`
@@ -45,13 +37,6 @@ export PATH="$GOROOT/bin:$GOPATH/bin:$PATH"
 export PATH="/opt/homebrew/go/bin:$PATH"
 export GOENVTARGET="$HOME/.goenvtarget"
 export PATH="$GOENVTARGET:$PATH"
-
-# elixir
-export EXENV_ROOT="${HOME}/.exenv"
-if [ -d "${EXENV_ROOT}" ]; then
-  export PATH="${EXENV_ROOT}/bin:$PATH"
-  eval "$(exenv init - zsh)"
-fi
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
