@@ -23,13 +23,6 @@ fi
 # npm
 export PATH="./node_modules/.bin:$PATH"
 
-# ruby
-export RBENV_ROOT="${HOME}/.rbenv"
-if [ -d "${RBENV_ROOT}" ]; then
-  export PATH="$HOME/.rbenv/bin:$PATH"
-  eval "$(rbenv init - zsh)"
-fi
-
 # golang
 export GOPATH="$HOME"
 export GOROOT=`go env GOROOT`
