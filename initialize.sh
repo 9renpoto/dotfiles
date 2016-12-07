@@ -20,3 +20,5 @@ ln -s ~/src/github.com/9renpoto/dotfiles/.vimrc ~/.vimrc
 ln -s ~/src/github.com/9renpoto/dotfiles/.zshenv ~/.zshenv
 ln -s ~/src/github.com/9renpoto/dotfiles/.zshrc ~/.zshrc
 ln -s ~/src/github.com/9renpoto/dotfiles/vim ~/.vim
+
+asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
