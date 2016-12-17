@@ -8,34 +8,34 @@ if ! type vim > /dev/null 2>&1; then
   alias vim=vi
 fi
 
-export XDG_CONFIG_HOME=~/src/github.com/9renpoto/dotfiles/.config
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+export HOSTNAME=`hostname`
+export XDG_CONFIG_HOME="~/src/github.com/9renpoto/dotfiles/.config"
 
-export PATH="/opt/homebrew/bin:$PATH"
-export PATH="$PATH:$HOME/bin"
+PATH="/opt/homebrew/bin:$PATH"
+PATH="$HOME/bin:$PATH"
 
 # pyenv
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PYENV_ROOT="${HOME}/.pyenv"
 if [ -d "${PYENV_ROOT}" ]; then
-  export PATH="${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:$PATH"
+  PATH="${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:$PATH"
   eval "$(pyenv init - zsh)"
   eval "$(pyenv virtualenv-init -)"
 fi
 
-# npm
-export PATH="./node_modules/.bin:$PATH"
-
 # golang
 export GOPATH="$HOME"
 export GOROOT=`go env GOROOT`
-export PATH="$GOROOT/bin:$GOPATH/bin:$PATH"
-export PATH="/opt/homebrew/go/bin:$PATH"
+PATH="$GOROOT/bin:$GOPATH/bin:$PATH"
+PATH="/opt/homebrew/go/bin:$PATH"
 export GOENVTARGET="$HOME/.goenvtarget"
-export PATH="$GOENVTARGET:$PATH"
+PATH="$GOENVTARGET:$PATH"
 
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+# npm
+PATH="./node_modules/.bin:~/src/github.com/9renpoto/dotfiles/node_modules/.bin:$PATH"
 
-export HOSTNAME=`hostname`
+export PATH
 
 # 重複したパスを登録しない。
 typeset -U path
