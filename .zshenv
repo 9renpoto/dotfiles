@@ -8,6 +8,8 @@ if ! type vim > /dev/null 2>&1; then
   alias vim=vi
 fi
 
+export XDG_CONFIG_HOME=~/src/github.com/9renpoto/dotfiles/.config
+
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$PATH:$HOME/bin"
 
