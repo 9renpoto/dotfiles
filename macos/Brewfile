@@ -35,7 +35,6 @@ brew 'tig'
 brew 'tmux'
 brew 'tree'
 brew 'unixodbc'
-brew 'vim', args: ['with-lua', 'HEAD']
 brew 'wget'
 brew 'yarn'
 brew 'zsh'

@@ -3,14 +3,9 @@ export LC_CTYPE='ja_JP.UTF-8'
 # vimを使う。
 export EDITOR=nvim
 
-# vimがなくてもvimでviを起動する。
-if ! type vim > /dev/null 2>&1; then
-  alias vim=vi
-fi
-
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 export HOSTNAME=`hostname`
-export XDG_CONFIG_HOME="~/src/github.com/9renpoto/dotfiles/.config"
+export XDG_CONFIG_HOME="~/.config"
 
 PATH="/opt/homebrew/bin:$PATH"
 PATH="$HOME/bin:$PATH"
