@@ -16,3 +16,4 @@ ln -s ~/src/github.com/9renpoto/dotfiles/.tmux.conf ~/.tmux.conf
 ln -s ~/src/github.com/9renpoto/dotfiles/.tool-versions ~/.tool-versions
 ln -s ~/src/github.com/9renpoto/dotfiles/.zshenv ~/.zshenv
 ln -s ~/src/github.com/9renpoto/dotfiles/.zshrc ~/.zshrc
+ln -s ~/src/github.com/9renpoto/dotfiles/.config ~/.config

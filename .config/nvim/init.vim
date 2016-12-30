@@ -1,22 +1,18 @@
 "*****************************************************************************
 "" Vim-PLug core
 "*****************************************************************************
-if has('vim_starting')
-  set nocompatible               " Be iMproved
-endif
-
 let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
 
-let g:vim_bootstrap_langs = "html,javascript"
-let g:vim_bootstrap_editor = "nvim"				" nvim or vim
+let g:vim_bootstrap_langs = 'html,javascript'
+let g:vim_bootstrap_editor = 'nvim'				" nvim or vim
 
 if !filereadable(vimplug_exists)
-  echo "Installing Vim-Plug..."
-  echo ""
+  echo 'Installing Vim-Plug...'
+  echo ''
   silent !\curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  let g:not_finish_vimplug = "yes"
+  let g:not_finish_vimplug = 'yes'
 
-  autocmd VimEnter * PlugInstall
+  autocmd-execute VimEnter * PlugInstall
 endif
 
 " Required:
@@ -89,7 +85,7 @@ Plug 'jelera/vim-javascript-syntax'
 "*****************************************************************************
 
 "" Include user's extra bundle
-if filereadable(expand("~/.config/nvim/local_bundles.vim"))
+if filereadable(expand('~/.config/nvim/local_bundles.vim'))
   source ~/.config/nvim/local_bundles.vim
 endif
 
@@ -108,15 +104,16 @@ set fileencoding=utf-8
 set fileencodings=utf-8
 set bomb
 set binary
+scriptencoding utf-8
 
 
 "" Fix backspace indent
 set backspace=indent,eol,start
 
 "" Tabs. May be overriten by autocmd rules
-set tabstop=4
+set tabstop=2
 set softtabstop=0
-set shiftwidth=4
+set shiftwidth=2
 set expandtab
 
 "" Map leader to ,
@@ -137,12 +134,12 @@ set noswapfile
 
 set fileformats=unix,dos,mac
 set showcmd
-set shell=/bin/sh
+set shell=/opt/homebrew/bin/zsh
 
 " session management
-let g:session_directory = "~/.config/nvim/session"
-let g:session_autoload = "no"
-let g:session_autosave = "no"
+let g:session_directory = '~/.config/nvim/session'
+let g:session_autoload = 'no'
+let g:session_autosave = 'no'
 let g:session_command_aliases = 1
 
 "*****************************************************************************
@@ -162,8 +159,8 @@ set t_Co=256
 set guioptions=egmrti
 set gfn=Monospace\ 10
 
-if has("gui_running")
-  if has("gui_mac") || has("gui_macvim")
+if has('gui_running')
+  if has('gui_mac') || has('gui_macvim')
     set guifont=Menlo:h12
     set transparency=7
   endif
@@ -176,7 +173,6 @@ else
   let g:indentLine_char = '┆'
   let g:indentLine_faster = 1
 
-  
 endif
 
 
@@ -198,7 +194,7 @@ set titlestring=%F
 
 set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
-if exists("*fugitive#statusline")
+if exists('*fugitive#statusline')
   set statusline+=%{fugitive#statusline()}
 endif
 
@@ -248,7 +244,7 @@ let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
 let g:vimshell_prompt =  '$ '
 
 " terminal emulation
-if g:vim_bootstrap_editor == 'nvim'
+if g:vim_bootstrap_editor ==# 'nvim'
   nnoremap <silent> <leader>sh :terminal<CR>
 else
   nnoremap <silent> <leader>sh :VimShellCreate<CR>
@@ -353,10 +349,10 @@ let g:ctrlp_open_new_file = 'r'
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 
 " snippets
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsExpandTrigger='<tab>'
+let g:UltiSnipsJumpForwardTrigger='<tab>'
+let g:UltiSnipsJumpBackwardTrigger='<c-b>'
+let g:UltiSnipsEditSplit='vertical'
 
 " syntastic
 let g:syntastic_always_populate_loc_list=1
@@ -374,7 +370,7 @@ let g:tagbar_autofocus = 1
 " Disable visualbell
 set noerrorbells visualbell t_vb=
 if has('autocmd')
-  autocmd GUIEnter * set visualbell t_vb=
+  augroup GUIEnter * set visualbell t_vb=
 endif
 
 "" Copy/Paste/Cut
@@ -444,7 +440,7 @@ augroup END
 "*****************************************************************************
 
 "" Include user's local vim config
-if filereadable(expand("~/.config/nvim/local_init.vim"))
+if filereadable(expand('~/.config/nvim/local_init.vim'))
   source ~/.config/nvim/local_init.vim
 endif
 
