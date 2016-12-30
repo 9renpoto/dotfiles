@@ -1,5 +1,5 @@
 .python-version
+.config/nvim/
 .tmux/plugins/
 .tool-versions
 node_modules/
-vim/bundle/
