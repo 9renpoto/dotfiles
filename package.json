@@ -11,7 +11,7 @@
     "eslint": "^3.12.2",
     "fixpack": "^2.3.1",
     "npm-check-updates": "^2.8.8",
-    "npm-run-all": "^3.1.2",
+    "npm-run-all": "^4.0.0",
     "yo": "^1.8.5"
   },
   "directories": {
