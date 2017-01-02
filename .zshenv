@@ -28,7 +28,7 @@ export GOENVTARGET="$HOME/.goenvtarget"
 PATH="$GOENVTARGET:$PATH"
 
 # npm
-PATH="./node_modules/.bin:~/src/github.com/9renpoto/dotfiles/node_modules/.bin:$PATH"
+PATH="./node_modules/.bin:$HOME/src/github.com/9renpoto/dotfiles/node_modules/.bin:$PATH"
 
 export PATH
 
