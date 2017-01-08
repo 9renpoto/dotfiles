@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # http://qiita.com/usamik26/items/601f5612bd3f8a21cc41
+sudo mkdir -p /opt
 cd /opt
 sudo mkdir -p homebrew
 sudo chown ${USER}:staff homebrew
