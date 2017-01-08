@@ -3,7 +3,7 @@ export LC_CTYPE='ja_JP.UTF-8'
 # vimを使う。
 export EDITOR=nvim
 
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/opt/homebrew-cask/Caskroom"
 export HOSTNAME=`hostname`
 export XDG_CONFIG_HOME="~/.config"
 
