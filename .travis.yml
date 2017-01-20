@@ -3,10 +3,15 @@ sudo: false
 python:
 - 'nightly'
 - '2.7'
+nodejs:
+- stable
+- 6
+- 5
 git:
   submodules: false
 script:
 - vint .config/nvim/init.vim
+- npm t
 notifications:
   email: false
   slack:
