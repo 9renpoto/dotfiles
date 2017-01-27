@@ -1082,9 +1082,9 @@ eslint-plugin-standard@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-standard/-/eslint-plugin-standard-2.0.1.tgz#3589699ff9c917f2c25f76a916687f641c369ff3"
 
-eslint@^3.12.2:
-  version "3.13.1"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.13.1.tgz#564d2646b5efded85df96985332edd91a23bff25"
+eslint@^3.14.1:
+  version "3.14.1"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.14.1.tgz#8a62175f2255109494747a1b25128d97b8eb3d97"
   dependencies:
     babel-code-frame "^6.16.0"
     chalk "^1.1.3"
@@ -1513,9 +1513,9 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-generator-standard-readme@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/generator-standard-readme/-/generator-standard-readme-0.1.0.tgz#ae9284e412dcdd1a40e0c563668f54c717bbc192"
+generator-standard-readme@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/generator-standard-readme/-/generator-standard-readme-0.1.1.tgz#907ce7f75def8c0961e808c2b817d8db7bfec317"
   dependencies:
     underscore.string "^3.0.3"
     yeoman-environment "^1.6.1"
