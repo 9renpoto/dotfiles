@@ -8,9 +8,9 @@
   },
   "devDependencies": {
     "@9renpoto/eslint-config": "^1.4.0",
-    "eslint": "^3.12.2",
+    "eslint": "^3.14.1",
     "fixpack": "^2.3.1",
-    "generator-standard-readme": "^0.1.0",
+    "generator-standard-readme": "^0.1.1",
     "hicat": "^0.7.0",
     "npm-run-all": "^4.0.0",
     "semantic-release-cli": "^3.0.3",
