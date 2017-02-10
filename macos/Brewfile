@@ -27,6 +27,8 @@ cask 'keeweb'
 cask 'macid'
 cask 'opera'
 cask 'soundnode'
+cask 'vagrant'
+cask 'vagrant-manager'
 cask 'virtualbox'
 cask 'visual-studio-code'
 
