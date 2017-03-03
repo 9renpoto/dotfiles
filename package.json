@@ -6,6 +6,7 @@
   "bugs": {
     "url": "https://github.com/9renpoto/dotfiles/pulls"
   },
+  "dependencies": {},
   "devDependencies": {
     "@9renpoto/eslint-config": "^1.5.2",
     "eslint": "^3.16.1",
