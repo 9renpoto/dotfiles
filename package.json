@@ -14,7 +14,7 @@
     "generator-standard-readme": "^0.1.1",
     "grunt-cli": "^1.2.0",
     "hicat": "^0.7.0",
-    "license-checker": "^8.0.4",
+    "license-checker": "^9.0.0",
     "npm-run-all": "^4.0.2",
     "semantic-release-cli": "^3.0.3",
     "typescript": "^2.2.1",
