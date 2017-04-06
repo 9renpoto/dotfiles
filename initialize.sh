@@ -7,7 +7,8 @@ sudo mkdir -p homebrew
 sudo chown ${USER}:staff homebrew
 
 ln -s ~/src/github.com/9renpoto/dotfiles/.agignore ~/.agignore
-ln -s ~/src/github.com/9renpoto/dotfiles/.asdf ~/.asdf
+ln -s ~/src/github.com/9renpoto/dotfiles/.anyenv ~/.anyenv
+ln -s ~/src/github.com/9renpoto/dotfiles/.config ~/.config
 ln -s ~/src/github.com/9renpoto/dotfiles/.editorconfig ~/.editorconfig
 ln -s ~/src/github.com/9renpoto/dotfiles/.gitconfig ~/.gitconfig
 ln -s ~/src/github.com/9renpoto/dotfiles/.hyper.js ~/.hyper.js
@@ -17,4 +18,3 @@ ln -s ~/src/github.com/9renpoto/dotfiles/.tmux.conf ~/.tmux.conf
 ln -s ~/src/github.com/9renpoto/dotfiles/.tool-versions ~/.tool-versions
 ln -s ~/src/github.com/9renpoto/dotfiles/.zshenv ~/.zshenv
 ln -s ~/src/github.com/9renpoto/dotfiles/.zshrc ~/.zshrc
-ln -s ~/src/github.com/9renpoto/dotfiles/.config ~/.config

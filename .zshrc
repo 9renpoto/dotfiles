@@ -49,7 +49,7 @@ ZSH_CUSTOM=~/src/github.com/9renpoto/dotfiles/zsh/
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting asdf)
+plugins=(git zsh-syntax-highlighting)
 
 # User configuration
 
@@ -86,9 +86,6 @@ export LANG=en_US.UTF-8
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # added by travis gem
-[ -f /Users/9renpoto/.travis/travis.sh ] && source /Users/9renpoto/.travis/travis.sh
-
-# added by travis gem
-[ -f /Users/k_kan/.travis/travis.sh ] && source /Users/k_kan/.travis/travis.sh
+[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 
 [ -f ~/src/bitbucket.org/9renpoto/ssh/.keychain ] && source ~/src/bitbucket.org/9renpoto/ssh/.keychain

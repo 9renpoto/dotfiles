@@ -1,5 +1,4 @@
 .config/configstore/
 .config/nvim/
-.python-version
 .tmux/plugins/
 node_modules/
