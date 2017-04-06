@@ -8,7 +8,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@9renpoto/eslint-config": "^1.5.2",
+    "@9renpoto/eslint-config": "^2.0.0",
     "eslint": "^3.16.1",
     "fixpack": "^2.3.1",
     "generator-standard-readme": "^0.1.1",
