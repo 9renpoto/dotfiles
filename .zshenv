@@ -12,11 +12,15 @@ PATH="$HOME/bin:$PATH"
 
 # pyenv
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-export PYENV_ROOT="${HOME}/.pyenv"
-if [ -d "${PYENV_ROOT}" ]; then
-  PATH="${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:$PATH"
-  eval "$(pyenv init - zsh)"
-  eval "$(pyenv virtualenv-init -)"
+
+# anyenv http://qiita.com/maosanhioro/items/047a4b924a758f4eb269
+if [ -d $HOME/.anyenv ] ; then
+  export PATH="$HOME/.anyenv/bin:$PATH"
+  eval "$(anyenv init -)"
+  for D in `\ls $HOME/.anyenv/envs`
+  do
+    export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
+  done
 fi
 
 # golang
