@@ -8,17 +8,19 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@9renpoto/eslint-config": "^2.0.0",
-    "eslint": "^3.16.1",
+    "@9renpoto/eslint-config": "9renpoto/eslint-config",
+    "eslint": "^3.19.0",
     "fixpack": "^2.3.1",
-    "generator-standard-readme": "^0.1.1",
+    "generator-standard-readme": "^0.1.4",
+    "ghpages": "^0.0.10",
     "grunt-cli": "^1.2.0",
     "hicat": "^0.7.0",
-    "license-checker": "^9.0.0",
+    "license-checker": "^9.0.3",
+    "npm-check-updates": "^2.11.0",
     "npm-run-all": "^4.0.2",
     "semantic-release-cli": "^3.0.3",
-    "typescript": "^2.2.1",
-    "typings": "^2.1.0",
+    "typescript": "^2.2.2",
+    "typings": "^2.1.1",
     "yo": "^1.8.5"
   },
   "directories": {
@@ -29,13 +31,13 @@
     "settings"
   ],
   "license": "MIT",
-  "main": "package.json",
+  "main": "n/a",
   "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/9renpoto/dotfiles.git"
   },
   "scripts": {
-    "test": "eslint ."
+    "test": "eslint . --cache"
   }
 }
