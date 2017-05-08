@@ -11,7 +11,7 @@
     "@9renpoto/eslint-config": "9renpoto/eslint-config",
     "eslint": "^3.19.0",
     "fixpack": "^2.3.1",
-    "generator-standard-readme": "^0.1.4",
+    "generator-standard-readme": "^1.0.0",
     "ghpages": "^0.0.10",
     "grunt-cli": "^1.2.0",
     "hicat": "^0.7.0",
