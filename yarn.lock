@@ -2,16 +2,16 @@
 # yarn lockfile v1
 
 
-"@9renpoto/eslint-config@9renpoto/eslint-config":
-  version "2.0.0"
-  resolved "https://codeload.github.com/9renpoto/eslint-config/tar.gz/0b40006861a101294cde5605d3b8b906ddda2590"
+"@9renpoto/eslint-config@latest":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@9renpoto/eslint-config/-/eslint-config-2.1.0.tgz#6b39d306ffb4867690294f7e77ef473f7771735a"
   dependencies:
-    eslint-config-standard "^10.0.0"
+    eslint-config-standard "^10.2.1"
     eslint-plugin-eslint-comments "^1.0.0"
     eslint-plugin-import "^2.2.0"
     eslint-plugin-node "^4.2.2"
     eslint-plugin-promise "^3.5.0"
-    eslint-plugin-standard "^3.0.0"
+    eslint-plugin-standard "^3.0.1"
 
 JSONStream@~1.3.0:
   version "1.3.1"
@@ -283,6 +283,12 @@ async@1.5.2, async@^1.0.0, async@^1.4.2, async@~1.5:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
 
+async@2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/async/-/async-2.1.4.tgz#2d2160c7788032e4dd6cbe2502f1f9a2c8f6cde4"
+  dependencies:
+    lodash "^4.14.0"
+
 async@^2.0.0, async@^2.0.1:
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/async/-/async-2.1.5.tgz#e587c68580994ac67fc56ff86d3ac56bdbe810bc"
@@ -345,6 +351,10 @@ base64-arraybuffer@0.1.5:
 base64id@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/base64id/-/base64id-0.1.0.tgz#02ce0fdeee0cef4f40080e1e73e834f0b1bfce3f"
+
+base64url@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/base64url/-/base64url-2.0.0.tgz#eac16e03ea1438eff9423d69baa36262ed1f70bb"
 
 batch@0.5.3:
   version "0.5.3"
@@ -814,12 +824,6 @@ co@^4.6.0:
 code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
-
-collections@^0.2.0:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/collections/-/collections-0.2.2.tgz#1f23026b2ef36f927eecc901e99c5f0d48fa334e"
-  dependencies:
-    weak-map "1.0.0"
 
 color-convert@^1.0.0:
   version "1.9.0"
@@ -1623,9 +1627,9 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-standard@^10.0.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-standard/-/eslint-config-standard-10.2.0.tgz#9e5a495c32aae8aa8aeb580b703ef645a1765e9b"
+eslint-config-standard@^10.2.1:
+  version "10.2.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-standard/-/eslint-config-standard-10.2.1.tgz#c061e4d066f379dc17cd562c64e819b4dd454591"
 
 eslint-import-resolver-node@^0.2.0:
   version "0.2.3"
@@ -1677,7 +1681,7 @@ eslint-plugin-promise@^3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-3.5.0.tgz#78fbb6ffe047201627569e85a6c5373af2a68fca"
 
-eslint-plugin-standard@^3.0.0:
+eslint-plugin-standard@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-standard/-/eslint-plugin-standard-3.0.1.tgz#34d0c915b45edc6f010393c7eef3823b08565cf2"
 
@@ -2110,6 +2114,14 @@ fs-extra@1.0.0:
     jsonfile "^2.1.0"
     klaw "^1.0.0"
 
+fs-extra@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-3.0.1.tgz#3794f378c58b342ea7dbbb23095109c4b3b62291"
+  dependencies:
+    graceful-fs "^4.1.2"
+    jsonfile "^3.0.0"
+    universalify "^0.1.0"
+
 fs-vacuum@~1.2.9:
   version "1.2.9"
   resolved "https://registry.yarnpkg.com/fs-vacuum/-/fs-vacuum-1.2.9.tgz#4f90193ab8ea02890995bcd4e804659a5d366b2d"
@@ -2251,34 +2263,17 @@ gh-got@^2.2.0:
     object-assign "^4.0.1"
     pinkie-promise "^2.0.0"
 
-gh-pages@^0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/gh-pages/-/gh-pages-0.11.0.tgz#93313c6dcbfc74d426bc89a29ebff6420acc3c1b"
-  dependencies:
-    async "1.5.2"
-    commander "2.9.0"
-    globby "^4.0.0"
-    graceful-fs "4.1.2"
-    q "1.4.1"
-    q-io "1.13.2"
-    wrench "1.5.8"
-
-ghpages@^0.0.10:
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/ghpages/-/ghpages-0.0.10.tgz#ce965bc0b1b27cf23e6ad33b92ec1a2f8d92e0b4"
-  dependencies:
-    gh-pages "^0.11.0"
-    gitconfiglocal "^1.0.0"
-    meow "^3.6.0"
-    object-assign "^4.0.1"
-    opn "^3.0.3"
-    parse-github-url "^0.2.1"
-
-gitconfiglocal@^1.0.0:
+gh-pages@^1.0.0:
   version "1.0.0"
-  resolved "https://registry.yarnpkg.com/gitconfiglocal/-/gitconfiglocal-1.0.0.tgz#41d045f3851a5ea88f03f24ca1c6178114464b9b"
+  resolved "https://registry.yarnpkg.com/gh-pages/-/gh-pages-1.0.0.tgz#4a46f4c25439f7a2b7e6835504d4a49e949f04ca"
   dependencies:
-    ini "^1.3.2"
+    async "2.1.4"
+    base64url "^2.0.0"
+    commander "2.9.0"
+    fs-extra "^3.0.1"
+    globby "^6.1.0"
+    graceful-fs "4.1.11"
+    rimraf "^2.5.4"
 
 github-url-from-git@^1.4.0:
   version "1.5.0"
@@ -2396,6 +2391,16 @@ globby@^5.0.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
+globby@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/globby/-/globby-6.1.0.tgz#f5a6d70e8395e21c858fb0489d64df02424d506c"
+  dependencies:
+    array-union "^1.0.1"
+    glob "^7.0.3"
+    object-assign "^4.0.1"
+    pify "^2.0.0"
+    pinkie-promise "^2.0.0"
+
 glogg@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/glogg/-/glogg-1.0.0.tgz#7fe0f199f57ac906cf512feead8f90ee4a284fc5"
@@ -2453,13 +2458,13 @@ got@^6.7.1:
     unzip-response "^2.0.1"
     url-parse-lax "^1.0.0"
 
-graceful-fs@4.1.2, graceful-fs@^4.1.2:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.2.tgz#fe2239b7574972e67e41f808823f9bfa4a991e37"
-
-graceful-fs@^4.0.0, graceful-fs@^4.1.11, graceful-fs@^4.1.4, graceful-fs@^4.1.6, graceful-fs@^4.1.9, graceful-fs@~4.1.11, graceful-fs@~4.1.9:
+graceful-fs@4.1.11, graceful-fs@^4.0.0, graceful-fs@^4.1.11, graceful-fs@^4.1.4, graceful-fs@^4.1.6, graceful-fs@^4.1.9, graceful-fs@~4.1.11, graceful-fs@~4.1.9:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
+
+graceful-fs@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.2.tgz#fe2239b7574972e67e41f808823f9bfa4a991e37"
 
 "graceful-readlink@>= 1.0.0":
   version "1.0.1"
@@ -2764,7 +2769,7 @@ inherits@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.1.tgz#b17d08d326b4423e568eff719f91b0b1cbdf69f1"
 
-ini@1.x.x, ini@^1.2.0, ini@^1.3.2, ini@^1.3.4, ini@~1.3.0, ini@~1.3.4:
+ini@1.x.x, ini@^1.2.0, ini@^1.3.4, ini@~1.3.0, ini@~1.3.4:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.4.tgz#0537cb79daf59b59a1a517dff706c86ec039162e"
 
@@ -3264,6 +3269,12 @@ jsonfile@^2.1.0:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
+jsonfile@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-3.0.0.tgz#92e7c7444e5ffd5fa32e6a9ae8b85034df8347d0"
+  optionalDependencies:
+    graceful-fs "^4.1.6"
+
 jsonify@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
@@ -3731,7 +3742,7 @@ mem-fs@^1.1.0:
     vinyl "^1.1.0"
     vinyl-file "^2.0.0"
 
-meow@^3.0.0, meow@^3.1.0, meow@^3.3.0, meow@^3.5.0, meow@^3.6.0:
+meow@^3.0.0, meow@^3.1.0, meow@^3.3.0, meow@^3.5.0:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/meow/-/meow-3.7.0.tgz#72cb668b425228290abbfa856892587308a801fb"
   dependencies:
@@ -3798,13 +3809,9 @@ mime@1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.2.4.tgz#11b5fdaf29c2509255176b80ad520294f5de92b7"
 
-mime@1.3.4, "mime@>= 0.0.1", mime@^1.2.11:
+mime@1.3.4, "mime@>= 0.0.1":
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.3.4.tgz#115f9e3b6b3daf2959983cb38f149a2d40eb5d53"
-
-mimeparse@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/mimeparse/-/mimeparse-0.1.4.tgz#dafb02752370fd226093ae3152c271af01ac254a"
 
 "minimatch@2 || 3", minimatch@3.0.x, minimatch@^3.0.0, minimatch@^3.0.2, minimatch@^3.0.3:
   version "3.0.3"
@@ -4032,9 +4039,9 @@ npm-cache-filename@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/npm-cache-filename/-/npm-cache-filename-1.0.2.tgz#ded306c5b0bfc870a9e9faf823bc5f283e05ae11"
 
-npm-check-updates@^2.11.0:
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-2.11.0.tgz#6073a2c022eaf27352e2a8b08de931776207b818"
+npm-check-updates@^2.11.1:
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-2.11.1.tgz#9f9e9f6d9e558165c52901924063fc70783cd9eb"
   dependencies:
     bluebird "^3.4.3"
     chalk "^1.1.3"
@@ -4429,7 +4436,7 @@ opn@4.0.2:
     object-assign "^4.0.1"
     pinkie-promise "^2.0.0"
 
-opn@^3.0.2, opn@^3.0.3:
+opn@^3.0.2:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/opn/-/opn-3.0.3.tgz#b6d99e7399f78d65c3baaffef1fb288e9b85243a"
   dependencies:
@@ -4552,10 +4559,6 @@ parallel-transform@^1.1.0:
 parse-github-repo-url@^1.0.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/parse-github-repo-url/-/parse-github-repo-url-1.4.0.tgz#286c53e2c9962e0641649ee3ac9508fca4dd959c"
-
-parse-github-url@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/parse-github-url/-/parse-github-url-0.2.1.tgz#e17335025e02c827a14198b614e73ab5b9904be8"
 
 parse-glob@^3.0.4:
   version "3.0.4"
@@ -4740,9 +4743,9 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier-eslint-cli@^3.4.3:
-  version "3.4.3"
-  resolved "https://registry.yarnpkg.com/prettier-eslint-cli/-/prettier-eslint-cli-3.4.3.tgz#bf96116f76ae4b938c9ce878997ca9a7a9475504"
+prettier-eslint-cli@^3.4.4:
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/prettier-eslint-cli/-/prettier-eslint-cli-3.4.4.tgz#82c2d8bdfecf1519682a93cc77898cddc4bada99"
   dependencies:
     arrify "^1.0.1"
     babel-runtime "^6.23.0"
@@ -4872,21 +4875,6 @@ punycode@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-1.4.1.tgz#c0d5a63b2718800ad8e1eb0fa5269c84dd41845e"
 
-q-io@1.13.2:
-  version "1.13.2"
-  resolved "https://registry.yarnpkg.com/q-io/-/q-io-1.13.2.tgz#eea130d481ddb5e1aa1bc5a66855f7391d06f003"
-  dependencies:
-    collections "^0.2.0"
-    mime "^1.2.11"
-    mimeparse "^0.1.4"
-    q "^1.0.1"
-    qs "^1.2.1"
-    url2 "^0.0.0"
-
-q@1.4.1, q@^1.0.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/q/-/q-1.4.1.tgz#55705bcd93c5f3673530c2c2cbc0c2b3addc286e"
-
 qs@0.4.x:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-0.4.2.tgz#3cac4c861e371a8c9c4770ac23cda8de639b8e5f"
@@ -4898,10 +4886,6 @@ qs@6.2.1, qs@~6.2.0:
 "qs@>= 0.4.0", qs@~6.3.0:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.3.1.tgz#918c0b3bcd36679772baf135b1acb4c1651ed79d"
-
-qs@^1.2.1:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-1.2.2.tgz#19b57ff24dc2a99ce1f8bdf6afcda59f8ef61f88"
 
 qs@~6.4.0:
   version "6.4.0"
@@ -5375,7 +5359,7 @@ right-align@^0.1.1:
   dependencies:
     align-text "^0.1.1"
 
-rimraf@2, rimraf@^2.2.0, rimraf@^2.2.8, rimraf@^2.4.4, rimraf@^2.5.1, rimraf@^2.5.2, rimraf@^2.6.1, rimraf@~2.6.0:
+rimraf@2, rimraf@^2.2.0, rimraf@^2.2.8, rimraf@^2.4.4, rimraf@^2.5.1, rimraf@^2.5.2, rimraf@^2.5.4, rimraf@^2.6.1, rimraf@~2.6.0:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.1.tgz#c2338ec643df7a1b7fe5c54fa86f57428a55f33d"
   dependencies:
@@ -6412,6 +6396,10 @@ unique-string@^1.0.0:
   dependencies:
     crypto-random-string "^1.0.0"
 
+universalify@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.0.tgz#9eb1c4651debcc670cc94f1a75762332bb967778"
+
 unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
@@ -6484,10 +6472,6 @@ url-parse-lax@^1.0.0:
   resolved "https://registry.yarnpkg.com/url-parse-lax/-/url-parse-lax-1.0.0.tgz#7af8f303645e9bd79a272e7a14ac68bc0609da73"
   dependencies:
     prepend-http "^1.0.1"
-
-url2@^0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/url2/-/url2-0.0.0.tgz#4eaabd1d5c3ac90d62ab4485c998422865a04b1a"
 
 url@^0.11.0:
   version "0.11.0"
@@ -6646,10 +6630,6 @@ wcwidth@^1.0.0:
   dependencies:
     defaults "^1.0.3"
 
-weak-map@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/weak-map/-/weak-map-1.0.0.tgz#b66e56a9df0bd25a76bbf1b514db129080614a37"
-
 weinre@^2.0.0-pre-I0Z7U9OV:
   version "2.0.0-pre-I0Z7U9OV"
   resolved "https://registry.yarnpkg.com/weinre/-/weinre-2.0.0-pre-I0Z7U9OV.tgz#fef8aa223921f7b40bbbbd4c3ed4302f6fd0a813"
@@ -6722,10 +6702,6 @@ wrap-fn@^0.1.0:
 wrappy@1, wrappy@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
-
-wrench@1.5.8:
-  version "1.5.8"
-  resolved "https://registry.yarnpkg.com/wrench/-/wrench-1.5.8.tgz#7a31c97f7869246d76c5cf2f5c977a1c4c8e5ab5"
 
 write-file-atomic@^1.1.2, write-file-atomic@~1.3.1:
   version "1.3.1"
