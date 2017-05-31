@@ -9,6 +9,7 @@ tap 'neovim/neovim'
 
 cask 'alfred'
 cask 'atom'
+cask 'atom-beta'
 cask 'devdocs'
 cask 'discord'
 cask 'docker'
