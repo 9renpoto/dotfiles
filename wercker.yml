@@ -2,4 +2,7 @@ box: node
 build:
   steps:
     - npm-install
+    - script:
+      code: |-
+          npm i eslint @9renpoto/eslint-config
     - npm-test
