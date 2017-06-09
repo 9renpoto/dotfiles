@@ -15,7 +15,7 @@
     "license-checker": "^11.0.0",
     "lite-server": "^2.3.0",
     "npm-check-updates": "^2.11.2",
-    "prettier-eslint-cli": "^4.0.0",
+    "prettier-eslint-cli": "^4.1.0",
     "semantic-release-cli": "^3.0.3",
     "yo": "^2.0.0"
   },
