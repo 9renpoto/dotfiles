@@ -3,11 +3,9 @@ export LC_CTYPE='ja_JP.UTF-8'
 # vimを使う。
 export EDITOR=nvim
 
-export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/opt/homebrew-cask/Caskroom"
 export HOSTNAME=`hostname`
 export XDG_CONFIG_HOME="~/.config"
 
-PATH="/opt/homebrew/bin:$PATH"
 PATH="$HOME/bin:$PATH"
 
 # pyenv
@@ -33,6 +31,8 @@ PATH="$GOENVTARGET:$PATH"
 
 # npm
 PATH="./node_modules/.bin:$HOME/src/github.com/9renpoto/dotfiles/node_modules/.bin:$PATH"
+
+PATH="/opt/homebrew/bin:$PATH"
 
 export PATH
 
