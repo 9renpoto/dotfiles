@@ -1,5 +1,4 @@
 cask_args appdir: '/Applications'
-cask_args caskroom: '/opt/homebrew-cask/Caskroom'
 tap 'caskroom/cask'
 tap 'caskroom/versions'
 tap 'git-time-metric/gtm'
@@ -13,8 +12,8 @@ cask 'devdocs'
 cask 'discord'
 cask 'docker'
 cask 'duet'
-cask 'firefox'
-cask 'firefoxnightly'
+cask 'firefox', args: { language: 'en' }
+cask 'firefoxnightly', args: { language: 'en' }
 cask 'flux'
 cask 'google-chrome-beta'
 cask 'google-drive'
