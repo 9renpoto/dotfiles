@@ -9,15 +9,7 @@
   "dependencies": {},
   "devDependencies": {
     "fixpack": "^2.3.1",
-    "generator-standard-readme": "^1.0.0",
-    "gh-pages": "^1.0.0",
-    "hicat": "^0.7.0",
-    "license-checker": "^11.0.0",
-    "lite-server": "^2.3.0",
-    "npm-check-updates": "^2.11.2",
-    "prettier-eslint-cli": "^4.0.0",
-    "semantic-release-cli": "^3.0.3",
-    "yo": "^2.0.0"
+    "gh-pages": "^1.0.0"
   },
   "directories": {
     "doc": "docs"
