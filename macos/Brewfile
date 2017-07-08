@@ -14,6 +14,7 @@ cask 'discord'
 cask 'docker'
 cask 'duet'
 cask 'firefox', args: { language: 'en' }
+cask 'firefoxdeveloperedition', args: { language: 'en' }
 cask 'firefoxnightly', args: { language: 'en' }
 cask 'flux'
 cask 'google-chrome-beta'
