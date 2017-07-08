@@ -1,12 +1,3 @@
-[submodule "oh-my-zsh"]
-	path = oh-my-zsh
-	url = git@github.com:robbyrussell/oh-my-zsh.git
-[submodule "zsh/plugins/zsh-syntax-highlighting"]
-	path = zsh/plugins/zsh-syntax-highlighting
-	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule ".tmux/plugins/tpm"]
 	path = .tmux/plugins/tpm
 	url = git@github.com:tmux-plugins/tpm.git
-[submodule ".anyenv"]
-	path = .anyenv
-	url = git@github.com:riywo/anyenv.git
