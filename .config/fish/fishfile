@@ -6,5 +6,4 @@ fisherman/getopts
 decors/fish-ghq
 fisherman/last_job_id
 oh-my-fish/plugin-node
-oh-my-fish/plugin-pyenv
 oh-my-fish/plugin-tmux
