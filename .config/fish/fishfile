@@ -1,3 +1,4 @@
+oh-my-fish/plugin-android-sdk
 fisherman/await
 oh-my-fish/theme-clearance
 fisherman/fzf
@@ -6,4 +7,5 @@ fisherman/getopts
 decors/fish-ghq
 fisherman/last_job_id
 oh-my-fish/plugin-node
+fisherman/pipenv
 oh-my-fish/plugin-tmux
