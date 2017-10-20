@@ -1,6 +1,3 @@
-if &compatible
-  set nocompatible
-endif
 set runtimepath+=$HOME/src/github.com/Shougo/dein.vim
 
 if dein#load_state($HOME . '/src/github/9renpoto/dotfiles/.config/nvim/dein')
