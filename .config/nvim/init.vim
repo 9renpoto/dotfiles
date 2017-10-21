@@ -28,9 +28,17 @@ set tabstop=2
 set showtabline=2
 set termguicolors
 
-autocmd BufWritePre * :%s/\s\+$//ge
-
 colorscheme atom-dark-256
+
+augroup on_save
+  autocmd BufWritePre * :%s/\s\+$//ge
+augroup END
+
+augroup HighlightTrailingSpaces
+  autocmd!
+  autocmd VimEnter,WinEnter,ColorScheme * highlight TrailingSpaces term=underline guibg=Red ctermbg=Red
+  autocmd VimEnter,WinEnter * match TrailingSpaces /\s\+$/
+augroup END
 
 let g:lightline = {
         \ 'colorscheme': 'wombat',
@@ -51,7 +59,7 @@ let g:lightline = {
         \ }
 
 function! LightlineModified()
-  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  return &ft =~# 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
 function! LightlineReadonly()
@@ -59,12 +67,12 @@ function! LightlineReadonly()
 endfunction
 
 function! LightlineFilename()
-  return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \  &ft == 'unite' ? unite#get_status_string() :
-        \  &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
-        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+  return ('' !=? LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+        \ (&ft ==# 'vimfiler' ? vimfiler#get_status_string() :
+        \  &ft ==# 'unite' ? unite#get_status_string() :
+        \  &ft ==# 'vimshell' ? vimshell#get_status_string() :
+        \ '' !=? expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ ('' !=? LightlineModified() ? ' ' . LightlineModified() : '')
 endfunction
 
 function! LightlineFugitive()
