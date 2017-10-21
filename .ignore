@@ -1,8 +1,6 @@
-.gtm/
-.*-version
+### https://raw.github.com/github/gitignore/d0b1f7fef90caba0a22bb0a82d2f0abcc2cbc302/Global/macOS.gitignore
 
-### https://raw.github.com/github/gitignore/be3333655bffe9507d66cc864aee95ed6052b4ed/Global/OSX.gitignore
-
+# General
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -20,6 +18,7 @@ Icon
 .TemporaryItems
 .Trashes
 .VolumeIcon.icns
+.com.apple.timemachine.donotpresent
 
 # Directories potentially created on remote AFP share
 .AppleDB
@@ -29,17 +28,64 @@ Temporary Items
 .apdisk
 
 
-### https://raw.github.com/github/gitignore/be3333655bffe9507d66cc864aee95ed6052b4ed/Global/Vim.gitignore
+### https://raw.github.com/github/gitignore/d0b1f7fef90caba0a22bb0a82d2f0abcc2cbc302/Global/Vim.gitignore
 
-[._]*.s[a-w][a-z]
-[._]s[a-w][a-z]
-*.un~
+# Swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+
+# Session
 Session.vim
+
+# Temporary
 .netrwhist
 *~
+# Auto-generated tag files
+tags
 
-### https://raw.github.com/github/gitignore/be3333655bffe9507d66cc864aee95ed6052b4ed/Global/Redis.gitignore
+
+### https://raw.github.com/github/gitignore/d0b1f7fef90caba0a22bb0a82d2f0abcc2cbc302/Global/Redis.gitignore
 
 # Ignore redis binary dump (dump.rdb) files
 
 *.rdb
+
+
+### https://raw.github.com/github/gitignore/d0b1f7fef90caba0a22bb0a82d2f0abcc2cbc302/Global/VisualStudioCode.gitignore
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+
+### https://raw.github.com/github/gitignore/d0b1f7fef90caba0a22bb0a82d2f0abcc2cbc302/Global/Xcode.gitignore
+
+# Xcode
+#
+# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
+
+## User settings
+xcuserdata/
+
+## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
+*.xcscmblueprint
+*.xccheckout
+
+## compatibility with Xcode 3 and earlier (ignoring not required starting Xcode 4)
+build/
+DerivedData/
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+
+
