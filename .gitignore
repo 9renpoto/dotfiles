@@ -1,3 +1,4 @@
+.cache/
 .config/configstore/
 .config/nvim/
 .config/yarn/
