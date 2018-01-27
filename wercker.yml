@@ -4,5 +4,4 @@ build:
     - npm-install
     - script:
       code: |-
-          npm i eslint @9renpoto/eslint-config
           $(npm bin)/eslint .
