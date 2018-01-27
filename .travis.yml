@@ -1,7 +1,7 @@
 language: python
 sudo: false
 python:
-- 'nightly'
+- '3.6'
 - '2.7'
 git:
   submodules: false
