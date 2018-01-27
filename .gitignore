@@ -6,7 +6,7 @@
 .config/fisherman/
 .tmux/plugins/
 
-### https://raw.github.com/github/gitignore/be962308a6efb6d27446d13ee05b74948e616a01/Node.gitignore
+### https://raw.github.com/github/gitignore/22a5eb3da72c0a224a179033e92722bdbf5a05ad/Node.gitignore
 
 # Logs
 logs
@@ -39,7 +39,7 @@ bower_components
 # node-waf configuration
 .lock-wscript
 
-# Compiled binary addons (http://nodejs.org/api/addons.html)
+# Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
 
 # Dependency directories
@@ -66,4 +66,7 @@ typings/
 
 # dotenv environment variables file
 .env
-/.gtm/
+
+# next.js build output
+.next
+
