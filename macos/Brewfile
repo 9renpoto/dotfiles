@@ -39,6 +39,7 @@ brew 'gist'
 brew 'git'
 brew 'go'
 brew 'heroku'
+brew 'imagemagick'
 brew 'jq'
 brew 'keychain'
 brew 'mysql', args: ['client-only']
