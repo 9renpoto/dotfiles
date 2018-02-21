@@ -29,6 +29,7 @@ cask 'slack-beta'
 cask 'visual-studio-code'
 cask 'vivaldi'
 
+brew 'crowdin'
 brew 'editorconfig'
 brew 'erlang'
 brew 'fish'
