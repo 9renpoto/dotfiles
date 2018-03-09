@@ -4,7 +4,7 @@
     "@9renpoto/eslint-config": "2.4.0",
     "eslint": "4.18.2",
     "husky": "0.14.3",
-    "lint-staged": "6.1.1",
+    "lint-staged": "7.0.0",
     "prettier-eslint-cli": "4.7.1"
   },
   "license": "MIT",
