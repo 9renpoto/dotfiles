@@ -1,5 +1,7 @@
 .cache/
 .config/configstore/
+.config/fnm/
+.config/git/
 .config/nvim/
 .config/yarn/
 .config/fish/
