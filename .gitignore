@@ -1,11 +1,12 @@
 .cache/
 .config/configstore/
+.config/direnv/
+.config/fish/
+.config/fisherman/
 .config/fnm/
 .config/git/
 .config/nvim/
 .config/yarn/
-.config/fish/
-.config/fisherman/
 .tmux/plugins/
 
 ### https://raw.github.com/github/gitignore/22a5eb3da72c0a224a179033e92722bdbf5a05ad/Node.gitignore
