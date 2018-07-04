@@ -1,8 +1,6 @@
 language: python
 sudo: false
-python:
-- '3.6'
-- '2.7'
+python: '3.6'
 git:
   submodules: false
 script:
