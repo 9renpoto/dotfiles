@@ -4,4 +4,4 @@ build:
     - npm-install
     - script:
       code: |-
-          $(npm bin)/eslint .
+        npm test
