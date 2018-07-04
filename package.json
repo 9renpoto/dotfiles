@@ -1,18 +1,14 @@
 {
   "name": "@9renpoto/dotfiles",
   "devDependencies": {
-    "@9renpoto/eslint-config": "4.4.0",
-    "eslint": "4.19.1",
     "husky": "0.14.3",
     "lint-staged": "7.2.0",
-    "prettier-eslint-cli": "4.7.1"
+    "prettier": "1.13.7",
+    "textlint": "^10.2.1",
+    "textlint-rule-no-dead-link": "^4.3.0"
   },
   "license": "MIT",
   "lint-staged": {
-    "*.js": [
-      "prettier-eslint --write",
-      "git add"
-    ],
     "*.md": [
       "prettier --write",
       "git add"
@@ -20,6 +16,7 @@
   },
   "private": true,
   "scripts": {
+    "test":"textlint README.md",
     "precommit": "lint-staged"
   }
 }
