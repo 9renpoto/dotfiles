@@ -1,4 +1,4 @@
-### https://raw.github.com/github/gitignore/d0b1f7fef90caba0a22bb0a82d2f0abcc2cbc302/Global/macOS.gitignore
+### https://raw.github.com/github/gitignore/967cd6479319efde70a6fa44fa1bfa02020f2357/Global/macOS.gitignore
 
 # General
 .DS_Store
@@ -28,12 +28,13 @@ Temporary Items
 .apdisk
 
 
-### https://raw.github.com/github/gitignore/d0b1f7fef90caba0a22bb0a82d2f0abcc2cbc302/Global/Vim.gitignore
+### https://raw.github.com/github/gitignore/967cd6479319efde70a6fa44fa1bfa02020f2357/Global/Vim.gitignore
 
 # Swap
 [._]*.s[a-v][a-z]
 [._]*.sw[a-p]
-[._]s[a-v][a-z]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
 [._]sw[a-p]
 
 # Session
@@ -44,16 +45,18 @@ Session.vim
 *~
 # Auto-generated tag files
 tags
+# Persistent undo
+[._]*.un~
 
 
-### https://raw.github.com/github/gitignore/d0b1f7fef90caba0a22bb0a82d2f0abcc2cbc302/Global/Redis.gitignore
+### https://raw.github.com/github/gitignore/967cd6479319efde70a6fa44fa1bfa02020f2357/Global/Redis.gitignore
 
 # Ignore redis binary dump (dump.rdb) files
 
 *.rdb
 
 
-### https://raw.github.com/github/gitignore/d0b1f7fef90caba0a22bb0a82d2f0abcc2cbc302/Global/VisualStudioCode.gitignore
+### https://raw.github.com/github/gitignore/967cd6479319efde70a6fa44fa1bfa02020f2357/Global/VisualStudioCode.gitignore
 
 .vscode/*
 !.vscode/settings.json
@@ -62,7 +65,7 @@ tags
 !.vscode/extensions.json
 
 
-### https://raw.github.com/github/gitignore/d0b1f7fef90caba0a22bb0a82d2f0abcc2cbc302/Global/Xcode.gitignore
+### https://raw.github.com/github/gitignore/967cd6479319efde70a6fa44fa1bfa02020f2357/Global/Xcode.gitignore
 
 # Xcode
 #
@@ -87,5 +90,78 @@ DerivedData/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
+
+
+### https://raw.github.com/github/gitignore/967cd6479319efde70a6fa44fa1bfa02020f2357/Global/Vagrant.gitignore
+
+# General
+.vagrant/
+
+# Log files (if you are creating logs in debug mode, uncomment this)
+# *.logs
+
+
+### https://raw.github.com/github/gitignore/967cd6479319efde70a6fa44fa1bfa02020f2357/Global/JetBrains.gitignore
+
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+
+# User-specific stuff
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# Sensitive or high-churn files
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+
+# Gradle
+.idea/**/gradle.xml
+.idea/**/libraries
+
+# Gradle and Maven with auto-import
+# When using Gradle or Maven with auto-import, you should exclude module files,
+# since they will be recreated, and may cause churn.  Uncomment if using
+# auto-import.
+# .idea/modules.xml
+# .idea/*.iml
+# .idea/modules
+
+# CMake
+cmake-build-*/
+
+# Mongo Explorer plugin
+.idea/**/mongoSettings.xml
+
+# File-based project format
+*.iws
+
+# IntelliJ
+out/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Cursive Clojure plugin
+.idea/replstate.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+# Editor-based Rest Client
+.idea/httpRequests
 
 
