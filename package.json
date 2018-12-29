@@ -16,7 +16,11 @@
   },
   "private": true,
   "scripts": {
-    "test":"textlint README.md",
-    "precommit": "lint-staged"
+    "test": "textlint README.md"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
