@@ -1,6 +1,6 @@
-.idea
+.envrc
 
-### https://raw.github.com/github/gitignore/967cd6479319efde70a6fa44fa1bfa02020f2357/Global/macOS.gitignore
+### https://raw.github.com/github/gitignore/6531e382923e8e4d89b069a045e1c2a5d4be6321/Global/macOS.gitignore
 
 # General
 .DS_Store
@@ -30,7 +30,7 @@ Temporary Items
 .apdisk
 
 
-### https://raw.github.com/github/gitignore/967cd6479319efde70a6fa44fa1bfa02020f2357/Global/Vim.gitignore
+### https://raw.github.com/github/gitignore/6531e382923e8e4d89b069a045e1c2a5d4be6321/Global/Vim.gitignore
 
 # Swap
 [._]*.s[a-v][a-z]
@@ -51,14 +51,14 @@ tags
 [._]*.un~
 
 
-### https://raw.github.com/github/gitignore/967cd6479319efde70a6fa44fa1bfa02020f2357/Global/Redis.gitignore
+### https://raw.github.com/github/gitignore/6531e382923e8e4d89b069a045e1c2a5d4be6321/Global/Redis.gitignore
 
 # Ignore redis binary dump (dump.rdb) files
 
 *.rdb
 
 
-### https://raw.github.com/github/gitignore/967cd6479319efde70a6fa44fa1bfa02020f2357/Global/VisualStudioCode.gitignore
+### https://raw.github.com/github/gitignore/6531e382923e8e4d89b069a045e1c2a5d4be6321/Global/VisualStudioCode.gitignore
 
 .vscode/*
 !.vscode/settings.json
@@ -67,7 +67,7 @@ tags
 !.vscode/extensions.json
 
 
-### https://raw.github.com/github/gitignore/967cd6479319efde70a6fa44fa1bfa02020f2357/Global/Xcode.gitignore
+### https://raw.github.com/github/gitignore/6531e382923e8e4d89b069a045e1c2a5d4be6321/Global/Xcode.gitignore
 
 # Xcode
 #
@@ -94,7 +94,7 @@ DerivedData/
 !default.perspectivev3
 
 
-### https://raw.github.com/github/gitignore/967cd6479319efde70a6fa44fa1bfa02020f2357/Global/Vagrant.gitignore
+### https://raw.github.com/github/gitignore/6531e382923e8e4d89b069a045e1c2a5d4be6321/Global/Vagrant.gitignore
 
 # General
 .vagrant/
@@ -103,7 +103,7 @@ DerivedData/
 # *.logs
 
 
-### https://raw.github.com/github/gitignore/967cd6479319efde70a6fa44fa1bfa02020f2357/Global/JetBrains.gitignore
+### https://raw.github.com/github/gitignore/6531e382923e8e4d89b069a045e1c2a5d4be6321/Global/JetBrains.gitignore
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
@@ -114,6 +114,9 @@ DerivedData/
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+
+# Generated files
+.idea/**/contentModel.xml
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
@@ -165,5 +168,24 @@ fabric.properties
 
 # Editor-based Rest Client
 .idea/httpRequests
+
+# Android studio 3.1+ serialized cache file
+.idea/caches/build_file_checksums.ser
+
+
+### https://raw.github.com/github/gitignore/6531e382923e8e4d89b069a045e1c2a5d4be6321/Global/SBT.gitignore
+
+# Simple Build Tool
+# http://www.scala-sbt.org/release/docs/Getting-Started/Directories.html#configuring-version-control
+
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+.history
+.cache
+.lib/
 
 

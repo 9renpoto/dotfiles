@@ -2,7 +2,6 @@ oh-my-fish/plugin-android-sdk
 fisherman/await
 oh-my-fish/theme-clearance
 oh-my-fish/plugin-direnv
-fisherman/fnm
 fisherman/fzf
 fisherman/get
 fisherman/get_file_age
@@ -13,3 +12,4 @@ fisherman/menu
 oh-my-fish/plugin-node
 fisherman/pipenv
 oh-my-fish/plugin-tmux
+rstacruz/fish-asdf
