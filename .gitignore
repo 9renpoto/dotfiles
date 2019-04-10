@@ -4,10 +4,13 @@
 .config/fish/
 .config/fisher/
 .config/fnm/
+.config/gatsby/
 .config/git/
+.config/hub/
 .config/nvim/
 .config/yarn/
 .tmux/plugins/
+.tmux/.tmux
 
 ### https://raw.github.com/github/gitignore/22a5eb3da72c0a224a179033e92722bdbf5a05ad/Node.gitignore
 

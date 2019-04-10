@@ -8,7 +8,7 @@ set -gx LC_ALL en_US.UTF-8
 
 alias vim='/opt/homebrew/bin/nvim'
 
-if test -e $HOME/src/bitbucket.org/9renpoto/ssh/.keychain
-  . $HOME/src/bitbucket.org/9renpoto/ssh/.keychain
+if test -e $HOME/src/github.com/9renpoto/ssh/.keychain
+  . $HOME/src/github.com/9renpoto/ssh/.keychain
 end
 source ~/.asdf/asdf.fish
