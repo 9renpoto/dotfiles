@@ -6,7 +6,7 @@
 .config/fnm/
 .config/gatsby/
 .config/git/
-.config/hub/
+.config/hub
 .config/nvim/
 .config/yarn/
 .tmux/plugins/
