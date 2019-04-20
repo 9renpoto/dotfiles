@@ -11,4 +11,4 @@ alias vim='/opt/homebrew/bin/nvim'
 if test -e $HOME/src/github.com/9renpoto/ssh/.keychain
   . $HOME/src/github.com/9renpoto/ssh/.keychain
 end
-source ~/.asdf/asdf.fish
+source (brew --prefix asdf)/asdf.fish
