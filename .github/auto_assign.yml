@@ -1,0 +1,8 @@
+addReviewers: true
+addAssignees: true
+reviewers:
+  - 9renpoto
+skipKeywords:
+  - wip
+  - WIP
+numberOfReviewers: 0
