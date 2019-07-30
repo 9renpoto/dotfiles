@@ -5,7 +5,7 @@
     "lint-staged": "9.2.1",
     "prettier": "1.18.2",
     "textlint": "11.3.1",
-    "textlint-rule-no-dead-link": "4.4.3"
+    "textlint-rule-no-dead-link": "4.4.4"
   },
   "license": "MIT",
   "lint-staged": {
