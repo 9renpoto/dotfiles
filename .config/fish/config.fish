@@ -12,3 +12,4 @@ if test -e $HOME/src/github.com/9renpoto/ssh/.keychain
   . $HOME/src/github.com/9renpoto/ssh/.keychain
 end
 source (brew --prefix asdf)/asdf.fish
+eval (starship init fish)
