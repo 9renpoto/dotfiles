@@ -1,5 +1,4 @@
 oh-my-fish/plugin-android-sdk
-oh-my-fish/theme-clearance
 oh-my-fish/plugin-direnv
 fisherman/fzf
 fisherman/getopts
@@ -7,4 +6,3 @@ decors/fish-ghq
 oh-my-fish/plugin-node
 fisherman/pipenv
 oh-my-fish/plugin-tmux
-matchai/spacefish
