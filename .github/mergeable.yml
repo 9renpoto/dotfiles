@@ -1,0 +1,8 @@
+version: 2
+mergeable:
+  - when: pull_request.*, pull_request_review.*
+    validate:
+      - do: description
+        must_exclude:
+          regex: \[ \]
+          message: There are incomplete Todo task(s) unchecked.
