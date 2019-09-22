@@ -2,7 +2,8 @@ version: 2
 mergeable:
   - when: pull_request.*, pull_request_review.*
     validate:
-      - do: description
+      - do: title
+        # Do not merge when it is marked work in progress (WIP)
         must_exclude:
-          regex: \[ \]
-          message: There are incomplete Todo task(s) unchecked.
+          regex: ^\[WIP\]
+          message: This is work in progress. Do not merge yet.
