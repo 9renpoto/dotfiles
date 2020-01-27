@@ -2,7 +2,7 @@
   "name": "@9renpoto/dotfiles",
   "devDependencies": {
     "husky": "4.2.1",
-    "lint-staged": "10.0.2",
+    "lint-staged": "10.0.3",
     "prettier": "1.19.1",
     "textlint": "11.6.1",
     "textlint-rule-no-dead-link": "4.6.2"
