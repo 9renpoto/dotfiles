@@ -4,7 +4,7 @@
     "husky": "4.2.1",
     "lint-staged": "10.0.7",
     "prettier": "1.19.1",
-    "textlint": "11.6.2",
+    "textlint": "11.6.3",
     "textlint-rule-no-dead-link": "4.6.2"
   },
   "license": "MIT",
