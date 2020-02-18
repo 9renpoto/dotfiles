@@ -5,6 +5,8 @@
 .config/fisher/
 .config/fnm/
 .config/gatsby/
+.config/gcloud/
+.config/gh/
 .config/git/
 .config/hub
 .config/nvim/
