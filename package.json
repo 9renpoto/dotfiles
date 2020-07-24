@@ -6,7 +6,7 @@
     "test": "textlint README.md"
   },
   "devDependencies": {
-    "textlint": "11.6.3",
+    "textlint": "11.7.6",
     "textlint-rule-no-dead-link": "4.7.0"
   }
 }
