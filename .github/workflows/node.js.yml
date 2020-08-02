@@ -22,4 +22,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Setup PNPM
       uses: pnpm/action-setup@v1.2.0
+      with:
+        version: 4.11.1
+        run_install: |
+          - recursive: true
+            args: [--frozen-lockfile, --strict-peer-dependencies]
     - run: npm test
