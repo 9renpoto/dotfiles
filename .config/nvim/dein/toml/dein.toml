@@ -121,3 +121,6 @@ command! FZFFileList call fzf#run({
 
 [[plugins]]
 repo = 'wakatime/vim-wakatime'
+
+[[plugins]]
+repo = 'ekalinin/Dockerfile.vim'
