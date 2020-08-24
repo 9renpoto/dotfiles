@@ -10,6 +10,7 @@
 .config/git/
 .config/hub
 .config/nvim/
+.config/stripe
 .config/yarn/
 .tmux/plugins/
 .tmux/.tmux
