@@ -12,8 +12,9 @@
 .config/nvim/
 .config/stripe
 .config/yarn/
-.tmux/plugins/
 .tmux/.tmux
+.tmux/plugins/
+macos/Brewfile.lock.json
 
 ### https://raw.github.com/github/gitignore/22a5eb3da72c0a224a179033e92722bdbf5a05ad/Node.gitignore
 
