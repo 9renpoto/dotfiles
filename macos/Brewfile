@@ -34,6 +34,7 @@ cask 'miro'
 cask 'slack-beta'
 cask 'vagrant'
 cask 'visual-studio-code'
+cask 'microsoft-teams'
 
 brew 'asdf'
 brew 'bat'
