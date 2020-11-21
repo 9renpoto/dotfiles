@@ -1,7 +1,7 @@
 devDependencies:
   textlint: 11.7.6
   textlint-rule-no-dead-link: 4.7.0
-lockfileVersion: 5.1
+lockfileVersion: 5.2
 packages:
   /@azu/format-text/1.0.1:
     dev: true
