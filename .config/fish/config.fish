@@ -4,6 +4,7 @@ set -x HOSTNAME hostname
 set -x GOPATH $HOME
 
 set -x PATH /opt/homebrew/bin $PATH
+set -x PATH ~/.deno/bin $PATH
 set -gx LC_ALL en_US.UTF-8
 
 alias vim='/opt/homebrew/bin/nvim'

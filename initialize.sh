@@ -14,3 +14,7 @@ ln -s ~/src/github.com/9renpoto/dotfiles/.hyper.js ~/.hyper.js
 ln -s ~/src/github.com/9renpoto/dotfiles/.ignore ~/.gitignore
 ln -s ~/src/github.com/9renpoto/dotfiles/.tmux ~/.tmux
 ln -s ~/src/github.com/9renpoto/dotfiles/.tmux.conf ~/.tmux.conf
+ln -s ~/src/github.com/9renpoto/dotfiles/.default-cargo-crates ~/.default-cargo-crates
+ln -s ~/src/github.com/9renpoto/dotfiles/.default-npm-packages ~/.default-npm-packages
+ln -s ~/src/github.com/9renpoto/dotfiles/.bashrc ~/.bashrc
+ln -s ~/src/github.com/9renpoto/dotfiles/.zshrc ~/.zshrc
