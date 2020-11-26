@@ -31,7 +31,7 @@ set termguicolors
 colorscheme atom-dark-256
 
 augroup on_save
-  autocmd BufWritePre * :%s/\s\+$//ge
+  autocmd BufWritePre *.{js,jsx,ts,tsx,json,yml,rs} :%s/\s\+$//ge
 augroup END
 
 augroup HighlightTrailingSpaces
