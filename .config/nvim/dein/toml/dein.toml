@@ -74,15 +74,6 @@ repo = 'airblade/vim-gitgutter'
 repo = 'w0rp/ale'
 
 [[plugins]]
-repo = 'flowtype/vim-flow'
-on_ft = ['javascript', 'javascript.jsx']
-
-[[plugins]]
-repo = 'pangloss/vim-javascript'
-on_ft = ['javascript', 'javascript.jsx']
-hook_add = 'let g:javascript_plugin_flow = 1'
-
-[[plugins]]
 repo = 'othree/html5.vim'
 
 [[plugins]]
@@ -105,10 +96,6 @@ repo = 'Shougo/context_filetype.vim'
 repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim']
 
-[[plugins]] # toml syntax
-repo = 'cespare/vim-toml'
-on_ft = 'toml'
-
 [[plugins]]
 repo = 'junegunn/fzf.vim'
 hook_add = '''
@@ -123,7 +110,20 @@ command! FZFFileList call fzf#run({
 repo = 'wakatime/vim-wakatime'
 
 [[plugins]]
-repo = 'rust-lang/rust.vim'
+repo = 'neoclide/coc.nvim'
+on_ft = ['rust']
+hook_add = '''
+let g:LanguageClient_serverCommands = {
+\ 'rust': ['rust-analyzer'],
+\ }
 
-[[plugins]]
-repo = 'ekalinin/Dockerfile.vim'
+let g:ycm_language_server =
+\ [
+\   {
+\     'name': 'rust',
+\     'cmdline': ['rust-analyzer'],
+\     'filetypes': ['rust'],
+\     'project_root_files': ['Cargo.toml']
+\   }
+\ ]
+'''
