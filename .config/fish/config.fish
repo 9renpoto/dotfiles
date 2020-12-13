@@ -2,15 +2,13 @@ set -x XDG_CONFIG_HOME $HOME/.config
 set -x EDITOR nvim
 set -x HOSTNAME hostname
 set -x GOPATH $HOME
+set -U FZF_LEGACY_KEYBINDINGS 0
 
-set -x PATH /opt/homebrew/bin $PATH
 set -x PATH ~/.deno/bin $PATH
 set -gx LC_ALL en_US.UTF-8
 
-alias vim='/opt/homebrew/bin/nvim'
+alias vim='/usr/local/bin/nvim'
 
-if test -e $HOME/src/github.com/9renpoto/ssh/.keychain
-  . $HOME/src/github.com/9renpoto/ssh/.keychain
-end
+source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc
 source (brew --prefix asdf)/asdf.fish
 eval (starship init fish)

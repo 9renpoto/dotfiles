@@ -1,7 +1,8 @@
-oh-my-fish/plugin-direnv
-fisherman/fzf
-fisherman/getopts
-decors/fish-ghq
-fisherman/pipenv
-oh-my-fish/plugin-tmux
 jorgebucaran/fisher
+oh-my-fish/plugin-direnv
+decors/fish-ghq
+oh-my-fish/plugin-tmux
+sentriz/fish-pipenv
+jethrokuan/fzf
+jorgebucaran/getopts.fish
+oh-my-fish/plugin-brew
