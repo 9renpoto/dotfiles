@@ -19,3 +19,4 @@ ln -s ~/src/github.com/9renpoto/dotfiles/.tmux ~/.tmux
 ln -s ~/src/github.com/9renpoto/dotfiles/.tmux.conf ~/.tmux.conf
 ln -s ~/src/github.com/9renpoto/dotfiles/.zprofile ~/.zprofile
 ln -s ~/src/github.com/9renpoto/dotfiles/.zshrc ~/.zshrc
+ln -s ~/src/github.com/9renpoto/dotfiles/.cargo ~/.cargo

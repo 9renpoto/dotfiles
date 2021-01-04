@@ -1,4 +1,6 @@
+.cargo/
 .config/.mono/
+.config/coc/
 .config/configstore/
 .config/direnv/
 .config/fish/
@@ -14,6 +16,8 @@
 .config/yarn/
 .tmux/.tmux
 .tmux/plugins/
+.tmux/resurrect/
+.tmux/sidebar/
 macos/Brewfile.lock.json
 
 ### https://raw.github.com/github/gitignore/22a5eb3da72c0a224a179033e92722bdbf5a05ad/Node.gitignore
