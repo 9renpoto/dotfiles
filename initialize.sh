@@ -11,6 +11,7 @@ ln -s ~/src/github.com/9renpoto/dotfiles/.bashrc ~/.bashrc
 ln -s ~/src/github.com/9renpoto/dotfiles/.config ~/.config
 ln -s ~/src/github.com/9renpoto/dotfiles/.default-cargo-crates ~/.default-cargo-crates
 ln -s ~/src/github.com/9renpoto/dotfiles/.default-npm-packages ~/.default-npm-packages
+ln -s ~/src/github.com/9renpoto/dotfiles/.default-python-packages  ~/.default-python-packages
 ln -s ~/src/github.com/9renpoto/dotfiles/.editorconfig ~/.editorconfig
 ln -s ~/src/github.com/9renpoto/dotfiles/.gitconfig ~/.gitconfig
 ln -s ~/src/github.com/9renpoto/dotfiles/.hyper.js ~/.hyper.js
