@@ -2,11 +2,11 @@ lockfileVersion: 5.3
 
 specifiers:
   textlint: 12.0.2
-  textlint-rule-no-dead-link: 4.7.0
+  textlint-rule-no-dead-link: 4.8.0
 
 devDependencies:
   textlint: 12.0.2
-  textlint-rule-no-dead-link: 4.7.0
+  textlint-rule-no-dead-link: 4.8.0
 
 packages:
 
@@ -1361,8 +1361,8 @@ packages:
       unist-util-visit: 1.4.1
     dev: true
 
-  /textlint-rule-no-dead-link/4.7.0:
-    resolution: {integrity: sha512-enqn5JHR7Xa5vtkrYBAwa1POuKoi4j2hY7RKrPX+mWgQGIFapPrxfy7Bw+2pEHfV2nLqXrLQuPo4H6/D9FvzSw==}
+  /textlint-rule-no-dead-link/4.8.0:
+    resolution: {integrity: sha512-jB45mvIhKdgLFs4kDzfn8Q3C1WBv+BGI6At07ZJd9YmM/+dm+P8W9urisBSXFeQcYoGcaXqDiKZwK9BpdnpciQ==}
     engines: {node: '>=4'}
     dependencies:
       fs-extra: 8.1.0
