@@ -1,9 +1,0 @@
-version: 2
-mergeable:
-  - when: pull_request.*, pull_request_review.*
-    validate:
-      - do: title
-        # Do not merge when it is marked work in progress (WIP)
-        must_exclude:
-          regex: ^\[WIP\]
-          message: This is work in progress. Do not merge yet.
