@@ -22,6 +22,8 @@ cask 'hyper'
 cask 'java-beta'
 cask 'kap'
 cask 'miro'
+cask 'notion'
+cask 'obsidian'
 cask 'slack-beta'
 cask 'visual-studio-code'
 
