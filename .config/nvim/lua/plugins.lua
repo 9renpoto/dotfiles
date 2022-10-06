@@ -6,6 +6,7 @@ vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
+  use 'wakatime/vim-wakatime'
 
   -- Simple plugins can be specified as strings
   -- use '9mm/vim-closer'
