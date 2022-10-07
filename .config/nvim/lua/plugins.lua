@@ -8,9 +8,6 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'wakatime/vim-wakatime'
 
-  -- Simple plugins can be specified as strings
-  -- use '9mm/vim-closer'
-
   -- Lazy loading:
   -- Load on specific commands
   use {'tpope/vim-dispatch', opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}}
@@ -21,46 +18,19 @@ return require('packer').startup(function(use)
   -- Load on a combination of conditions: specific filetypes or commands
   -- Also run code after load (see the "config" key)
   use {
-    'w0rp/ale',
+    'dense-analysis/ale',
     ft = {'sh', 'zsh', 'bash', 'c', 'cpp', 'cmake', 'html', 'markdown', 'racket', 'vim', 'tex'},
     cmd = 'ALEEnable',
     config = 'vim.cmd[[ALEEnable]]'
   }
+  
+  use 'hrsh7th/nvim-cmp'
+  use 'hrsh7th/cmp-nvim-lsp'
 
-  -- Plugins can have dependencies on other plugins
   use {
-    'haorenW1025/completion-nvim',
-    opt = true,
-    requires = {{'hrsh7th/vim-vsnip', opt = true}, {'hrsh7th/vim-vsnip-integ', opt = true}}
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
-
-  -- Plugins can also depend on rocks from luarocks.org:
-  -- use {
-  --   'my/supercoolplugin',
-  --   rocks = {'lpeg', {'lua-cjson', version = '2.1.0'}}
-  -- }
-
-  -- You can specify rocks in isolation
-  use_rocks 'penlight'
-  use_rocks {'lua-resty-http', 'lpeg'}
-
-  -- Local plugins can be included
-  -- use '~/projects/personal/hover.nvim'
-
-  -- Plugins can have post-install/update hooks
-  use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
-
-  -- Post-install/update hook with neovim command
-  -- use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-
-  -- Post-install/update hook with call of vimscript function with argument
-  use { 'glacambre/firenvim', run = function() vim.fn['firenvim#install'](0) end }
-
-  -- Use specific branch, dependency and run lua file after load
-  -- use {
-  --   'glepnir/galaxyline.nvim', branch = 'main', config = function() require'statusline' end,
-  --   requires = {'kyazdani42/nvim-web-devicons'}
-  -- }
 
   -- Use dependency and run lua function after load
   use {
@@ -74,3 +44,4 @@ return require('packer').startup(function(use)
   -- You can alias plugin names
   use {'dracula/vim', as = 'dracula'}
 end)
+
