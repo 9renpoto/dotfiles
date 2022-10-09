@@ -12,5 +12,5 @@ jobs:
         uses: JohnnyMorganz/stylua-action@v1.1.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          version: latest 
+          version: latest
           args: --check .
