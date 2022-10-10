@@ -24,11 +24,11 @@ return require("packer").startup(function(use)
         config = "vim.cmd[[ALEEnable]]",
     })
 
-    -- use({
-    -- 	"nvim-telescope/telescope.nvim",
-    -- 	tag = "0.1.0",
-    -- 	requires = { { "nvim-lua/plenary.nvim" } },
-    -- })
+    use({
+        "nvim-telescope/telescope.nvim",
+        tag = "0.1.0",
+        requires = { { "nvim-lua/plenary.nvim" } },
+    })
 
     -- use("hrsh7th/nvim-cmp")
     -- use("hrsh7th/cmp-nvim-lsp")
@@ -37,6 +37,11 @@ return require("packer").startup(function(use)
         "nvim-lualine/lualine.nvim",
         requires = { "kyazdani42/nvim-web-devicons", opt = true },
     })
+    local builtin = require("telescope.builtin")
+    vim.keymap.set("n", "ff", builtin.find_files, {})
+    vim.keymap.set("n", "fg", builtin.live_grep, {})
+    vim.keymap.set("n", "fb", builtin.buffers, {})
+    vim.keymap.set("n", "fh", builtin.help_tags, {})
 
     -- Use dependency and run lua function after load
     -- use({
