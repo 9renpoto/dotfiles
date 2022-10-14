@@ -17,7 +17,7 @@ module completions {
   # Download objects and refs from another repository
   export extern "git fetch" [
     repository?: string@"nu-complete git remotes" # name of the repository to fetch
-    branch?: string@"nu-complete git branches" # name of the branch to fetch
+    branch?: string@"nu-complete git branches"    # name of the branch to fetch
     --all                                         # Fetch all remotes
     --append(-a)                                  # Append ref names and object names to .git/FETCH_HEAD
     --atomic                                      # Use an atomic transaction to update local refs.
@@ -151,7 +151,6 @@ let dark_theme = {
     list: white
     block: white
     hints: dark_gray
-
     # shapes are used to change the cli syntax highlighting
     shape_garbage: { fg: "#FFFFFF" bg: "#FF0000" attr: b}
     shape_binary: purple_bold
@@ -254,7 +253,7 @@ let-env config = {
   # buffer_editor: "emacs" # command that will be used to edit the current line buffer with ctrl+o, if unset fallback to $env.EDITOR and $env.VISUAL
   use_ansi_coloring: true
   filesize_format: "auto" # b, kb, kib, mb, mib, gb, gib, tb, tib, pb, pib, eb, eib, zb, zib, auto
-  edit_mode: emacs # emacs, vi
+  edit_mode: vi # emacs, vi
   max_history_size: 10000 # Session has to be reloaded for this to take effect
   sync_history_on_enter: true # Enable to share the history between multiple sessions, else you have to close the session to persist history to file
   history_file_format: "plaintext" # "sqlite" or "plaintext"
@@ -416,7 +415,7 @@ let-env config = {
       name: completion_menu
       modifier: none
       keycode: tab
-      mode: emacs # Options: emacs vi_normal vi_insert
+      mode: vi_normal # Options: emacs vi_normal vi_insert
       event: {
         until: [
           { send: menu name: completion_menu }
@@ -435,21 +434,21 @@ let-env config = {
       name: history_menu
       modifier: control
       keycode: char_r
-      mode: emacs
+      mode: vi_normal 
       event: { send: menu name: history_menu }
     }
     {
       name: next_page
       modifier: control
       keycode: char_x
-      mode: emacs
+      mode: vi_normal 
       event: { send: menupagenext }
     }
     {
       name: undo_or_previous_page
       modifier: control
       keycode: char_z
-      mode: emacs
+      mode: vi_normal 
       event: {
         until: [
           { send: menupageprevious }
@@ -461,7 +460,7 @@ let-env config = {
       name: yank
       modifier: control
       keycode: char_y
-      mode: emacs
+      mode: vi_normal 
       event: {
         until: [
           {edit: pastecutbufferafter}
@@ -514,3 +513,6 @@ let-env config = {
     }
   ]
 }
+
+source ~/.cache/starship/init.nu
+source ~/.zoxide.nu
