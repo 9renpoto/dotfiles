@@ -7,3 +7,5 @@ set -x PATH ~/.deno/bin $PATH
 set -gx LC_ALL en_US.UTF-8
 
 eval (starship init fish)
+source (brew --prefix asdf)/libexec/asdf.fish
+
