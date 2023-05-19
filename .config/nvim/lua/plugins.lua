@@ -32,6 +32,8 @@ return require("packer").startup(function(use)
 
     -- use("hrsh7th/nvim-cmp")
     -- use("hrsh7th/cmp-nvim-lsp")
+    --
+    use({ "hashivim/vim-terraform" })
 
     use({
         "nvim-lualine/lualine.nvim",
@@ -44,13 +46,12 @@ return require("packer").startup(function(use)
     vim.keymap.set("n", "fh", builtin.help_tags, {})
 
     -- Use dependency and run lua function after load
-    -- use({
-    -- 	"lewis6991/gitsigns.nvim",
-    -- 	requires = { "nvim-lua/plenary.nvim" },
-    -- 	config = function()
-    -- 		require("gitsigns").setup()
-    -- 	end,
-    -- })
+    use({
+        "lewis6991/gitsigns.nvim",
+        config = function()
+            require("gitsigns").setup()
+        end,
+    })
 
     -- You can specify multiple plugins in a single call
     use({ "tjdevries/colorbuddy.vim", { "nvim-treesitter/nvim-treesitter", opt = true } })
