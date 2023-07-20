@@ -1,4 +1,3 @@
-tap 'homebrew/core'
 tap 'homebrew/bundle'
 tap 'homebrew/cask-versions'
 tap 'homebrew/homebrew-services'
