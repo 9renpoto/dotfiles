@@ -5,8 +5,12 @@ vim.cmd([[packadd packer.nvim]])
 
 return require("packer").startup(function(use)
     -- Packer can manage itself
-    use("wbthomason/packer.nvim")
+    use("hashivim/vim-terraform")
+    use("hrsh7th/cmp-nvim-lsp")
+    use("hrsh7th/nvim-cmp")
+    use("neovim/nvim-lspconfig")
     use("wakatime/vim-wakatime")
+    use("wbthomason/packer.nvim")
 
     -- Lazy loading:
     -- Load on specific commands
@@ -29,11 +33,6 @@ return require("packer").startup(function(use)
         tag = "0.1.0",
         requires = { { "nvim-lua/plenary.nvim" } },
     })
-
-    -- use("hrsh7th/nvim-cmp")
-    -- use("hrsh7th/cmp-nvim-lsp")
-    --
-    use({ "hashivim/vim-terraform" })
 
     use({
         "nvim-lualine/lualine.nvim",

@@ -1,2 +1,2 @@
-require'plugins'
-
+require("plugins")
+require("lsp-config")
