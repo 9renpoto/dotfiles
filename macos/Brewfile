@@ -3,13 +3,10 @@ tap 'homebrew/cask-versions'
 tap 'homebrew/homebrew-services'
 tap 'homebrew/cask-fonts'
 tap 'neovim/neovim'
-tap 'devhubapp/devhub'
 
 cask 'alacritty'
 cask 'bitwarden'
-cask 'brave-browser-beta'
 cask 'deepl'
-cask 'devhub'
 cask 'discord'
 cask 'docker'
 cask 'firefox-nightly', args: { language: 'en' }
