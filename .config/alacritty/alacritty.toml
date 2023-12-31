@@ -1,0 +1,13 @@
+import = ["/Users/brigitte/.config/alacritty/dracula.toml"]
+
+[font.bold]
+family = "Hack Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "Hack Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "Hack Nerd Font"
+style = "Regular"
