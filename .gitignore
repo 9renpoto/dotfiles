@@ -6,6 +6,7 @@
 .config/fish/functions/
 .config/gcloud/
 .config/gh/
+.config/nvim/
 .config/yarn/
 .tmux/.tmux
 .tmux/plugins/
