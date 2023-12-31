@@ -6,7 +6,3 @@ repos:
       language: docker_image
       entry: secretlint/secretlint:latest secretlint
 
-- repo: https://github.com/JohnnyMorganz/StyLua
-  rev: v0.15.0
-  hooks:
-    - id: stylua-system
