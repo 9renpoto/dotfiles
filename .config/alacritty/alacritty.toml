@@ -1,4 +1,4 @@
-import = ["/Users/brigitte/.config/alacritty/dracula.toml"]
+import = ["~/.config/alacritty/dracula.toml"]
 
 [font.bold]
 family = "Hack Nerd Font"
