@@ -28,7 +28,6 @@ cask 'visual-studio-code'
 
 brew 'act'
 brew 'actionlint'
-brew 'asdf'
 brew 'awscli'
 brew 'bat'
 brew 'circleci'

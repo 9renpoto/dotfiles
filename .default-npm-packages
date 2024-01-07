@@ -1,4 +1,3 @@
-yarn
-pnpm
-@9renpoto/eslint-config-typescript
-@9renpoto/textlint-config-ja
+prettier
+prettier-package-json
+
