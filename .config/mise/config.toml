@@ -1,2 +1,5 @@
+[settings]
+legacy_version_file_disable_tools = ["terraform", "packer"]
+
 [tools]
 node = "lts"
