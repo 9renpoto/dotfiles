@@ -1,13 +1,13 @@
 import = ["~/.config/alacritty/dracula.toml"]
 
 [font.bold]
-family = "Hack Nerd Font"
+family = "JetBrainsMono Nerd Font"
 style = "Bold"
 
 [font.italic]
-family = "Hack Nerd Font"
+family = "JetBrainsMono Nerd Font"
 style = "Italic"
 
 [font.normal]
-family = "Hack Nerd Font"
+family = "JetBrainsMono Nerd Font"
 style = "Regular"
