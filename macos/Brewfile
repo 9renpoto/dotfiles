@@ -10,10 +10,8 @@ tap 'songmu/tap'
 
 cask '1password'
 cask 'alacritty'
-cask 'android-studio'
 cask 'aws-vault'
 cask 'bitwarden'
-cask 'chatgpt'
 cask 'docker'
 cask 'figma'
 cask 'firefox@nightly', args: { language: 'en' }
