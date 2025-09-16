@@ -25,7 +25,7 @@ link_dotfiles() {
 
     # List of files/directories to symlink in the format "source:destination".
     links="
-.agignore:.agignore
+.rgignore:.rgignore
 .bashrc:.bashrc
 .config:.config
 .default-cargo-crates:.default-cargo-crates
