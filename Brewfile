@@ -1,7 +1,5 @@
 tap 'fujiwara/tap'
 tap 'hashicorp/tap'
-tap 'homebrew/bundle'
-tap 'homebrew/homebrew-services'
 tap 'kayac/tap'
 tap 'neovim/neovim'
 tap 'songmu/tap'

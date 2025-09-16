@@ -1,16 +1,14 @@
 .config/configstore/
-.config/direnv/
 .config/fish/completions/
 .config/fish/conf.d/
 .config/fish/fish_variables
 .config/fish/functions/
 .config/gcloud/
 .config/gh/
-.config/nvim/
-.config/yarn/
+.config/nvim
 .tmux/.tmux
 .tmux/plugins/
 .tmux/resurrect/
 .tmux/sidebar/
-macos/Brewfile.lock.json
+Brewfile.lock.json
 
