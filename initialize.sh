@@ -50,10 +50,17 @@ link_dotfiles() {
             continue
         fi
 
-        # Backup existing file or symlink before creating a new one
+        # If destination exists, handle it
         if [ -e "$dest_path" ] || [ -L "$dest_path" ]; then
-            echo "Backing up existing file at $dest_path to $dest_path.bak"
-            mv "$dest_path" "$dest_path.bak"
+            # If it's a symlink, just remove it.
+            if [ -L "$dest_path" ]; then
+                echo "Removing existing symlink at $dest_path"
+                rm "$dest_path"
+            else
+                # Otherwise, it's a file or directory, so back it up.
+                echo "Backing up existing file at $dest_path to $dest_path.bak"
+                mv "$dest_path" "$dest_path.bak"
+            fi
         fi
 
         echo "Linking $source_path to $dest_path"
