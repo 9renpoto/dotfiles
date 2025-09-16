@@ -24,8 +24,6 @@ link_dotfiles() {
     info "Creating symlinks..."
 
     # List of files/directories to symlink in the format "source:destination".
-    # If destination is blank, it defaults to the source name in the home directory.
-    # I am sourcing the list from the original script, but excluding non-existent files.
     links="
 .agignore:.agignore
 .bashrc:.bashrc
@@ -65,49 +63,35 @@ link_dotfiles() {
     info "Symlinking complete."
 }
 
-# --- OS-specific Setup Functions ---
-setup_macos() {
-    info "Running macOS setup..."
-    local brewfile="$DOTFILES_ROOT/macos/Brewfile"
+# --- Homebrew Setup Function ---
+setup_homebrew() {
+    info "Running Homebrew setup..."
+    if ! command -v brew >/dev/null; then
+        info "Homebrew is not installed. Please install it first to manage packages."
+        info "See: https://brew.sh/"
+        return
+    fi
+
+    local brewfile="$DOTFILES_ROOT/Brewfile"
     if [ -f "$brewfile" ]; then
-        info "Found macOS Brewfile. Installing packages..."
+        info "Found Brewfile. Installing packages..."
         brew bundle --file="$brewfile"
     else
-        info "macOS Brewfile not found. Skipping package installation."
-    fi
-}
-
-setup_linux() {
-    info "Running Linux/WSL setup..."
-    if ! command -v brew >/dev/null; then
-        info "Homebrew (Linuxbrew) is not installed. Please install it first to manage packages."
-        info "See: https://docs.brew.sh/Homebrew-on-Linux"
-    else
-        local brewfile="$DOTFILES_ROOT/linux/Brewfile"
-        if [ -f "$brewfile" ]; then
-            info "Found Linux Brewfile. Installing packages..."
-            brew bundle --file="$brewfile"
-        else
-            info "Linux Brewfile not found. Skipping package installation."
-        fi
+        info "Brewfile not found in root directory. Skipping package installation."
     fi
 }
 
 # --- Main Execution ---
 main() {
-    # The symlinking should happen on all platforms
     link_dotfiles
 
-    # Run setup based on detected OS
+    # Run Homebrew setup on supported platforms
     case "$(uname -s)" in
-        Darwin)
-            setup_macos
-            ;;
-        Linux)
-            setup_linux
+        Darwin|Linux)
+            setup_homebrew
             ;;
         *)
-            info "Unsupported OS: $(uname -s). Skipping OS-specific setup."
+            info "Unsupported OS: $(uname -s). Skipping Homebrew setup."
             ;;
     esac
 
