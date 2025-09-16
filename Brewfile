@@ -13,7 +13,6 @@ cask 'figma'
 cask 'firefox@nightly', args: { language: 'en' }
 cask 'font-jetbrains-mono-nerd-font'
 cask 'google-chrome@beta'
-cask 'google-japanese-ime'
 cask 'kap'
 cask 'miro'
 cask 'notion'
