@@ -1,7 +1,0 @@
-repos:
-  - repo: local
-    hooks:
-      - id: secretlint
-        name: secretlint
-        language: docker_image
-        entry: secretlint/secretlint:latest secretlint

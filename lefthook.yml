@@ -1,0 +1,5 @@
+pre-commit:
+  commands:
+    secretlint:
+      glob: "*"
+      run: docker run --rm -v "$(pwd):/work" -w /work secretlint/secretlint:latest secretlint {staged_files}
