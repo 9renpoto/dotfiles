@@ -1,0 +1,7 @@
+[".config/nvim"]
+type = "git-repo"
+url = "git@github.com:9renpoto/astronvim_config.git"
+branch = "main"
+refreshPeriod = "168h"
+exact = true
+
