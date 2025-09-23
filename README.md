@@ -12,7 +12,7 @@ Opinionated dotfiles and setup scripts for macOS and Linux/WSL shells.
 
 - `brew bundle --file=Brewfile` keeps CLI/GUI packages in sync with the tracked Brewfile.
 - `brew bundle check --file=Brewfile` inspects for drift; pair with `brew bundle cleanup --file=Brewfile` to prune unused packages.
-- `pre-commit run --all-files` runs Secretlint locally; enable the hook permanently with `pre-commit install`.
+- `lefthook run pre-commit --all-files` runs Secretlint locally; enable the hook permanently with `lefthook install`.
 
 ## Configuration Layout
 
