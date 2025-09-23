@@ -1,0 +1,12 @@
+# Repository docs and tooling only
+.editorconfig
+AGENTS.md
+Brewfile
+README.md
+SECURITY.md
+initialize.sh
+lefthook.yml
+.gitignore
+
+# Development artifacts
+.git/
