@@ -17,7 +17,7 @@
 
 ## Coding Style & Naming Conventions
 
-- Follow `.editorconfig` (mirrored to `dot_editorconfig` for home): UTF-8, LF line endings, spaces with a width of 2 (Python: 4). Shell scripts should stay POSIX-compatible and pass `shellcheck`.
+- Follow `.editorconfig` (chezmoi applies the same conventions to `~/.editorconfig`): UTF-8, LF line endings, spaces with a width of 2 (Python: 4). Shell scripts should stay POSIX-compatible and pass `shellcheck`.
 - Name files after their target tool or plugin and keep directory-per-app layouts inside `dot_config/`.
 - Use `biome check` for JavaScript/TypeScript docs and `cspell lint` for spelling when touching the respective areas defined in the Brewfile toolchain.
 
