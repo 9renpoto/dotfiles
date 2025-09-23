@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# This script initializes the dotfiles repository.
-# It sets up symlinks and installs packages using Homebrew.
+# Bootstrap script for the dotfiles repository.
+# Ensures chezmoi is available, applies the source state, and optionally runs Homebrew.
 
 set -e
 
@@ -19,91 +19,65 @@ get_dotfiles_root() {
 DOTFILES_ROOT=$(get_dotfiles_root)
 info "Dotfiles repository located at: $DOTFILES_ROOT"
 
-# --- Symlinking Function ---
-link_dotfiles() {
-    info "Creating symlinks..."
+ensure_chezmoi() {
+    if command -v chezmoi >/dev/null 2>&1; then
+        return 0
+    fi
 
-    # List of files/directories to symlink in the format "source:destination".
-    links="
-.rgignore:.rgignore
-.bashrc:.bashrc
-.config:.config
-.default-cargo-crates:.default-cargo-crates
-.default-npm-packages:.default-npm-packages
-.editorconfig:.editorconfig
-.gitconfig:.gitconfig
-.ignore:.gitignore
-.tmux.conf:.tmux.conf
-.zshrc:.zshrc
-"
+    info "chezmoi not found on PATH. Installing..."
 
-    for item in $links; do
-        # Split the item into source and destination
-        source_in_repo=$(echo "$item" | cut -d: -f1)
-        dest_in_home=$(echo "$item" | cut -d: -f2)
+    if command -v brew >/dev/null 2>&1; then
+        brew install chezmoi
+        return 0
+    fi
 
-        source_path="$DOTFILES_ROOT/$source_in_repo"
-        dest_path="$HOME/$dest_in_home"
-
-        if [ ! -e "$source_path" ]; then
-            echo "Warning: Source file not found, skipping: $source_path"
-            continue
-        fi
-
-        # If destination exists, handle it
-        if [ -e "$dest_path" ] || [ -L "$dest_path" ]; then
-            # If it's a symlink, just remove it.
-            if [ -L "$dest_path" ]; then
-                echo "Removing existing symlink at $dest_path"
-                rm "$dest_path"
-            else
-                # Otherwise, it's a file or directory, so back it up.
-                echo "Backing up existing file at $dest_path to $dest_path.bak"
-                mv "$dest_path" "$dest_path.bak"
-            fi
-        fi
-
-        echo "Linking $source_path to $dest_path"
-        ln -s "$source_path" "$dest_path"
-    done
-
-    info "Symlinking complete."
+    cat <<'EOM'
+chezmoi is required to apply the dotfiles.
+Install it using one of the supported methods:
+  • macOS/Linux (Homebrew): brew install chezmoi
+  • Windows (winget): winget install twpayne.chezmoi
+  • Manual options: https://www.chezmoi.io/install/
+Re-run initialize.sh after installing chezmoi.
+EOM
+    exit 1
 }
 
-# --- Homebrew Setup Function ---
+apply_with_chezmoi() {
+    info "Applying dotfiles using chezmoi..."
+    chezmoi apply --source="$DOTFILES_ROOT" --destination="$HOME"
+    info "chezmoi apply completed."
+}
+
 setup_homebrew() {
     info "Running Homebrew setup..."
-    if ! command -v brew >/dev/null; then
-        info "Homebrew is not installed. Please install it first to manage packages."
-        info "See: https://brew.sh/"
+    if ! command -v brew >/dev/null 2>&1; then
+        info "Homebrew not detected. Skipping package installation."
         return
     fi
 
-    local brewfile="$DOTFILES_ROOT/Brewfile"
+    brewfile="$DOTFILES_ROOT/Brewfile"
     if [ -f "$brewfile" ]; then
-        info "Found Brewfile. Installing packages..."
+        info "Installing packages listed in Brewfile..."
         brew bundle --file="$brewfile"
     else
-        info "Brewfile not found in root directory. Skipping package installation."
+        info "Brewfile not found in repository root."
     fi
 }
 
-# --- Main Execution ---
 main() {
-    link_dotfiles
+    ensure_chezmoi
+    apply_with_chezmoi
 
-    # Run Homebrew setup on supported platforms
     case "$(uname -s)" in
         Darwin|Linux)
             setup_homebrew
             ;;
         *)
-            info "Unsupported OS: $(uname -s). Skipping Homebrew setup."
+            info "Homebrew automation skipped on $(uname -s)."
             ;;
     esac
 
     info "✅ Dotfiles initialization complete!"
 }
 
-# Execute the script
 main
