@@ -6,14 +6,17 @@
 [github]
   user = 9renpoto
 [ghq]
-  root = ~/src
+  root = "{{ .chezmoi.homeDir }}/src"
 [core]
-  excludesfile = ~/.config/git/ignore
+  excludesfile = "{{ .chezmoi.homeDir }}/.config/git/ignore"
 [filter "lfs"]
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
   required = true
   process = git-lfs filter-process
+[init]
+	defaultBranch = main
+{{ if not (eq .chezmoi.os "windows") -}}
 [core]
   pager = delta
   editor = nvim
@@ -26,5 +29,4 @@
   commit-decoration-style = bold yellow box ul
   file-style = bold yellow ul
   file-decoration-style = none
-[init]
-	defaultBranch = main
+{{ end -}}
