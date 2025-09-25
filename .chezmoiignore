@@ -7,5 +7,9 @@ initialize.sh
 lefthook.yml
 .gitignore
 
+# Managed by package managers
+config/fish
+config/nvim
+
 # Development artifacts
 .git/
