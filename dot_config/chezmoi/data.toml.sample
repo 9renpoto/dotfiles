@@ -1,0 +1,8 @@
+# This is a sample data file for chezmoi.
+# To use it, copy it to "data.toml" in the same directory
+# and uncomment/edit the values you want to override.
+
+[ssh]
+# You can override the default path for the GitHub SSH key here.
+# For example:
+# github_identity_file = "~/.ssh/github_personal_key"

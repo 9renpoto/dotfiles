@@ -1,0 +1,5 @@
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile {{ .ssh.github_identity_file | default "~/.ssh/id_ed25519" }}
+  IdentitiesOnly yes
