@@ -12,6 +12,19 @@ Opinionated dotfiles and setup scripts for macOS, Linux/WSL, and Windows termina
 
 Re-run `chezmoi apply` whenever you pull updates to keep `$HOME` in sync.
 
+## Configuration
+
+Some configurations can be customized using variables. Create a `~/.config/chezmoi/chezmoi.toml` file to override default values.
+
+For example, to change the Git email address:
+
+```toml
+[data]
+  email = "your-email@example.com"
+```
+
+`chezmoi apply` will then use this email address in your `~/.gitconfig`.
+
 ## Maintenance Commands
 
 - `chezmoi update --apply` pulls the latest repository changes and reapplies them.
