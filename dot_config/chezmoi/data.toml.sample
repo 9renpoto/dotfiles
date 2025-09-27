@@ -3,6 +3,4 @@
 # and uncomment/edit the values you want to override.
 
 [ssh]
-# You can override the default path for the GitHub SSH key here.
-# For example:
-# github_identity_file = "~/.ssh/github_personal_key"
+github_identity_file = "~/.ssh/id_ed25519" # Override if you use a different key
