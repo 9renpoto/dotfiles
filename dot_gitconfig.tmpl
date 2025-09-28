@@ -1,6 +1,6 @@
 [user]
   name = Keisuke Umeno
-  email = {{ .email | default "9renpoto@gmail.com" }}
+  email = {{ if hasKey . "email" }}{{ .email }}{{ else }}9renpoto@gmail.com{{ end }}
 [color]
   ui = auto
 [github]
