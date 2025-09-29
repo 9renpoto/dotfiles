@@ -1,0 +1,33 @@
+name: chezmoi templates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    name: Validate chezmoi templates
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        run: |
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/.local/bin"
+
+      - name: Check templates
+        run: |
+          set -euo pipefail
+          export PATH="$HOME/.local/bin:$PATH"
+          templates_found=0
+          while IFS= read -r -d '' template; do
+            templates_found=1
+            echo "Validating $template"
+            chezmoi --source="$PWD" execute-template --file "$template" >/dev/null
+          done < <(find "$PWD" -name '*.tmpl' -print0)
+          if [ "$templates_found" -eq 0 ]; then
+            echo "No templates to validate."
+          fi
