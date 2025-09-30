@@ -3,7 +3,7 @@ tap 'neovim/neovim'
 tap 'oven-sh/bun'
 
 cask 'alacritty'
-cask 'aws-vault'
+cask 'aws-vault-binary'
 cask 'bitwarden'
 cask 'chatgpt'
 cask 'figma'
