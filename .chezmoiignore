@@ -13,3 +13,8 @@ config/nvim
 
 # Development artifacts
 .git/
+
+# Devcontainer-specific ignores
+{{ if (env "REMOTE_CONTAINERS") == "true" -}}
+dot_gitconfig.tmpl
+{{ end -}}
