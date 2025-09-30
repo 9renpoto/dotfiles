@@ -1,10 +1,10 @@
 [user]
   name = Keisuke Umeno
-  email = {{ if hasKey . "email" }}{{ .email }}{{ else }}{{ fail "email not set in chezmoi.toml" }}{{ end }}
+  email = {{ .user.email }}
 [color]
   ui = auto
 [github]
-  user = 9renpoto
+  user = {{ .github.user }}
 [ghq]
   root = ~/src
 [core]
@@ -16,7 +16,7 @@
   process = git-lfs filter-process
 [core]
   pager = delta
-  editor = nvim
+  editor = {{ .core.editor }}
 [interactive]
   diffFilter = delta --color-only
 [delta]
