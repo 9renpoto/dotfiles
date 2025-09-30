@@ -15,6 +15,6 @@ config/nvim
 .git/
 
 # Devcontainer-specific ignores
-{{ if (env "REMOTE_CONTAINERS") == "true" -}}
+{{- if eq (env "REMOTE_CONTAINERS") "true" }}
 dot_gitconfig.tmpl
 {{ end -}}
