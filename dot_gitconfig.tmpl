@@ -1,6 +1,6 @@
 [user]
   name = Keisuke Umeno
-  email = {{ if hasKey . "email" }}{{ .email }}{{ else }}9renpoto@gmail.com{{ end }}
+  email = {{ if hasKey . "email" }}{{ .email }}{{ else }}{{ fail "email not set in chezmoi.toml" }}{{ end }}
 [color]
   ui = auto
 [github]

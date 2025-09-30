@@ -19,24 +19,6 @@ get_dotfiles_root() {
 DOTFILES_ROOT=$(get_dotfiles_root)
 info "Dotfiles repository located at: $DOTFILES_ROOT"
 
-seed_default_data_template() {
-    template_src="$DOTFILES_ROOT/dot_config/chezmoi/data.toml.sample"
-    template_dest="$HOME/.config/chezmoi/data.toml"
-
-    if [ ! -f "$template_src" ]; then
-        return
-    fi
-
-    if [ -e "$template_dest" ]; then
-        info "Existing chezmoi data file detected at $template_dest. Skipping template seeding."
-        return
-    fi
-
-    info "Seeding default chezmoi data template to $template_dest"
-    mkdir -p "$(dirname "$template_dest")"
-    cp "$template_src" "$template_dest"
-}
-
 ensure_chezmoi() {
     if command -v chezmoi >/dev/null 2>&1; then
         return 0
@@ -83,7 +65,6 @@ setup_homebrew() {
 }
 
 main() {
-    seed_default_data_template
     ensure_chezmoi
     apply_with_chezmoi
 

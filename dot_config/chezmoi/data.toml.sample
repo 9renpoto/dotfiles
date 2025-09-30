@@ -1,6 +1,0 @@
-# This is a sample data file for chezmoi.
-# To use it, copy it to "data.toml" in the same directory
-# and uncomment/edit the values you want to override.
-
-[ssh]
-github_identity_file = "~/.ssh/id_ed25519" # Override if you use a different key
