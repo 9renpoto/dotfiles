@@ -1,9 +1,6 @@
 [user]
   name = Keisuke Umeno
-  # When running in a CI environment, the email is not available, so we use a
-  # placeholder to allow validation to pass. For local use, the email is
-  # required and will cause an error if not set in your chezmoi.toml.
-  email = {{ if eq (env "CI") "true" }}"user@example.com"{{ else }}{{ if hasKey . "email" }}{{ .email }}{{ else }}{{ fail "email not set in chezmoi.toml" }}{{ end }}{{ end }}
+  email = {{ if hasKey . "email" }}{{ .email }}{{ else }}{{ fail "email not set in chezmoi.toml" }}{{ end }}
 [color]
   ui = auto
 [github]
