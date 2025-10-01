@@ -19,20 +19,24 @@ else
 fi
 
 if command -v brew >/dev/null 2>&1; then
-  system_name=$(uname -s)
-  if [ "$system_name" = "Linux" ]; then
-    tmp_brewfile=$(mktemp)
-    awk '/^(tap|brew)/ { print }' Brewfile >"$tmp_brewfile"
-    echo "Validating Brewfile taps and brews with brew bundle check..."
-    if ! brew bundle check --file="$tmp_brewfile"; then
-      echo "brew bundle check reported issues; continuing startup." >&2
+  if [ -f Brewfile ]; then
+    system_name=$(uname -s)
+    if [ "$system_name" = "Linux" ]; then
+      tmp_brewfile=$(mktemp)
+      awk '/^(tap|brew)/ { print }' Brewfile >"$tmp_brewfile"
+      echo "Validating Brewfile taps and brews with brew bundle check..."
+      if ! brew bundle check --file="$tmp_brewfile"; then
+        echo "brew bundle check reported issues; continuing startup." >&2
+      fi
+      rm -f "$tmp_brewfile"
+    else
+      echo "Validating Brewfile with brew bundle check..."
+      if ! brew bundle check --file=Brewfile; then
+        echo "brew bundle check reported issues; continuing startup." >&2
+      fi
     fi
-    rm -f "$tmp_brewfile"
   else
-    echo "Validating Brewfile with brew bundle check..."
-    if ! brew bundle check --file=Brewfile; then
-      echo "brew bundle check reported issues; continuing startup." >&2
-    fi
+    echo "Brewfile not present; skipping brew bundle check." >&2
   fi
 else
   echo "Homebrew not available; skipping brew bundle check." >&2
