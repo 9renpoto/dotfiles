@@ -12,6 +12,14 @@ Opinionated dotfiles and setup scripts for macOS, Linux/WSL, and Windows termina
 
 Re-run `chezmoi apply` whenever you pull updates to keep `$HOME` in sync.
 
+### macOS Preparation
+
+Before running `chezmoi apply` on macOS, make sure the base toolchain is ready:
+
+- Install Apple's Command Line Tools: `xcode-select --install`
+- Install Homebrew if it's missing (see [brew.sh](https://brew.sh/) for the latest install command)
+- Confirm Homebrew works: `brew doctor`
+
 ## Configuration
 
 Some configurations can be customized using variables. Create a `~/.config/chezmoi/chezmoi.toml` file to override default values.
@@ -37,6 +45,23 @@ For example, to change the Git email address:
   ```
 
 - Templates such as `private_dot_ssh/config.tmpl` read `data.ssh.github_identity_file`, falling back to `~/.ssh/id_ed25519` when nothing is defined. This keeps the SSH config portable while letting each environment opt into a different key path.
+
+#### macOS Template Override Example
+
+Use `chezmoidata.darwin.toml.tmpl` as a starting point when you need to pin macOS-specific values locally:
+
+1. Render the current template to your local config: `chezmoi execute-template < "$(chezmoi source-path)/chezmoidata.darwin.toml.tmpl" > ~/.config/chezmoi/chezmoidata.darwin.toml`
+2. Edit the generated file and override only the keys you need, for example:
+
+   ```toml
+   [paths]
+   homebrew_prefix = "/opt/homebrew"
+
+   [machine]
+   profile = "work"
+   ```
+
+3. Re-run `chezmoi apply` (or `chezmoi update --apply`) to pick up the overrides.
 
 ## Maintenance Commands
 
