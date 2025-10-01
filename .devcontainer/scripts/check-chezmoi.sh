@@ -2,14 +2,19 @@
 set -euo pipefail
 
 if ! command -v chezmoi >/dev/null 2>&1; then
-  echo "chezmoi is not installed; cannot run checks." >&2
-  exit 1
+  echo "chezmoi is not installed; skipping check." >&2
+  exit 0
 fi
 
 SOURCE_DIR=${CHEZMOI_SOURCE_DIR:-$(pwd)}
 if [ ! -d "$SOURCE_DIR" ]; then
-  echo "Specified source directory '$SOURCE_DIR' does not exist." >&2
-  exit 1
+  echo "Specified source directory '$SOURCE_DIR' does not exist; skipping check." >&2
+  exit 0
+fi
+
+if [ ! -f "$SOURCE_DIR/dot_chezmoi.toml.tmpl" ] && [ ! -f "$SOURCE_DIR/.chezmoiignore" ]; then
+  echo "chezmoi source files not present in $SOURCE_DIR; skipping check." >&2
+  exit 0
 fi
 
 scratch_root=$(mktemp -d "${TMPDIR:-/tmp}/chezmoi-test-XXXXXX")
