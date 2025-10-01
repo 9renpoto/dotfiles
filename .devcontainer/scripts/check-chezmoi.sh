@@ -1,7 +1,25 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if ! command -v chezmoi >/dev/null 2>&1; then
+ensure_chezmoi() {
+  if command -v chezmoi >/dev/null 2>&1; then
+    return 0
+  fi
+
+  if command -v brew >/dev/null 2>&1; then
+    echo "chezmoi not found; attempting installation via Homebrew..." >&2
+    if brew list chezmoi >/dev/null 2>&1 || brew install chezmoi; then
+      hash -r
+      if command -v chezmoi >/dev/null 2>&1; then
+        return 0
+      fi
+    fi
+  fi
+
+  return 1
+}
+
+if ! ensure_chezmoi; then
   echo "chezmoi is not installed; skipping check." >&2
   exit 0
 fi
