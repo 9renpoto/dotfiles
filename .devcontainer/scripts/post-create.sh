@@ -22,19 +22,16 @@ if command -v brew >/dev/null 2>&1; then
   system_name=$(uname -s)
   if [ "$system_name" = "Linux" ]; then
     tmp_brewfile=$(mktemp)
-    trap 'rm -f "$tmp_brewfile"' EXIT
     awk '/^(tap|brew)/ { print }' Brewfile >"$tmp_brewfile"
     echo "Validating Brewfile taps and brews with brew bundle check..."
     if ! brew bundle check --file="$tmp_brewfile"; then
-      echo "brew bundle check reported issues." >&2
-      exit 1
+      echo "brew bundle check reported issues; continuing startup." >&2
     fi
     rm -f "$tmp_brewfile"
   else
     echo "Validating Brewfile with brew bundle check..."
     if ! brew bundle check --file=Brewfile; then
-      echo "brew bundle check reported issues." >&2
-      exit 1
+      echo "brew bundle check reported issues; continuing startup." >&2
     fi
   fi
 else
