@@ -5,7 +5,7 @@
     "context": ".."
   },
   "remoteUser": "vscode",
-  "postCreateCommand": "bash .devcontainer/scripts/run-brew-bundle.sh",
+  "postCreateCommand": "bash .devcontainer/scripts/post-create.sh",
   "postStartCommand": "bash .devcontainer/scripts/check-chezmoi.sh",
   "customizations": {
     "vscode": {
