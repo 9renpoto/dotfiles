@@ -1,4 +1,3 @@
-tap 'hashicorp/tap'
 tap 'neovim/neovim'
 tap 'oven-sh/bun'
 
@@ -45,7 +44,7 @@ brew 'neovim'
 brew 'oven-sh/bun/bun'
 brew 'ripgrep'
 brew 'starship'
-brew 'switchaudio-osx'
+brew 'stylua'
 brew 'tig'
 brew 'tmux'
 brew 'zoxide'

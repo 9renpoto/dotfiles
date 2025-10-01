@@ -25,6 +25,19 @@ For example, to change the Git email address:
 
 `chezmoi apply` will then use this email address in your `~/.gitconfig`.
 
+### Environment-Specific Data
+
+- Global defaults live in `chezmoidata.toml`; platform-specific files such as `chezmoidata.darwin.toml.tmpl` and `chezmoidata.linux.toml` layer on automatic values (e.g., the Homebrew prefix).
+- Host-specific tweaks can be added by extending the override maps inside the platform templates or by adding per-host data files that follow chezmoi's naming (for example `chezmoidata.<hostname>.toml`).
+- Sensitive or machine-local overrides can stay outside the repo: use `~/.config/chezmoi/chezmoi.toml` and nest keys under `[data]` to match the structure in `chezmoidata`. For the GitHub SSH key, set:
+
+  ```toml
+  [data.ssh]
+    github_identity_file = "~/.ssh/your_custom_key"
+  ```
+
+- Templates such as `private_dot_ssh/config.tmpl` read `data.ssh.github_identity_file`, falling back to `~/.ssh/id_ed25519` when nothing is defined. This keeps the SSH config portable while letting each environment opt into a different key path.
+
 ## Maintenance Commands
 
 - `chezmoi update --apply` pulls the latest repository changes and reapplies them.

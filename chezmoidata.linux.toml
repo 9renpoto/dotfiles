@@ -1,0 +1,10 @@
+# Linux-specific chezmoi data overrides.
+
+[platform]
+name = "linux"
+
+[paths]
+homebrew_prefix = "/home/linuxbrew/.linuxbrew"
+
+[packages]
+manager = "brew"

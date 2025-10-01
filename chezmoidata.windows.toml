@@ -1,0 +1,10 @@
+# Windows-specific chezmoi data overrides.
+
+[platform]
+name = "windows"
+
+[paths]
+homebrew_prefix = ""
+
+[packages]
+manager = "winget"

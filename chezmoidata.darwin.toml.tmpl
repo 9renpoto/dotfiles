@@ -1,0 +1,21 @@
+{{- /* macOS chezmoi data generated per-machine. Extend the override maps below with hostnames to customise individual Macs. */ -}}
+{{- $defaultPrefix := ternary "/opt/homebrew" "/usr/local" (eq .chezmoi.arch "arm64") -}}
+{{- $homebrewOverrides := dict -}}
+{{- $homebrewPrefix := default $defaultPrefix (index $homebrewOverrides .chezmoi.hostname) -}}
+{{- $profileOverrides := dict -}}
+{{- $machineProfile := default "default" (index $profileOverrides .chezmoi.hostname) -}}
+
+# macOS-specific chezmoi data (templated for multiple machines).
+
+[platform]
+name = "macos"
+
+[paths]
+homebrew_prefix = "{{ $homebrewPrefix }}"
+
+[packages]
+manager = "brew"
+
+[machine]
+hostname = "{{ .chezmoi.hostname }}"
+profile = "{{ $machineProfile }}"
