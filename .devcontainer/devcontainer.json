@@ -1,0 +1,17 @@
+{
+  "name": "chezmoi-devcontainer",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "remoteUser": "vscode",
+  "postCreateCommand": "bash .devcontainer/scripts/run-brew-bundle.sh",
+  "postStartCommand": "bash .devcontainer/scripts/check-chezmoi.sh",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      }
+    }
+  }
+}
