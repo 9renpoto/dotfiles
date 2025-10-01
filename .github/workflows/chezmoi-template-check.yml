@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run chezmoi checks inside devcontainer
-        uses: devcontainers/ci@v0
+        uses: devcontainers/ci@v0.3
         with:
           workspaceFolder: .
           runCmd: |
