@@ -9,9 +9,7 @@
   "postStartCommand": "bash .devcontainer/scripts/check-chezmoi.sh",
   "customizations": {
     "vscode": {
-      "settings": {
-        "terminal.integrated.defaultProfile.linux": "zsh"
-      }
+      "settings": {}
     }
   }
 }
