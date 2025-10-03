@@ -23,6 +23,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.s
  && su -l vscode -c 'NONINTERACTIVE=1 /tmp/install.sh' \
  && rm -f /tmp/install.sh
 
+# hadolint ignore=SC2016
 RUN mkdir -p /etc/profile.d \
  && echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' > /etc/profile.d/homebrew.sh \
  && chmod 0644 /etc/profile.d/homebrew.sh \
