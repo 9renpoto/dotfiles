@@ -24,21 +24,16 @@ RUN curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.s
  && rm -f /tmp/install.sh
 
 RUN mkdir -p /etc/profile.d \
- && cat <<'EOF' > /etc/profile.d/homebrew.sh
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-EOF
-RUN chmod 0644 /etc/profile.d/homebrew.sh
-
-RUN cat <<'EOF' >> /home/vscode/.bashrc
-
-# Initialize Homebrew
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-EOF
-
-RUN cat <<'EOF' >> /home/vscode/.zshrc
-
-# Initialize Homebrew
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-EOF
-
-RUN chown vscode:vscode /home/vscode/.bashrc /home/vscode/.zshrc
+ && echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' > /etc/profile.d/homebrew.sh \
+ && chmod 0644 /etc/profile.d/homebrew.sh \
+ && { \
+        echo; \
+        echo '# Initialize Homebrew'; \
+        echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'; \
+    } >> /home/vscode/.bashrc \
+ && { \
+        echo; \
+        echo '# Initialize Homebrew'; \
+        echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'; \
+    } >> /home/vscode/.zshrc \
+ && chown vscode:vscode /home/vscode/.bashrc /home/vscode/.zshrc
