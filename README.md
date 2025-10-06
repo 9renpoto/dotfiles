@@ -46,6 +46,19 @@ For example, to change the Git email address:
 
 - Templates such as `private_dot_ssh/config.tmpl` read `data.ssh.github_identity_file`, falling back to `~/.ssh/id_ed25519` when nothing is defined. This keeps the SSH config portable while letting each environment opt into a different key path.
 
+### Devcontainer
+
+This repository includes a devcontainer configuration that allows you to work in a consistent, pre-configured environment.
+
+1.  **Open in Devcontainer**: Open this project in a VS Code devcontainer. When the container starts, it will install necessary tools but will not apply dotfiles automatically.
+2.  **Run Setup from Host**: From your **host machine's terminal**, run the following command in the project root:
+
+    ```sh
+    ./devcontainer-setup.sh
+    ```
+
+    This script uses `chezmoi docker` to apply the dotfiles from your source tree directly into the running container's home directory.
+
 #### macOS Template Override Example
 
 Use `chezmoidata.darwin.toml.tmpl` as a starting point when you need to pin macOS-specific values locally:

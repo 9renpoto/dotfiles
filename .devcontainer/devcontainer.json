@@ -6,7 +6,7 @@
   },
   "remoteUser": "vscode",
   "postCreateCommand": "bash .devcontainer/scripts/post-create.sh",
-  "postStartCommand": "bash .devcontainer/scripts/check-chezmoi.sh",
+  "postStartCommand": "echo 'Run ./devcontainer-setup.sh from your host to apply dotfiles.'",
   "customizations": {
     "vscode": {
       "settings": {}
