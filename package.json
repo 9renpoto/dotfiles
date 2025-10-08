@@ -5,7 +5,8 @@
   "scripts": {
     "secretlint": "secretlint"
   },
-  "devDependencies": {
-    "@secretlint/secretlint": "^7.0.0"
+  "dependencies": {
+    "@secretlint/secretlint-rule-preset-recommend": "^11.2.4",
+    "secretlint": "^11.2.4"
   }
 }

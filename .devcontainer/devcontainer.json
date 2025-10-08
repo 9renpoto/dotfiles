@@ -9,7 +9,10 @@
   "postStartCommand": "echo 'Run ./devcontainer-setup.sh from your host to apply dotfiles.'",
   "customizations": {
     "vscode": {
-      "settings": {}
+      "settings": {},
+      "extensions": [
+        "openai.chatgpt"
+      ]
     }
   }
 }
