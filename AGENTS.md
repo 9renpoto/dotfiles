@@ -5,7 +5,7 @@
 - Source files use [`chezmoi`](https://www.chezmoi.io/) naming: `dot_*` map to files in `$HOME` and `dot_config/` mirrors `~/.config/`. Keep additions consistent so `chezmoi apply` can manage them.
 - `dot_config/alacritty/`, `dot_config/fish/`, and `dot_config/mise/config.toml` capture app-specific settings; add new profiles near peers.
 - `Brewfile` declares the CLI and GUI toolchain; keep entries grouped (taps, casks, brews) and sorted to limit merge noise.
-- `lefthook.yml` runs Secretlint inside a Docker container; prefer extending this hook to enforce additional checks instead of wiring ad-hoc scripts.
+- `lefthook.yml` runs Secretlint via the Bun-managed local dependency; prefer extending this hook to enforce additional checks instead of wiring ad-hoc scripts.
 
 ## Build, Test, and Development Commands
 
@@ -13,6 +13,7 @@
 - `./initialize.sh` installs `chezmoi` when missing and applies the local working tree—handy when testing changes from a clone.
 - `brew bundle --file=Brewfile` installs the Brewfile set; pair with `brew bundle check --file=Brewfile` before committing package updates and `brew bundle cleanup --file=Brewfile` to prune strays.
 - `mise install` ensures language runtimes (Node LTS for linters) match `dot_mise.toml`; call this after cloning or editing runtime requirements.
+- `bun install` installs the local JavaScript toolchain (Secretlint) used by lefthook; run after cloning or dependency updates.
 - `lefthook run pre-commit --all-files` executes Secretlint; run locally before opening a pull request to surface credential leaks early.
 
 ## Coding Style & Naming Conventions
@@ -35,4 +36,4 @@
 ## Environment Notes
 
 - Target platforms are macOS, Linux/WSL, and Windows via `winget`; gate OS-specific logic inside scripts to avoid breaking portability.
-- Secretlint relies on Docker; ensure Docker Desktop or a compatible runtime is available when running `lefthook` locally.
+- Secretlint runs via Bun; ensure Bun is installed (`brew install oven-sh/bun/bun`) before invoking lefthook locally.

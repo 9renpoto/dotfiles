@@ -1,0 +1,11 @@
+{
+  "name": "dotfiles",
+  "private": true,
+  "packageManager": "bun@1",
+  "scripts": {
+    "secretlint": "secretlint"
+  },
+  "devDependencies": {
+    "@secretlint/secretlint": "^7.0.0"
+  }
+}
