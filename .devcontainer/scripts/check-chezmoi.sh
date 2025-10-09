@@ -2,7 +2,7 @@
 set -euo pipefail
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-REPO_ROOT=$(cd "$SCRIPT_DIR/.." && pwd)
+REPO_ROOT=$(cd "$SCRIPT_DIR/../.." && pwd)
 
 TEMP_HOME=$(mktemp -d)
 trap 'rm -rf "$TEMP_HOME"' EXIT
@@ -12,7 +12,7 @@ export XDG_CONFIG_HOME="$TEMP_HOME/.config"
 export XDG_CACHE_HOME="$TEMP_HOME/.cache"
 export XDG_DATA_HOME="$TEMP_HOME/.local/share"
 
-mkdir -p "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME" "$XDG_DATA_HOME" "$TEMP_HOME/bin"
+mkdir -p "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME" "$XDG_DATA_HOME" "$XDG_DATA_HOME/chezmoi" "$TEMP_HOME/bin"
 
 export CHEZMOI_SOURCE_DIR="$REPO_ROOT"
 export CHEZMOI_DEST_DIR="$TEMP_HOME"
