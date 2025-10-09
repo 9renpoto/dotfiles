@@ -17,9 +17,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Run chezmoi checks inside devcontainer
-        uses: devcontainers/ci@v0.3
-        with:
-          workspaceFolder: .
-          runCmd: |
-            bash .devcontainer/scripts/check-chezmoi.sh
+      - name: Run chezmoi checks
+        run: bash .devcontainer/scripts/check-chezmoi.sh

@@ -12,11 +12,12 @@ export XDG_CONFIG_HOME="$TEMP_HOME/.config"
 export XDG_CACHE_HOME="$TEMP_HOME/.cache"
 export XDG_DATA_HOME="$TEMP_HOME/.local/share"
 
-mkdir -p "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME" "$XDG_DATA_HOME"
+mkdir -p "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME" "$XDG_DATA_HOME" "$TEMP_HOME/bin"
 
 export CHEZMOI_SOURCE_DIR="$REPO_ROOT"
 export CHEZMOI_DEST_DIR="$TEMP_HOME"
 export PATH="$TEMP_HOME/bin:$PATH"
+export HOMEBREW_NO_AUTO_UPDATE=1
 
 # Initialize Homebrew environment if available so we can install dependencies.
 if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
