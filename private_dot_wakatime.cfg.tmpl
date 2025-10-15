@@ -1,0 +1,9 @@
+[settings]
+api_key = {{ (output "bw get password wakatime_api_key") | trim }}
+debug = false
+hidefilenames = true
+ignore =
+    COMMIT_EDITMSG$
+    PULLREQ_EDITMSG$
+    MERGE_MSG$
+    TAG_EDITMSG$
