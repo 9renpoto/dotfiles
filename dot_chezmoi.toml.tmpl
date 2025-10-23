@@ -1,9 +1,58 @@
-# This is a template for your chezmoi configuration file.
-# It will be used to generate ~/.config/chezmoi/chezmoi.toml.
-#
-# You should replace the default email address below with your own.
+# This template generates ~/.config/chezmoi/chezmoi.toml and centralises all
+# template data (replacing the previous chezmoidata.* files).
+{{- $email := "9renpoto@gmail.com" -}}
+{{- $githubUser := "9renpoto" -}}
+{{- $githubKey := "~/.ssh/id_ed25519" -}}
+{{- $coreEditor := "nvim" -}}
+{{- $platform := dict "name" "common" -}}
+{{- $paths := dict "homebrew_prefix" "" -}}
+{{- $packages := dict "manager" "brew" -}}
+{{- $machine := dict -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{- $defaultPrefix := ternary "/opt/homebrew" "/usr/local" (eq .chezmoi.arch "arm64") -}}
+{{- $homebrewOverrides := dict -}}
+{{- $profileOverrides := dict -}}
+{{- $homebrewPrefix := default $defaultPrefix (get $homebrewOverrides .chezmoi.hostname) -}}
+{{- $machineProfile := default "default" (get $profileOverrides .chezmoi.hostname) -}}
+{{- $platform = dict "name" "macos" -}}
+{{- $paths = dict "homebrew_prefix" $homebrewPrefix -}}
+{{- $machine = dict "hostname" .chezmoi.hostname "profile" $machineProfile -}}
+{{- else if eq .chezmoi.os "linux" -}}
+{{- $platform = dict "name" "linux" -}}
+{{- $paths = dict "homebrew_prefix" "/home/linuxbrew/.linuxbrew" -}}
+{{- else if eq .chezmoi.os "windows" -}}
+{{- $platform = dict "name" "windows" -}}
+{{- $packages = dict "manager" "winget" -}}
+{{- end }}
 
-email = "9renpoto@gmail.com"
+email = {{ quote $email }}
 
 [ssh]
-github_identity_file = "~/.ssh/id_ed25519" # Override if you use a different key
+github_identity_file = {{ quote $githubKey }}
+
+[data.user]
+email = {{ quote $email }}
+
+[data.github]
+user = {{ quote $githubUser }}
+
+[data.ssh]
+github_identity_file = {{ quote $githubKey }}
+
+[data.core]
+editor = {{ quote $coreEditor }}
+
+[data.platform]
+name = {{ quote (get $platform "name") }}
+
+[data.paths]
+homebrew_prefix = {{ quote (get $paths "homebrew_prefix") }}
+
+[data.packages]
+manager = {{ quote (get $packages "manager") }}
+
+{{- if gt (len $machine) 0 }}
+[data.machine]
+hostname = {{ quote (get $machine "hostname") }}
+profile = {{ quote (get $machine "profile") }}
+{{- end }}

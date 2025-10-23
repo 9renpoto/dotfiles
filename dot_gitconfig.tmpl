@@ -1,6 +1,10 @@
+{{- $user := default (dict) (get . "user") -}}
+{{- $email := trim (default "" (get $user "email")) -}}
+{{- $core := default (dict) (get . "core") -}}
+{{- $editor := default "nvim" (get $core "editor") -}}
 [user]
-  name = Keisuke Umeno
-  email = {{ .user.email }}
+  name = Keisuke Umeno{{ if $email }}
+  email = {{ $email }}{{ end }}
 [color]
   ui = auto
 [ghq]
@@ -8,4 +12,4 @@
 [core]
   excludesfile = ~/.config/git/ignore
 [core]
-  editor = {{ .core.editor }}
+  editor = {{ $editor }}
