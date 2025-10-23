@@ -1,6 +1,7 @@
+{{- $sshConfig := get . "ssh" -}}
+{{- $githubIdentityFile := get $sshConfig "github_identity_file" -}}
 Host github.com
   HostName github.com
   User git
-{{- $sshConfig := default (dict) (get . "ssh") -}}
-  IdentityFile {{ default "~/.ssh/id_ed25519" (get $sshConfig "github_identity_file") }}
+  IdentityFile {{$githubIdentityFile}}
   IdentitiesOnly yes
