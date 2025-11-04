@@ -1,3 +1,24 @@
 setopt hist_ignore_all_dups
 setopt EXTENDED_GLOB
-export TMUX_SHELL=`which fish`
+
+# antidote
+# Make sure antidote is installed
+if ! command -v antidote &> /dev/null
+then
+    echo "antidote could not be found, please install it with brew"
+    return
+fi
+
+# Source antidote from brew
+source "$(brew --prefix)/opt/antidote/share/antidote/antidote.zsh"
+
+zsh_plugins=${ZDOTDIR:-$HOME}/.zsh_plugins.txt
+
+# Check if the plugins file exists
+if [ -f "$zsh_plugins" ]; then
+    # If the static file doesn't exist, or it's older than the plugins file
+    if [[ ! -f "${zsh_plugins}.zsh" || "${zsh_plugins}.zsh" -ot "$zsh_plugins" ]]; then
+        antidote bundle < "$zsh_plugins" > "${zsh_plugins}.zsh"
+    fi
+    source "${zsh_plugins}.zsh"
+fi

@@ -16,6 +16,7 @@ cask 'visual-studio-code'
 
 brew 'act'
 brew 'actionlint'
+brew 'antidote'
 brew 'bat'
 brew 'biome'
 brew 'bitwarden-cli'
