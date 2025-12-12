@@ -1,4 +1,11 @@
-# .zsh_plugins.txt
+# Minimal plugin configuration for antidote
+# Syntax: https://getantidote.github.io/
+
+# Fish-like syntax highlighting
 zsh-users/zsh-syntax-highlighting
+
+# Fish-like autosuggestions
 zsh-users/zsh-autosuggestions
-zsh-users/zsh-history-substring-search
+
+# Better completions
+zsh-users/zsh-completions kind:fpath
