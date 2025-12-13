@@ -1,4 +1,17 @@
+# Environment variables
+export XDG_CONFIG_HOME="$HOME/.config"
+export EDITOR=nvim
+export GOPATH="$HOME"
+export LC_ALL=en_US.UTF-8
+export PKG_CONFIG_PATH="$(brew --prefix openssl)/lib/pkgconfig"
+
+# History settings
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
 setopt hist_ignore_all_dups
+setopt hist_ignore_space
+setopt share_history
 setopt EXTENDED_GLOB
 
 # antidote
@@ -22,3 +35,23 @@ if [ -f "$zsh_plugins" ]; then
     fi
     source "${zsh_plugins}.zsh"
 fi
+
+# Modern CLI tools
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
+eval "$(mise activate zsh)"
+
+# ghq + fzf integration
+function ghq-fzf() {
+  local selected_dir=$(ghq list | fzf --query="$LBUFFER" --preview 'ghq list --full-path --exact {} | xargs eza --tree --level=1 --icons')
+  if [ -n "$selected_dir" ]; then
+    BUFFER="cd $(ghq root)/${selected_dir}"
+    zle accept-line
+  fi
+  zle reset-prompt
+}
+zle -N ghq-fzf
+bindkey '^]' ghq-fzf
+
+# Path settings
+export PATH="$HOME/.deno/bin:$PATH"
