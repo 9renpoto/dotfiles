@@ -46,6 +46,46 @@ For example, to change the Git email address:
 
 - Templates such as `private_dot_ssh/config.tmpl` read `data.ssh.github_identity_file`, falling back to `~/.ssh/id_ed25519` when nothing is defined. This keeps the SSH config portable while letting each environment opt into a different key path.
 
+### Secret Management
+
+Secrets are managed locally through `~/.config/chezmoi/chezmoi.toml`.
+
+#### Quick Setup
+
+Run the interactive setup script to create your configuration file:
+
+```sh
+./setup-chezmoi-config.sh
+```
+
+This script will prompt you for:
+- WakaTime API key (optional)
+- Email address override (optional)
+- Custom SSH key path (optional)
+- Machine profile (optional)
+
+#### Manual Setup
+
+Alternatively, manually create or edit `~/.config/chezmoi/chezmoi.toml`:
+
+```toml
+[data.wakatime]
+  api_key = "waka_YOUR_API_KEY_HERE"
+
+[data.user]
+  email = "your-email@example.com"
+
+[data.ssh]
+  github_identity_file = "~/.ssh/your_custom_key"
+
+[data.machine]
+  profile = "dev"
+```
+
+After configuration, run `chezmoi apply` to generate your dotfiles with the provided values.
+
+**Important**: Never commit `~/.config/chezmoi/chezmoi.toml` to version control. This file should remain local to each machine.
+
 ### Devcontainer
 
 This repository includes a devcontainer configuration that allows you to work in a consistent, pre-configured environment.

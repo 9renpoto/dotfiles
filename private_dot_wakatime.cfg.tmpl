@@ -1,5 +1,11 @@
+{{- $wakatime := default (dict) (get . "wakatime") -}}
+{{- $apiKey := default "" (get $wakatime "api_key") -}}
 [settings]
-api_key = {{ (output "bw get password wakatime_api_key") | trim }}
+{{- if $apiKey }}
+api_key = {{ $apiKey }}
+{{- else }}
+# api_key = YOUR_WAKATIME_API_KEY_HERE
+{{- end }}
 debug = false
 hidefilenames = true
 ignore =
