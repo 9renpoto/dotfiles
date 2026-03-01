@@ -47,15 +47,15 @@ eval "$(mise activate zsh)"
 
 # ghq + fzf integration
 function ghq-fzf() {
-  local selected_dir=$(ghq list | fzf --query="$LBUFFER" --preview 'ghq list --full-path --exact {} | xargs eza --tree --level=1 --icons')
+  local selected_dir=$(ghq list --full-path | fzf --query="$LBUFFER" --preview 'eza --tree --level=1 --icons --color=always {}')
   if [ -n "$selected_dir" ]; then
-    BUFFER="cd $(ghq root)/${selected_dir}"
+    BUFFER="cd ${selected_dir}"
     zle accept-line
   fi
   zle reset-prompt
 }
 zle -N ghq-fzf
-bindkey '^]' ghq-fzf
+bindkey '^g' ghq-fzf
 
 # Path settings
 export PATH="$HOME/.deno/bin:$PATH"
