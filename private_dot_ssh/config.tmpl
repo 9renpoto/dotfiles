@@ -1,5 +1,4 @@
-{{- $sshConfig := get . "ssh" -}}
-{{- $githubIdentityFile := get $sshConfig "github_identity_file" -}}
+{{- $githubIdentityFile := .ssh.github_identity_file -}}
 Host github.com
   HostName github.com
   User git

@@ -59,15 +59,18 @@ main() {
     echo
 
     # Email (optional override)
-    read -rp "Enter your email address (optional, overrides default): " email
+    read -rp "Enter your email address [9renpoto@gmail.com]: " email
+    email=${email:-9renpoto@gmail.com}
     echo
 
     # SSH key path (optional override)
-    read -rp "Enter custom SSH key path for GitHub (optional): " github_ssh_key
+    read -rp "Enter custom SSH key path for GitHub [~/.ssh/id_ed25519]: " github_ssh_key
+    github_ssh_key=${github_ssh_key:-~/.ssh/id_ed25519}
     echo
 
     # Machine profile (optional)
-    read -rp "Enter machine profile (e.g., dev, work, personal) (optional): " machine_profile
+    read -rp "Enter machine profile (e.g., dev, work, personal) [dev]: " machine_profile
+    machine_profile=${machine_profile:-dev}
     echo
 
     # Generate config file

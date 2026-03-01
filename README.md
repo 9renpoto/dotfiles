@@ -8,9 +8,20 @@ Opinionated dotfiles and setup scripts for macOS, Linux/WSL, and Windows termina
    - macOS / Linux: `brew install chezmoi`
    - Windows: `winget install twpayne.chezmoi`
 2. Apply the configuration: `chezmoi init 9renpoto/dotfiles --apply`
-3. Finish runtime setup: `mise install`
+   - During `init`, you will be prompted for your email and other information. These values are used to personalize your configuration.
+3. Finish runtime setup:
+   - Run `mise install` to install language runtimes.
+   - Switch to **zsh** (highly recommended): `chsh -s $(which zsh)`
 
 Re-run `chezmoi apply` whenever you pull updates to keep `$HOME` in sync.
+
+### Shell Recommendation
+
+While this repository supports multiple shells, **zsh** is the recommended default. Our zsh configuration includes:
+- [antidote](https://getantidote.github.io/) for fast plugin management.
+- Syntax highlighting and autosuggestions.
+- [starship](https://starship.rs/) prompt integration.
+- [zoxide](https://github.com/ajeetds/zoxide) for smarter directory navigation.
 
 ### macOS Preparation
 
@@ -125,7 +136,13 @@ Use `chezmoidata.darwin.toml.tmpl` as a starting point when you need to pin macO
 
 ## Working Locally
 
-When hacking on the repository from a development clone, `./initialize.sh` ensures `chezmoi` is installed, applies the local working tree with `chezmoi apply`, and optionally runs the Brewfile on macOS/Linux hosts.
+When hacking on the repository from a development clone, `./initialize.sh` ensures `chezmoi` is installed, runs an interactive configuration setup if needed, applies the local working tree with `chezmoi apply`, and optionally runs the Brewfile on macOS/Linux hosts.
+
+1. Clone the repository.
+2. Run `./initialize.sh`.
+3. Follow the prompts to configure your email, SSH key path, and other settings.
+   - For SSH keys on WSL, it's recommended to use **GitHub CLI** (`gh`) to create and manage your keys: `gh ssh-key add ~/.ssh/id_ed25519.pub`.
+4. Switch to **zsh** if you haven't already: `chsh -s $(which zsh)`.
 
 ## Configuration Layout
 

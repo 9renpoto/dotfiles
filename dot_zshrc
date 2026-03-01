@@ -1,8 +1,12 @@
 # Environment variables
+if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
 export XDG_CONFIG_HOME="$HOME/.config"
 export EDITOR=nvim
 export GOPATH="$HOME"
-export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+# export LC_ALL=en_US.UTF-8 # Comment out to avoid warnings if locale is missing
 export PKG_CONFIG_PATH="$(brew --prefix openssl)/lib/pkgconfig"
 
 # History settings
@@ -15,15 +19,15 @@ setopt share_history
 setopt EXTENDED_GLOB
 
 # antidote
-# Make sure antidote is installed
-if ! command -v antidote &> /dev/null
-then
+# Source antidote from brew if available
+if [ -f "/home/linuxbrew/.linuxbrew/opt/antidote/share/antidote/antidote.zsh" ]; then
+    source "/home/linuxbrew/.linuxbrew/opt/antidote/share/antidote/antidote.zsh"
+elif command -v brew &> /dev/null && [ -f "$(brew --prefix)/opt/antidote/share/antidote/antidote.zsh" ]; then
+    source "$(brew --prefix)/opt/antidote/share/antidote/antidote.zsh"
+else
     echo "antidote could not be found, please install it with brew"
-    return
+    # return # Don't return, let the shell load anyway
 fi
-
-# Source antidote from brew
-source "$(brew --prefix)/opt/antidote/share/antidote/antidote.zsh"
 
 zsh_plugins=${ZDOTDIR:-$HOME}/.zsh_plugins.txt
 

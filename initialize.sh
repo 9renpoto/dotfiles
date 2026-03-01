@@ -44,6 +44,11 @@ EOM
 
 apply_with_chezmoi() {
     info "Applying dotfiles using chezmoi..."
+    # If the config file doesn't exist, run setup script to trigger prompts
+    if [ ! -f "$HOME/.config/chezmoi/chezmoi.toml" ]; then
+        info "Configuration file not found. Starting interactive setup..."
+        "$DOTFILES_ROOT/setup-chezmoi-config.sh"
+    fi
     chezmoi apply --source="$DOTFILES_ROOT" --destination="$HOME"
     info "chezmoi apply completed."
 }
