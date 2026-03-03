@@ -1,9 +1,15 @@
 # Environment variables
+if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
 export XDG_CONFIG_HOME="$HOME/.config"
 export EDITOR=nvim
 export GOPATH="$HOME"
-export LC_ALL=en_US.UTF-8
-export PKG_CONFIG_PATH="$(brew --prefix openssl)/lib/pkgconfig"
+export LANG=en_US.UTF-8
+# export LC_ALL=en_US.UTF-8 # Comment out to avoid warnings if locale is missing
+if command -v brew &> /dev/null; then
+    export PKG_CONFIG_PATH="$(brew --prefix openssl)/lib/pkgconfig"
+fi
 
 # History settings
 HISTFILE="$HOME/.zsh_history"
@@ -15,15 +21,15 @@ setopt share_history
 setopt EXTENDED_GLOB
 
 # antidote
-# Make sure antidote is installed
-if ! command -v antidote &> /dev/null
-then
+# Source antidote from brew if available
+if [ -f "/home/linuxbrew/.linuxbrew/opt/antidote/share/antidote/antidote.zsh" ]; then
+    source "/home/linuxbrew/.linuxbrew/opt/antidote/share/antidote/antidote.zsh"
+elif command -v brew &> /dev/null && [ -f "$(brew --prefix)/opt/antidote/share/antidote/antidote.zsh" ]; then
+    source "$(brew --prefix)/opt/antidote/share/antidote/antidote.zsh"
+else
     echo "antidote could not be found, please install it with brew"
-    return
+    # return # Don't return, let the shell load anyway
 fi
-
-# Source antidote from brew
-source "$(brew --prefix)/opt/antidote/share/antidote/antidote.zsh"
 
 zsh_plugins=${ZDOTDIR:-$HOME}/.zsh_plugins.txt
 
@@ -43,15 +49,15 @@ eval "$(mise activate zsh)"
 
 # ghq + fzf integration
 function ghq-fzf() {
-  local selected_dir=$(ghq list | fzf --query="$LBUFFER" --preview 'ghq list --full-path --exact {} | xargs eza --tree --level=1 --icons')
+  local selected_dir=$(ghq list --full-path | fzf --query="$LBUFFER" --preview 'eza --tree --level=1 --icons --color=always {}')
   if [ -n "$selected_dir" ]; then
-    BUFFER="cd $(ghq root)/${selected_dir}"
+    BUFFER="cd ${selected_dir}"
     zle accept-line
   fi
   zle reset-prompt
 }
 zle -N ghq-fzf
-bindkey '^]' ghq-fzf
+bindkey '^g' ghq-fzf
 
 # Path settings
 export PATH="$HOME/.deno/bin:$PATH"
