@@ -7,7 +7,9 @@ export EDITOR=nvim
 export GOPATH="$HOME"
 export LANG=en_US.UTF-8
 # export LC_ALL=en_US.UTF-8 # Comment out to avoid warnings if locale is missing
-export PKG_CONFIG_PATH="$(brew --prefix openssl)/lib/pkgconfig"
+if command -v brew &> /dev/null; then
+    export PKG_CONFIG_PATH="$(brew --prefix openssl)/lib/pkgconfig"
+fi
 
 # History settings
 HISTFILE="$HOME/.zsh_history"
