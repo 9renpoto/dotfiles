@@ -1,5 +1,10 @@
 {{- $user := default (dict) (get . "user") -}}
-{{- $email := trim (default "" (get $user "email")) -}}
+{{- $data := default (dict) (get . "data") -}}
+{{- $dataUser := default (dict) (get $data "user") -}}
+{{- $email := trim (default (default "" (get . "email")) (get $dataUser "email")) -}}
+{{- if eq $email "" -}}
+{{- $email = trim (default "" (get $user "email")) -}}
+{{- end -}}
 {{- $core := default (dict) (get . "core") -}}
 {{- $editor := default "nvim" (get $core "editor") -}}
 [user]
