@@ -10,6 +10,7 @@ cask 'kap'
 cask 'obsidian'
 cask 'visual-studio-code'
 
+brew 'carapace'
 brew 'act'
 brew 'actionlint'
 brew 'antidote'
