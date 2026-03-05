@@ -15,7 +15,7 @@
 
 ## Template Data
 
-Defaults in `.chezmoidata.toml`. Platform values (Homebrew prefix, package manager) computed in `dot_chezmoi.toml.tmpl` from `chezmoi.os`/`chezmoi.arch`. Machine-local overrides in `~/.config/chezmoi/chezmoi.toml` (never commit this file).
+Defaults and platform values (Homebrew prefix, package manager) are defined/computed in `dot_chezmoi.toml.tmpl` from `chezmoi.os`/`chezmoi.arch`. Machine-local overrides in `~/.config/chezmoi/chezmoi.toml` (never commit this file).
 
 Platform branching: `{{ if eq .chezmoi.os "darwin" }} ... {{ else if eq .chezmoi.os "linux" }} ... {{ end }}`
 
