@@ -45,8 +45,10 @@ fi
 # carapace completion
 export CARAPACE_BRIDGES='zsh,fish,bash'
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
-autoload -Uz compinit && compinit -u
-source <(carapace _carapace)
+if command -v carapace >/dev/null 2>&1; then
+  autoload -Uz compinit && compinit
+  source <(carapace _carapace)
+fi
 
 # Modern CLI tools
 eval "$(starship init zsh)"
