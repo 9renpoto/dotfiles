@@ -42,6 +42,14 @@ if [ -f "$zsh_plugins" ]; then
     source "${zsh_plugins}.zsh"
 fi
 
+# carapace completion
+export CARAPACE_BRIDGES='zsh,fish,bash'
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+if command -v carapace >/dev/null 2>&1; then
+  autoload -Uz compinit && compinit
+  source <(carapace _carapace)
+fi
+
 # Modern CLI tools
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"

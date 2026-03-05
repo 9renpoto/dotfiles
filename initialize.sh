@@ -53,6 +53,21 @@ apply_with_chezmoi() {
     info "chezmoi apply completed."
 }
 
+ensure_chezmoi_config() {
+    config_file="$HOME/.config/chezmoi/chezmoi.toml"
+
+    if [ -f "$config_file" ]; then
+        return 0
+    fi
+
+    info "chezmoi config not found. Generating default config..."
+    if [ -x "$DOTFILES_ROOT/scripts/chezmoi-init" ]; then
+        "$DOTFILES_ROOT/scripts/chezmoi-init"
+    else
+        bash "$DOTFILES_ROOT/scripts/chezmoi-init"
+    fi
+}
+
 setup_homebrew() {
     info "Running Homebrew setup..."
     if ! command -v brew >/dev/null 2>&1; then
@@ -71,6 +86,7 @@ setup_homebrew() {
 
 main() {
     ensure_chezmoi
+    ensure_chezmoi_config
     apply_with_chezmoi
 
     case "$(uname -s)" in
