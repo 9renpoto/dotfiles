@@ -55,12 +55,33 @@ eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 eval "$(mise activate zsh)"
 
-# ghq + fzf integration
+# fzf integration (Ctrl+R: history, Ctrl+T: files, Alt+C: cd)
+if command -v fzf >/dev/null 2>&1; then
+  eval "$(fzf --zsh)"
+fi
+
+# ghq + fzf integration (mirrors decors/fish-ghq behaviour)
+# Override selector with GHQ_SELECTOR, pass extra flags via GHQ_SELECTOR_OPTS (space-separated)
 function ghq-fzf() {
-  local selected_dir=$(ghq list --full-path | fzf --query="$LBUFFER" --preview 'eza --tree --level=1 --icons --color=always {}')
-  if [ -n "$selected_dir" ]; then
-    BUFFER="cd ${selected_dir}"
-    zle accept-line
+  local selector=${GHQ_SELECTOR:-fzf}
+  if ! command -v ghq >/dev/null 2>&1 || ! command -v "$selector" >/dev/null 2>&1; then
+    zle reset-prompt
+    return 1
+  fi
+
+  local selected
+  selected=$(ghq list --full-path | "$selector" \
+    ${(z)GHQ_SELECTOR_OPTS} \
+    --query="$LBUFFER" \
+    --height=40% \
+    --layout=reverse \
+    --border=rounded \
+    --preview='eza --tree --level=1 --icons --color=always {}' \
+    --preview-window='right:40%:wrap')
+
+  if [[ -n "$selected" ]]; then
+    builtin cd "$selected"
+    BUFFER=""
   fi
   zle reset-prompt
 }
