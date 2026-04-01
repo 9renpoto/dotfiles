@@ -9,5 +9,5 @@ set -x PKG_CONFIG_PATH "$(brew --prefix openssl)/lib/pkgconfig"
 
 
 eval (starship init fish)
-zoxide init fish | source
 mise activate fish | source
+direnv hook fish | source

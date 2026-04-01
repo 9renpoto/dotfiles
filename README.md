@@ -21,7 +21,6 @@ While this repository supports multiple shells, **zsh** is the recommended defau
 - [antidote](https://getantidote.github.io/) for fast plugin management.
 - Syntax highlighting and autosuggestions.
 - [starship](https://starship.rs/) prompt integration.
-- [zoxide](https://github.com/ajeetds/zoxide) for smarter directory navigation.
 
 ### macOS Preparation
 
