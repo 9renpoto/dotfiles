@@ -1,6 +1,6 @@
 # Copilot Instructions
 
-[chezmoi](https://www.chezmoi.io/)-managed dotfiles for macOS, Linux/WSL, and Windows. Source files are the *source state*; `chezmoi apply` renders them into `$HOME`.
+See [AGENTS.md](../AGENTS.md) for the full contributor guide (commands, conventions, architecture, and PR requirements).
 
 ## File Naming
 
