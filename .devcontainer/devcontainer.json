@@ -5,13 +5,18 @@
     "context": ".."
   },
   "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/devcontainers-extra/features/tmux-homebrew:1": {},
+    "ghcr.io/devcontainers-extra/features/starship-homebrew:1": {}
+  },
   "postCreateCommand": "bash .devcontainer/scripts/post-create.sh",
   "postStartCommand": "echo 'Run ./devcontainer-setup.sh from your host to apply dotfiles.'",
   "customizations": {
     "vscode": {
       "settings": {},
       "extensions": [
-        "openai.chatgpt"
+        "github.copilot",
+        "github.copilot-chat"
       ]
     }
   }
