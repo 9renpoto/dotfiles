@@ -5,3 +5,8 @@ branch = "main"
 refreshPeriod = "168h"
 exact = true
 
+[".tmux/plugins/tpm"]
+type = "git-repo"
+url = "https://github.com/tmux-plugins/tpm"
+refreshPeriod = "168h"
+exact = true
