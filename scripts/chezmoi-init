@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Helper to generate ~/.config/chezmoi/chezmoi.toml from the template
+# Usage:
+#  - Interactive: ./scripts/chezmoi-init
+#  - Non-interactive: WAKATIME_API_KEY=... ./scripts/chezmoi-init /tmp/chezmoi-config.toml
+
+SOURCE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+OUTPUT="${1:-$HOME/.config/chezmoi/chezmoi.toml}"
+PROMPT_BOOL="Enable WakaTime integration?"
+PROMPT_STRING="WakaTime API key"
+
+if [ -n "${WAKATIME_API_KEY:-}" ]; then
+  echo "Generating $OUTPUT using WAKATIME_API_KEY from env"
+  tmpfile=$(mktemp)
+  chezmoi --source="$SOURCE_DIR" execute-template -i -f dot_chezmoi.toml.tmpl > "$tmpfile"
+  esc="${WAKATIME_API_KEY//\"/\\\"}"
+  printf "\n[data]\n  [data.wakatime]\n  api_key = \"%s\"\n" "$esc" >> "$tmpfile"
+  mv "$tmpfile" "$OUTPUT"
+else
+  echo "Generating $OUTPUT interactively (you will be prompted)"
+  chezmoi --source="$SOURCE_DIR" execute-template -i -f dot_chezmoi.toml.tmpl > "$OUTPUT"
+fi
+
+echo "Wrote $OUTPUT"
