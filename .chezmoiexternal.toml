@@ -1,12 +1,9 @@
 [".config/nvim"]
 type = "git-repo"
 url = "https://github.com/9renpoto/astronvim_config.git"
-branch = "main"
 refreshPeriod = "168h"
-exact = true
 
 [".tmux/plugins/tpm"]
 type = "git-repo"
 url = "https://github.com/tmux-plugins/tpm"
 refreshPeriod = "168h"
-exact = true
