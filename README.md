@@ -54,7 +54,17 @@ For example, to change the Git email address:
     github_identity_file = "~/.ssh/your_custom_key"
   ```
 
-- Templates such as `private_dot_ssh/config.tmpl` read `data.ssh.github_identity_file`, falling back to `~/.ssh/id_ed25519` when nothing is defined. This keeps the SSH config portable while letting each environment opt into a different key path.
+- To manage access to a VMware guest provisioned from `9renpoto/homelabs`, add a host-specific block:
+
+  ```toml
+  [data.ssh.homelabs_vmware]
+    host_name = "192.168.10.20"
+    user = "ubuntu"
+    port = 22
+    identity_file = "~/.ssh/homelabs-vmware"
+  ```
+
+- `private_dot_ssh/config.tmpl` renders `Host github.com` and, when `data.ssh.homelabs_vmware.host_name` is set, also renders `Host homelabs-vmware`. Both entries fall back to `~/.ssh/id_ed25519` when no `identity_file` override is defined.
 
 ### Secret Management
 
@@ -72,6 +82,7 @@ This script will prompt you for:
 - WakaTime API key (optional)
 - Email address override (optional)
 - Custom SSH key path (optional)
+- homelabs VMware HostName/IP, user, port, and SSH key path (optional)
 - Machine profile (optional)
 
 #### Manual Setup
@@ -88,11 +99,17 @@ Alternatively, manually create or edit `~/.config/chezmoi/chezmoi.toml`:
 [data.ssh]
   github_identity_file = "~/.ssh/your_custom_key"
 
+[data.ssh.homelabs_vmware]
+  host_name = "192.168.10.20"
+  user = "ubuntu"
+  port = 22
+  identity_file = "~/.ssh/homelabs-vmware"
+
 [data.machine]
   profile = "dev"
 ```
 
-After configuration, run `chezmoi apply` to generate your dotfiles with the provided values.
+After configuration, run `chezmoi apply` to generate your dotfiles with the provided values. If `data.ssh.homelabs_vmware.host_name` is set, you can connect with `ssh homelabs-vmware`.
 
 **Important**: Never commit `~/.config/chezmoi/chezmoi.toml` to version control. This file should remain local to each machine.
 
