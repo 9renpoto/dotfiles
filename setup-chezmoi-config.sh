@@ -68,23 +68,6 @@ main() {
     github_ssh_key=${github_ssh_key:-~/.ssh/id_ed25519}
     echo
 
-    # homelabs VMware SSH config (optional)
-    read -rp "Enter HostName or IP for homelabs VMware (optional): " homelabs_vmware_host_name
-    echo
-
-    if [ -n "${homelabs_vmware_host_name:-}" ]; then
-        read -rp "Enter SSH user for homelabs VMware (optional): " homelabs_vmware_user
-        echo
-
-        read -rp "Enter SSH port for homelabs VMware [22]: " homelabs_vmware_port
-        homelabs_vmware_port=${homelabs_vmware_port:-22}
-        echo
-
-        read -rp "Enter SSH key path for homelabs VMware [~/.ssh/homelabs-vmware]: " homelabs_vmware_identity_file
-        homelabs_vmware_identity_file=${homelabs_vmware_identity_file:-~/.ssh/homelabs-vmware}
-        echo
-    fi
-
     # Machine profile (optional)
     read -rp "Enter machine profile (e.g., dev, work, personal) [dev]: " machine_profile
     machine_profile=${machine_profile:-dev}
@@ -166,6 +149,11 @@ main() {
     echo "  ${CHEZMOI_CONFIG_FILE}"
     echo
     info "To apply your dotfiles with this configuration:"
+    echo "  chezmoi apply"
+}
+
+main "$@"
+ dotfiles with this configuration:"
     echo "  chezmoi apply"
 }
 
