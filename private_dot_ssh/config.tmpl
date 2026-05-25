@@ -4,12 +4,3 @@ Host github.com
   User git
   IdentityFile {{$githubIdentityFile}}
   IdentitiesOnly yes
-
-{{- with .ssh.homelabs_vmware }}
-{{- if .host_name }}
-{{ printf "\nHost homelabs-vmware\n  HostName %s\n" .host_name -}}
-{{- if .user }}{{ printf "  User %s\n" .user -}}{{ end -}}
-{{- if .port }}{{ printf "  Port %v\n" .port -}}{{ end -}}
-{{ printf "  IdentityFile %s\n  IdentitiesOnly yes\n" (or .identity_file "~/.ssh/id_ed25519") -}}
-{{- end }}
-{{- end }}

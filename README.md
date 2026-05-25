@@ -99,17 +99,11 @@ Alternatively, manually create or edit `~/.config/chezmoi/chezmoi.toml`:
 [data.ssh]
   github_identity_file = "~/.ssh/your_custom_key"
 
-[data.ssh.homelabs_vmware]
-  host_name = "192.168.10.20"
-  user = "ubuntu"
-  port = 22
-  identity_file = "~/.ssh/homelabs-vmware"
-
 [data.machine]
   profile = "dev"
 ```
 
-After configuration, run `chezmoi apply` to generate your dotfiles with the provided values. If `data.ssh.homelabs_vmware.host_name` is set, you can connect with `ssh homelabs-vmware`.
+After configuration, run `chezmoi apply` to generate your dotfiles with the provided values.
 
 **Important**: Never commit `~/.config/chezmoi/chezmoi.toml` to version control. This file should remain local to each machine.
 
