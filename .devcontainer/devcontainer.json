@@ -1,23 +1,11 @@
 {
   "name": "chezmoi-devcontainer",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "context": ".."
-  },
-  "remoteUser": "vscode",
+  "image": "mcr.microsoft.com/devcontainers/base:noble",
   "features": {
-    "ghcr.io/devcontainers-extra/features/tmux-homebrew:1": {},
-    "ghcr.io/devcontainers-extra/features/starship-homebrew:1": {}
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1": {},
+    "ghcr.io/devcontainers/features/node:1": {}
   },
   "postCreateCommand": "bash .devcontainer/scripts/post-create.sh",
   "postStartCommand": "echo 'Run ./devcontainer-setup.sh from your host to apply dotfiles.'",
-  "customizations": {
-    "vscode": {
-      "settings": {},
-      "extensions": [
-        "github.copilot",
-        "github.copilot-chat"
-      ]
-    }
-  }
+  "customizations": {}
 }

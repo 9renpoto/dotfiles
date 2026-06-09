@@ -1,6 +1,10 @@
 tap 'neovim/neovim'
 tap 'hashicorp/tap'
 
+cask "1password"
+cask "gather"
+cask "orbstack"
+cask "slack"
 cask 'alacritty'
 cask 'ankerwork'
 cask 'bitwarden'
@@ -17,10 +21,8 @@ brew 'actionlint'
 brew 'antidote'
 brew 'awscli'
 brew 'bat'
-brew 'biome'
 brew 'carapace'
 brew 'chezmoi'
-brew 'cspell'
 brew 'devcontainer'
 brew 'direnv'
 brew 'eza'
@@ -45,4 +47,3 @@ brew 'stylua'
 brew 'tig'
 brew 'tmux'
 brew 'typos-cli'
-brew 'zig'
