@@ -2,6 +2,7 @@ tap 'neovim/neovim'
 tap 'hashicorp/tap'
 
 cask "1password"
+cask "antigravity-cli"
 cask "gather"
 cask "orbstack"
 cask "slack"
