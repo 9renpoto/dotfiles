@@ -1,5 +1,6 @@
 tap 'neovim/neovim'
-tap 'hashicorp/tap'
+tap 'fwdcloudsec/granted'
+tap "songmu/tap"
 
 cask "1password"
 cask "antigravity-cli"
@@ -17,6 +18,7 @@ cask 'google-chrome'
 cask 'obsidian'
 cask 'visual-studio-code'
 
+brew "songmu/tap/ecschedule"
 brew 'act'
 brew 'actionlint'
 brew 'antidote'
@@ -28,6 +30,7 @@ brew 'devcontainer'
 brew 'direnv'
 brew 'eza'
 brew 'fd'
+brew 'fwdcloudsec/granted/granted'
 brew 'fzf'
 brew 'gh'
 brew 'ghq'
