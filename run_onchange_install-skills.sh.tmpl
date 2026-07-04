@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Skillsfile hash: {{ include "Skillsfile" | sha256sum }}
+
+if command -v gh >/dev/null 2>&1; then
+    echo "Installing/updating gh skills from Skillsfile..."
+    while read -r line; do
+        # Ignore comments and empty lines
+        [[ "$line" =~ ^#.*$ ]] || [[ -z "$line" ]] && continue
+        
+        # Check if the line already specifies agent/scope flags
+        if [[ "$line" =~ "--agent" ]] || [[ "$line" =~ "--scope" ]] || [[ "$line" =~ "--dir" ]]; then
+            echo "Installing skill (explicit flags): $line"
+            gh skill install $line || true
+        else
+            echo "Installing skill (default agents/scope): $line"
+            for agent in claude-code gemini-cli github-copilot; do
+                gh skill install $line --agent "$agent" --scope user || true
+            done
+        fi
+    done < "{{ joinPath .chezmoi.sourceDir "Skillsfile" }}"
+fi

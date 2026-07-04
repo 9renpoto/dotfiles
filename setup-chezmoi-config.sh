@@ -103,24 +103,6 @@ main() {
             echo "  github_identity_file = \"$github_ssh_key\""
         fi
 
-        if [ -n "${homelabs_vmware_host_name:-}" ]; then
-            echo ""
-            echo "[data.ssh.homelabs_vmware]"
-            echo "  host_name = \"$homelabs_vmware_host_name\""
-
-            if [ -n "${homelabs_vmware_user:-}" ]; then
-                echo "  user = \"$homelabs_vmware_user\""
-            fi
-
-            if [ -n "${homelabs_vmware_port:-}" ]; then
-                echo "  port = $homelabs_vmware_port"
-            fi
-
-            if [ -n "${homelabs_vmware_identity_file:-}" ]; then
-                echo "  identity_file = \"$homelabs_vmware_identity_file\""
-            fi
-        fi
-
         # Machine profile
         if [ -n "${machine_profile:-}" ]; then
             echo ""
@@ -149,11 +131,6 @@ main() {
     echo "  ${CHEZMOI_CONFIG_FILE}"
     echo
     info "To apply your dotfiles with this configuration:"
-    echo "  chezmoi apply"
-}
-
-main "$@"
- dotfiles with this configuration:"
     echo "  chezmoi apply"
 }
 

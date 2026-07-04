@@ -3,9 +3,11 @@ AGENTS.md
 Brewfile
 README.md
 SECURITY.md
+Skillsfile
 initialize.sh
 lefthook.yml
 .gitignore
+
 
 # Managed by package managers
 config/fish

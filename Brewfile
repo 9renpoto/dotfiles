@@ -1,24 +1,19 @@
 tap 'neovim/neovim'
-tap 'fwdcloudsec/granted'
-tap "songmu/tap"
 
-cask "1password"
-cask "antigravity-cli"
-cask "gather"
-cask "orbstack"
-cask "slack"
+cask '1password'
 cask 'alacritty'
 cask 'ankerwork'
+cask 'antigravity-cli'
 cask 'bitwarden'
-cask 'copilot-cli'
 cask 'firefox@nightly', args: { language: 'en' }
 cask 'font-jetbrains-mono-nerd-font'
+cask 'gather'
 cask 'gcloud-cli'
 cask 'google-chrome'
 cask 'obsidian'
-cask 'visual-studio-code'
+cask 'orbstack'
+cask 'slack'
 
-brew "songmu/tap/ecschedule"
 brew 'act'
 brew 'actionlint'
 brew 'antidote'
@@ -26,11 +21,11 @@ brew 'awscli'
 brew 'bat'
 brew 'carapace'
 brew 'chezmoi'
+brew 'cspell'
 brew 'devcontainer'
 brew 'direnv'
 brew 'eza'
 brew 'fd'
-brew 'fwdcloudsec/granted/granted'
 brew 'fzf'
 brew 'gh'
 brew 'ghq'
@@ -51,3 +46,4 @@ brew 'stylua'
 brew 'tig'
 brew 'tmux'
 brew 'typos-cli'
+brew 'zig'
