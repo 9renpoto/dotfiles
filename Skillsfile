@@ -1,0 +1,16 @@
+# GitHub CLI Agent Skills to install
+# Format: <owner/repo> <skill_name> [optional flags]
+#
+# If no flags are provided, skills are installed for claude-code, gemini-cli, and github-copilot at the user scope.
+
+# Core Skills from github/awesome-copilot
+github/awesome-copilot context-map
+github/awesome-copilot documentation-writer
+github/awesome-copilot doublecheck
+github/awesome-copilot gh-cli
+github/awesome-copilot git-commit
+github/awesome-copilot github-issues
+
+# Engineering Skills from mattpocock/skills
+mattpocock/skills engineering/grill-with-docs
+mattpocock/skills productivity/grill-me

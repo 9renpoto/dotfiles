@@ -46,7 +46,6 @@ For example, to change the Git email address:
 ### Environment-Specific Data
 
 - Global defaults live in `chezmoidata.toml`; platform-specific files such as `chezmoidata.darwin.toml.tmpl` and `chezmoidata.linux.toml` layer on automatic values (e.g., the Homebrew prefix).
-- Host-specific tweaks can be added by extending the override maps inside the platform templates or by adding per-host data files that follow chezmoi's naming (for example `chezmoidata.<hostname>.toml`).
 - Sensitive or machine-local overrides can stay outside the repo: use `~/.config/chezmoi/chezmoi.toml` and nest keys under `[data]` to match the structure in `chezmoidata`. For the GitHub SSH key, set:
 
   ```toml
@@ -54,17 +53,7 @@ For example, to change the Git email address:
     github_identity_file = "~/.ssh/your_custom_key"
   ```
 
-- To manage access to a VMware guest provisioned from `9renpoto/homelabs`, add a host-specific block:
-
-  ```toml
-  [data.ssh.homelabs_vmware]
-    host_name = "192.168.10.20"
-    user = "ubuntu"
-    port = 22
-    identity_file = "~/.ssh/homelabs-vmware"
-  ```
-
-- `private_dot_ssh/config.tmpl` renders `Host github.com` and, when `data.ssh.homelabs_vmware.host_name` is set, also renders `Host homelabs-vmware`. Both entries fall back to `~/.ssh/id_ed25519` when no `identity_file` override is defined.
+- `private_dot_ssh/config.tmpl` renders `Host github.com` and falls back to `~/.ssh/id_ed25519` when no `identity_file` override is defined.
 
 ### Secret Management
 
@@ -82,7 +71,6 @@ This script will prompt you for:
 - WakaTime API key (optional)
 - Email address override (optional)
 - Custom SSH key path (optional)
-- homelabs VMware HostName/IP, user, port, and SSH key path (optional)
 - Machine profile (optional)
 
 #### Manual Setup
