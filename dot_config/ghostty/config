@@ -1,0 +1,42 @@
+# Ghostty config
+# 設定リファレンス: https://ghostty.org/docs/config
+# 全オプション: `ghostty +show-config --default --docs`
+# 注意: 行末インラインコメント（値 # コメント）は不可。コメントは行単位で。
+
+# ── フォント ───────────────────────────────
+font-family = "JetBrainsMono Nerd Font"
+font-size = 13
+# macOSで文字を太く・くっきり
+font-thicken = true
+# 行間を少し広げて読みやすく
+adjust-cell-height = 8%
+
+# ── テーマ（OS の外観に自動追従）─────────────
+# dark = Dracula（現行 Alacritty と同系）、light = Catppuccin Latte。
+# テーマ名一覧・プレビューは `ghostty +list-themes`
+theme = light:Catppuccin Latte,dark:Dracula
+# 低すぎるコントラストを自動で持ち上げ、読めない色を防ぐ
+minimum-contrast = 1.1
+
+# ── ウィンドウ ─────────────────────────────
+# 内側の余白
+window-padding-x = 8
+window-padding-y = 8
+# 背景の透過とすりガラス（macOS）
+background-opacity = 0.95
+background-blur = true
+# macOS のタイトルバー: native / transparent / tabs / hidden
+macos-titlebar-style = transparent
+# 終了時のウィンドウ状態を復元
+window-save-state = always
+
+# ── カーソル ───────────────────────────────
+cursor-style = block
+cursor-style-blink = true
+mouse-hide-while-typing = true
+
+# ── その他 ─────────────────────────────────
+# 選択で自動コピー
+copy-on-select = clipboard
+# スクロールバック上限（約100MB。デフォルトは約10MB）
+scrollback-limit = 100000000

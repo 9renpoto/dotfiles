@@ -10,6 +10,7 @@ cask 'firefox@nightly', args: { language: 'en' }
 cask 'font-jetbrains-mono-nerd-font'
 cask 'gather'
 cask 'gcloud-cli'
+cask 'ghostty'
 cask 'google-chrome'
 cask 'obsidian'
 cask 'orbstack'
