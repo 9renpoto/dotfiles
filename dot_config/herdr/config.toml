@@ -1,0 +1,21 @@
+onboarding = false
+
+[theme]
+# Follow macOS light/dark appearance
+auto_switch = true
+dark_name = "dracula"
+light_name = "catppuccin-latte"
+
+[ui]
+show_agent_labels_on_pane_borders = true
+# Surface agents that need attention first
+agent_panel_sort = "priority"
+
+[ui.toast]
+# Deliver completion / input-request notifications to macOS Notification Center
+delivery = "system"
+
+[experimental]
+# Japanese IME support on macOS
+reveal_hidden_cursor_for_cjk_ime = true
+switch_ascii_input_source_in_prefix = true
