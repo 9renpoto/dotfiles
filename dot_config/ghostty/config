@@ -12,9 +12,11 @@ font-thicken = true
 adjust-cell-height = 8%
 
 # ── テーマ（OS の外観に自動追従）─────────────
-# dark = Dracula（現行 Alacritty と同系）、light = Catppuccin Latte。
+# dark = Dracula、light = Kanagawa Lotus。
+# herdr は light_name = "terminal" で端末パレットに委譲するため、
+# ライトの見え方はこの ghostty テーマが全て決める（白浮きの二層問題を回避）。
 # テーマ名一覧・プレビューは `ghostty +list-themes`
-theme = light:Catppuccin Latte,dark:Dracula
+theme = light:Kanagawa Lotus,dark:Dracula
 # 低すぎるコントラストを自動で持ち上げ、読めない色を防ぐ
 minimum-contrast = 1.1
 

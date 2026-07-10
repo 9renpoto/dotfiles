@@ -1,10 +1,12 @@
 onboarding = false
 
 [theme]
-# Follow macOS light/dark appearance
+# Defer to the terminal (ghostty) palette in both light and dark, so herdr
+# never paints its own theme over the terminal (avoids the light-mode white
+# background bleed). ghostty handles the actual light/dark switching.
 auto_switch = true
-dark_name = "dracula"
-light_name = "catppuccin-latte"
+dark_name = "terminal"
+light_name = "terminal"
 
 [ui]
 show_agent_labels_on_pane_borders = true
