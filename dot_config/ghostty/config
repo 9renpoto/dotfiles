@@ -4,7 +4,10 @@
 # 注意: 行末インラインコメント（値 # コメント）は不可。コメントは行単位で。
 
 # ── フォント ───────────────────────────────
-font-family = "JetBrainsMono Nerd Font"
+# 英数は SF Mono、日本語は Hiragino Sans（ヒラギノ角ゴ）でmacOS純正の見た目に。
+# Nerd Font 記号(starship のアイコン等)は ghostty 内蔵の Symbols Nerd Font にフォールバック。
+font-family = "SF Mono"
+font-family = "Hiragino Sans"
 font-size = 13
 # macOSで文字を太く・くっきり
 font-thicken = true

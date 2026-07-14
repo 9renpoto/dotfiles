@@ -1,14 +1,14 @@
 
 [font.bold]
-family = "JetBrainsMono Nerd Font"
+family = "UDEV Gothic NF"
 style = "Bold"
 
 [font.italic]
-family = "JetBrainsMono Nerd Font"
+family = "UDEV Gothic NF"
 style = "Italic"
 
 [font.normal]
-family = "JetBrainsMono Nerd Font"
+family = "UDEV Gothic NF"
 style = "Regular"
 
 [general]

@@ -10,7 +10,9 @@ cask 'chatgpt'
 cask 'claude'
 cask 'codexbar'
 cask 'firefox@nightly', args: { language: 'en' }
-cask 'font-jetbrains-mono-nerd-font'
+# pkgインストーラでsudoパスワードを要求されるため手動インストールが必要
+cask 'font-sf-mono'
+cask 'font-udev-gothic-nf'
 cask 'gather'
 cask 'gcloud-cli'
 cask 'ghostty'
