@@ -30,6 +30,23 @@ Before running `chezmoi apply` on macOS, make sure the base toolchain is ready:
 - Install Homebrew if it's missing (see [brew.sh](https://brew.sh/) for the latest install command)
 - Confirm Homebrew works: `brew doctor`
 
+### Windows Preparation
+
+Run the Windows bootstrap from PowerShell in a development clone:
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\initialize.ps1
+```
+
+The script imports `winget-packages.json`, refreshes `PATH` for the current
+process, and applies the local source state with `chezmoi`. Use
+`.\initialize.ps1 -SkipPackages` to reapply only the dotfiles, or
+`.\initialize.ps1 -SkipApply` to install only the packages. It also configures
+the ghq root as `%USERPROFILE%\src` on Windows and the corresponding
+`/mnt/<drive>/Users/<user>/src` path in the default WSL distribution. Override
+the location with `.\initialize.ps1 -GhqRoot D:\src` when needed.
+
 ## Configuration
 
 Some configurations can be customized using variables. Create a `~/.config/chezmoi/chezmoi.toml` file to override default values.
@@ -148,6 +165,7 @@ Use `chezmoidata.darwin.toml.tmpl` as a starting point when you need to pin macO
 - `chezmoi update --apply` pulls the latest repository changes and reapplies them.
 - `brew bundle --file=Brewfile` keeps CLI/GUI packages in sync with the tracked Brewfile.
 - `brew bundle check --file=Brewfile` inspects for drift; pair with `brew bundle cleanup --file=Brewfile` to prune unused packages.
+- `winget import --import-file winget-packages.json --ignore-unavailable --ignore-versions` installs the Windows toolset.
 - `lefthook run pre-commit --all-files` runs Secretlint locally; enable the hook permanently with `lefthook install`.
 
 ## Working Locally

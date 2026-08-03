@@ -4,7 +4,9 @@ Brewfile
 README.md
 SECURITY.md
 initialize.sh
+initialize.ps1
 lefthook.yml
+winget-packages.json
 .gitignore
 
 # Managed by package managers
