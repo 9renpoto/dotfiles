@@ -5,7 +5,9 @@ README.md
 SECURITY.md
 Skillsfile
 initialize.sh
+initialize.ps1
 lefthook.yml
+winget-packages.json
 .gitignore
 
 
