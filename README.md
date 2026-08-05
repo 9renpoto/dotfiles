@@ -47,6 +47,11 @@ the ghq root as `%USERPROFILE%\src` on Windows and the corresponding
 `/mnt/<drive>/Users/<user>/src` path in the default WSL distribution. Override
 the location with `.\initialize.ps1 -GhqRoot D:\src` when needed.
 
+PowerShell 5.1 and PowerShell 7 load the shared
+`~/.config/powershell/profile.ps1` profile. The shared profile initializes
+Starship and activates mise. Their cross-platform configuration lives in
+`~/.config/starship.toml` and `~/.config/mise/config.toml`.
+
 ## Configuration
 
 Some configurations can be customized using variables. Create a `~/.config/chezmoi/chezmoi.toml` file to override default values.
