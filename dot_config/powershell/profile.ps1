@@ -1,8 +1,3 @@
-if ($global:DotfilesPowerShellProfileLoaded) {
-  return
-}
-$global:DotfilesPowerShellProfileLoaded = $true
-
 if (Get-Command starship -ErrorAction SilentlyContinue) {
   Invoke-Expression (& starship init powershell)
 }

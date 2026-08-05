@@ -23,18 +23,41 @@ function Install-ProfileLoader {
   if (-not (Test-Path -LiteralPath $Path)) {
     if ($CreateIfMissing) {
       [IO.File]::WriteAllText($Path, $loader, $utf8WithoutBom)
+      return $true
     }
-    return
+    return $false
   }
 
-  $currentContent = (Get-Content -Raw -LiteralPath $Path).Trim()
+  $currentContent = [IO.File]::ReadAllText($Path).Trim()
   if (
     $currentContent.Length -eq 0 -or
     $currentContent -eq $legacyProfile -or
     $currentContent -eq $loader.Trim()
   ) {
     [IO.File]::WriteAllText($Path, $loader, $utf8WithoutBom)
+    return $true
   } else {
+    Write-Warning "Preserving customized PowerShell profile: $Path"
+    return $false
+  }
+}
+
+function Remove-MigratedProfileContent {
+  param(
+    [Parameter(Mandatory)][string]$Path
+  )
+
+  if (-not (Test-Path -LiteralPath $Path)) {
+    return
+  }
+
+  $currentContent = [IO.File]::ReadAllText($Path).Trim()
+  if (
+    $currentContent -eq $legacyProfile -or
+    $currentContent -eq $loader.Trim()
+  ) {
+    [IO.File]::WriteAllText($Path, '', $utf8WithoutBom)
+  } elseif ($currentContent.Length -gt 0) {
     Write-Warning "Preserving customized PowerShell profile: $Path"
   }
 }
@@ -44,10 +67,12 @@ foreach ($profileDirectoryName in @('WindowsPowerShell', 'PowerShell')) {
   New-Item -ItemType Directory -Path $profileDirectory -Force | Out-Null
 
   $allHostsProfile = Join-Path $profileDirectory 'profile.ps1'
-  Install-ProfileLoader -Path $allHostsProfile -CreateIfMissing
+  $loaderInstalled = Install-ProfileLoader -Path $allHostsProfile -CreateIfMissing
 
-  $currentHostProfile = Join-Path $profileDirectory 'Microsoft.PowerShell_profile.ps1'
-  Install-ProfileLoader -Path $currentHostProfile
+  if ($loaderInstalled) {
+    $currentHostProfile = Join-Path $profileDirectory 'Microsoft.PowerShell_profile.ps1'
+    Remove-MigratedProfileContent -Path $currentHostProfile
+  }
 }
 
 Write-Host "PowerShell profiles load $sharedProfilePath"
