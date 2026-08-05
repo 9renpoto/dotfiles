@@ -47,6 +47,17 @@ the ghq root as `%USERPROFILE%\src` on Windows and the corresponding
 `/mnt/<drive>/Users/<user>/src` path in the default WSL distribution. Override
 the location with `.\initialize.ps1 -GhqRoot D:\src` when needed.
 
+The winget manifest installs WakaTime CLI. To configure its API key without
+showing it in the terminal, run:
+
+```powershell
+.\initialize.ps1 -SkipPackages -ConfigureWakaTime
+```
+
+The key is stored only in the local chezmoi config, then rendered into
+`~/.wakatime.cfg`. Existing `[data.wakatime]` settings are preserved.
+The managed Neovim configuration already includes the WakaTime plugin.
+
 PowerShell 5.1 and PowerShell 7 load the shared
 `~/.config/powershell/profile.ps1` profile. The shared profile initializes
 Starship and activates mise. Their cross-platform configuration lives in

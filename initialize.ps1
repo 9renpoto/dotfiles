@@ -2,6 +2,7 @@
 param(
   [switch]$SkipPackages,
   [switch]$SkipApply,
+  [switch]$ConfigureWakaTime,
   [string]$GhqRoot = (Join-Path $HOME 'src')
 )
 
@@ -44,6 +45,49 @@ function Initialize-ChezmoiConfig {
     $config + [Environment]::NewLine,
     [Text.UTF8Encoding]::new($false)
   )
+}
+
+function Add-WakaTimeConfig {
+  param([Parameter(Mandatory)][string]$ConfigPath)
+
+  $configContent = [IO.File]::ReadAllText($ConfigPath)
+  if ($configContent -match '(?m)^\s*\[data\.wakatime\]\s*$') {
+    Write-Info 'Existing WakaTime configuration was preserved.'
+    return
+  }
+
+  $secureApiKey = Read-Host 'Enter your WakaTime API key' -AsSecureString
+  if ($secureApiKey.Length -eq 0) {
+    Write-Warning 'No WakaTime API key was entered; configuration was skipped.'
+    return
+  }
+
+  $apiKeyPointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureApiKey)
+  try {
+    $apiKey = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($apiKeyPointer)
+    $escapedApiKey = $apiKey.Replace('\', '\\').Replace('"', '\"')
+    $newLine = [Environment]::NewLine
+    $prefix = if ($configContent.Length -eq 0) {
+      ''
+    } elseif ($configContent.EndsWith("\n")) {
+      $newLine
+    } else {
+      $newLine + $newLine
+    }
+    $wakatimeConfig = @"
+[data.wakatime]
+  api_key = "$escapedApiKey"
+"@
+    [IO.File]::AppendAllText(
+      $ConfigPath,
+      $prefix + $wakatimeConfig.Trim() + $newLine,
+      [Text.UTF8Encoding]::new($false)
+    )
+  } finally {
+    [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($apiKeyPointer)
+  }
+
+  Write-Info 'WakaTime API key was added to the local chezmoi config.'
 }
 
 function Set-GhqRoot {
@@ -120,6 +164,10 @@ if (-not $SkipApply) {
   }
 
   Initialize-ChezmoiConfig
+  if ($ConfigureWakaTime) {
+    $chezmoiConfigPath = Join-Path $HOME '.config\chezmoi\chezmoi.toml'
+    Add-WakaTimeConfig -ConfigPath $chezmoiConfigPath
+  }
   Write-Info 'Applying dotfiles with chezmoi'
   $chezmoiPath = $chezmoi.Source
   & $chezmoiPath apply --source $repositoryRoot --destination $HOME
