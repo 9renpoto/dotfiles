@@ -20,7 +20,7 @@ config/nvim
 
 # Preserve host-specific Git settings on Windows
 {{- if eq .chezmoi.os "windows" }}
-dot_gitconfig.tmpl
+.gitconfig
 {{ end -}}
 
 # Devcontainer-specific ignores
