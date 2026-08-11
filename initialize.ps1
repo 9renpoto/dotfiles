@@ -90,30 +90,77 @@ function Add-WakaTimeConfig {
   Write-Info 'WakaTime API key was added to the local chezmoi config.'
 }
 
-function Set-GhqRoot {
-  param([Parameter(Mandatory)][string]$Root)
-
-  $git = Get-Command git.exe -ErrorAction SilentlyContinue
-  if (-not $git) {
-    throw 'git.exe was not found after package installation.'
-  }
+function Write-GhqConfig {
+  param(
+    [Parameter(Mandatory)][string]$ConfigPath,
+    [Parameter(Mandatory)][string]$Root
+  )
 
   $resolvedRoot = [IO.Path]::GetFullPath($Root)
   New-Item -ItemType Directory -Path $resolvedRoot -Force | Out-Null
 
-  $gitPath = $git.Source
-  & $gitPath config --global ghq.root ($resolvedRoot -replace '\\', '/')
-  if ($LASTEXITCODE -ne 0) {
-    throw "Failed to configure the Windows ghq root at $resolvedRoot."
+  $normalizedRoot = $resolvedRoot -replace '\\', '/'
+  $escapedRoot = $normalizedRoot.Replace('\', '\\').Replace('"', '\"')
+  $rootSetting = "  root = `"$escapedRoot`""
+  $lines = [Collections.Generic.List[string]]::new()
+  $lines.AddRange([IO.File]::ReadAllLines($ConfigPath))
+
+  $sectionIndex = -1
+  for ($index = 0; $index -lt $lines.Count; $index++) {
+    if ($lines[$index] -match '^\s*\[data\.ghq\]\s*$') {
+      $sectionIndex = $index
+      break
+    }
   }
+
+  if ($sectionIndex -eq -1) {
+    if ($lines.Count -gt 0 -and $lines[$lines.Count - 1].Length -gt 0) {
+      $lines.Add('')
+    }
+    $lines.Add('[data.ghq]')
+    $lines.Add($rootSetting)
+  } else {
+    $nextSectionIndex = $lines.Count
+    for ($index = $sectionIndex + 1; $index -lt $lines.Count; $index++) {
+      if ($lines[$index] -match '^\s*\[') {
+        $nextSectionIndex = $index
+        break
+      }
+    }
+
+    $rootIndex = -1
+    for ($index = $sectionIndex + 1; $index -lt $nextSectionIndex; $index++) {
+      if ($lines[$index] -match '^\s*root\s*=') {
+        $rootIndex = $index
+        break
+      }
+    }
+
+    if ($rootIndex -eq -1) {
+      $lines.Insert($nextSectionIndex, $rootSetting)
+    } else {
+      $lines[$rootIndex] = $rootSetting
+    }
+  }
+
+  [IO.File]::WriteAllLines(
+    $ConfigPath,
+    $lines,
+    [Text.UTF8Encoding]::new($false)
+  )
   Write-Info "Windows ghq root: $resolvedRoot"
+  return $resolvedRoot
+}
+
+function Sync-WslGhqRoot {
+  param([Parameter(Mandatory)][string]$Root)
 
   if (-not (Get-Command wsl.exe -ErrorAction SilentlyContinue)) {
     Write-Warning 'WSL was not found; skipped WSL ghq root configuration.'
     return
   }
 
-  $wslRootOutput = & wsl.exe --exec wslpath -a -u $resolvedRoot 2>$null
+  $wslRootOutput = & wsl.exe --exec wslpath -a -u $Root 2>$null
   if ($LASTEXITCODE -ne 0 -or -not $wslRootOutput) {
     Write-Warning 'Could not convert the Windows ghq root to a WSL path.'
     return
@@ -164,8 +211,9 @@ if (-not $SkipApply) {
   }
 
   Initialize-ChezmoiConfig
+  $chezmoiConfigPath = Join-Path $HOME '.config\chezmoi\chezmoi.toml'
+  $resolvedGhqRoot = Write-GhqConfig -ConfigPath $chezmoiConfigPath -Root $GhqRoot
   if ($ConfigureWakaTime) {
-    $chezmoiConfigPath = Join-Path $HOME '.config\chezmoi\chezmoi.toml'
     Add-WakaTimeConfig -ConfigPath $chezmoiConfigPath
   }
   Write-Info 'Applying dotfiles with chezmoi'
@@ -176,7 +224,7 @@ if (-not $SkipApply) {
     throw "chezmoi apply failed with exit code $LASTEXITCODE."
   }
 
-  Set-GhqRoot -Root $GhqRoot
+  Sync-WslGhqRoot -Root $resolvedGhqRoot
 }
 
 Write-Info 'Windows dotfiles initialization complete'
