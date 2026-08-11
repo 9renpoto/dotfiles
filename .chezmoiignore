@@ -18,6 +18,11 @@ config/nvim
 # Development artifacts
 .git/
 
+# Preserve host-specific Git settings on Windows
+{{- if eq .chezmoi.os "windows" }}
+dot_gitconfig.tmpl
+{{ end -}}
+
 # Devcontainer-specific ignores
 {{- if eq (env "REMOTE_CONTAINERS") "true" }}
 dot_gitconfig.tmpl

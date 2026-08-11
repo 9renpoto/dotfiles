@@ -152,6 +152,30 @@ function Write-GhqConfig {
   return $resolvedRoot
 }
 
+function Add-GitConfigInclude {
+  $git = Get-Command git.exe -ErrorAction SilentlyContinue
+  if (-not $git) {
+    throw 'git.exe was not found after package installation.'
+  }
+
+  $gitProcess = Start-Process `
+    -FilePath $git.Source `
+    -ArgumentList @(
+      'config',
+      '--global',
+      '--replace-all',
+      'include.path',
+      '~/.config/git/.gitconfig'
+    ) `
+    -NoNewWindow `
+    -Wait `
+    -PassThru
+  if ($gitProcess.ExitCode -ne 0) {
+    throw 'Failed to configure the managed Git config include.'
+  }
+  Write-Info 'Windows Git config includes ~/.config/git/.gitconfig'
+}
+
 function Sync-WslGhqRoot {
   param([Parameter(Mandatory)][string]$Root)
 
@@ -224,6 +248,7 @@ if (-not $SkipApply) {
     throw "chezmoi apply failed with exit code $LASTEXITCODE."
   }
 
+  Add-GitConfigInclude
   Sync-WslGhqRoot -Root $resolvedGhqRoot
 }
 
