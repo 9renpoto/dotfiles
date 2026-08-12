@@ -1,7 +1,0 @@
-{{- $ssh := default (dict) (get . "ssh") -}}
-{{- $githubIdentityFile := default "~/.ssh/id_ed25519" (get $ssh "github_identity_file") -}}
-Host github.com
-  HostName github.com
-  User git
-  IdentityFile {{$githubIdentityFile}}
-  IdentitiesOnly yes
