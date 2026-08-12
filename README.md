@@ -46,14 +46,18 @@ For example, to change the Git email address:
 ### Environment-Specific Data
 
 - Global defaults live in `chezmoidata.toml`; platform-specific files such as `chezmoidata.darwin.toml.tmpl` and `chezmoidata.linux.toml` layer on automatic values (e.g., the Homebrew prefix).
-- Sensitive or machine-local overrides can stay outside the repo: use `~/.config/chezmoi/chezmoi.toml` and nest keys under `[data]` to match the structure in `chezmoidata`. For the GitHub SSH key, set:
+- Sensitive or machine-local overrides can stay outside the repo: use `~/.config/chezmoi/chezmoi.toml` and nest keys under `[data]` to match the structure in `chezmoidata`.
 
-  ```toml
-  [data.ssh]
-    github_identity_file = "~/.ssh/your_custom_key"
-  ```
+### GitHub Authentication
 
-- `private_dot_ssh/config.tmpl` renders `Host github.com` and falls back to `~/.ssh/id_ed25519` when no `identity_file` override is defined.
+`~/.ssh/config` is **not** managed by this repository. GitHub authentication is delegated to the GitHub CLI:
+
+1. Authenticate once per machine: `gh auth login`
+2. `run_after_setup-git-credentials.sh` runs `gh auth setup-git` after every `chezmoi apply`, which registers `gh` as the git credential helper for GitHub over HTTPS.
+
+The script re-runs on each apply because applying rewrites `~/.gitconfig` from `dot_gitconfig.tmpl`, which is where `gh auth setup-git` stores its entries. It exits quietly when `gh` is missing or not authenticated, so first-time setup order does not matter — just re-run `chezmoi apply` after `gh auth login`.
+
+Run `gh config set git_protocol https` if you want git remotes to go through that credential helper. With the `ssh` protocol, `gh` keeps handing out SSH URLs and git authenticates with your default key (`~/.ssh/id_ed25519`) instead.
 
 ### Secret Management
 
@@ -70,7 +74,6 @@ Run the interactive setup script to create your configuration file:
 This script will prompt you for:
 - WakaTime API key (optional)
 - Email address override (optional)
-- Custom SSH key path (optional)
 - Machine profile (optional)
 
 #### Manual Setup
@@ -83,9 +86,6 @@ Alternatively, manually create or edit `~/.config/chezmoi/chezmoi.toml`:
 
 [data.user]
   email = "your-email@example.com"
-
-[data.ssh]
-  github_identity_file = "~/.ssh/your_custom_key"
 
 [data.machine]
   profile = "dev"
@@ -138,8 +138,8 @@ When hacking on the repository from a development clone, `./initialize.sh` ensur
 
 1. Clone the repository.
 2. Run `./initialize.sh`.
-3. Follow the prompts to configure your email, SSH key path, and other settings.
-   - For SSH keys on WSL, it's recommended to use **GitHub CLI** (`gh`) to create and manage your keys: `gh ssh-key add ~/.ssh/id_ed25519.pub`.
+3. Follow the prompts to configure your email and other settings.
+   - Run `gh auth login` so `gh auth setup-git` can wire up git credentials (see [GitHub Authentication](#github-authentication)).
 4. Switch to **zsh** if you haven't already: `chsh -s $(which zsh)`.
 
 ## Configuration Layout

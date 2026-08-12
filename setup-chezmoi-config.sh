@@ -63,11 +63,6 @@ main() {
     email=${email:-9renpoto@gmail.com}
     echo
 
-    # SSH key path (optional override)
-    read -rp "Enter custom SSH key path for GitHub [~/.ssh/id_ed25519]: " github_ssh_key
-    github_ssh_key=${github_ssh_key:-~/.ssh/id_ed25519}
-    echo
-
     # Machine profile (optional)
     read -rp "Enter machine profile (e.g., dev, work, personal) [dev]: " machine_profile
     machine_profile=${machine_profile:-dev}
@@ -94,13 +89,6 @@ main() {
             echo ""
             echo "[data.wakatime]"
             echo "  api_key = \"$wakatime_api_key\""
-        fi
-
-        # SSH
-        if [ -n "${github_ssh_key:-}" ]; then
-            echo ""
-            echo "[data.ssh]"
-            echo "  github_identity_file = \"$github_ssh_key\""
         fi
 
         # Machine profile
