@@ -7,13 +7,15 @@
 {{- end -}}
 {{- $core := default (dict) (get . "core") -}}
 {{- $editor := default "nvim" (get $core "editor") -}}
+{{- $ghq := default (dict) (get . "ghq") -}}
+{{- $ghqRoot := default "~/src" (get $ghq "root") -}}
 [user]
   name = Keisuke Umeno{{ if $email }}
   email = {{ $email }}{{ end }}
 [color]
   ui = auto
 [ghq]
-  root = ~/src
+  root = {{ $ghqRoot | quote }}
 [core]
   excludesfile = ~/.config/git/ignore
 [core]

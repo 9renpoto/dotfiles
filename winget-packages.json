@@ -23,6 +23,7 @@
         { "PackageIdentifier": "sharkdp.fd" },
         { "PackageIdentifier": "Starship.Starship" },
         { "PackageIdentifier": "twpayne.chezmoi" },
+        { "PackageIdentifier": "Wakatime.CLIWakatime" },
         { "PackageIdentifier": "x-motemen.ghq" }
       ],
       "SourceDetails": {

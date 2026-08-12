@@ -1,3 +1,4 @@
+{{ if ne .chezmoi.os "windows" -}}
 #!/bin/bash
 
 # Skillsfile hash: {{ include "Skillsfile" | sha256sum }}
@@ -20,3 +21,4 @@ if command -v gh >/dev/null 2>&1; then
         fi
     done < "{{ joinPath .chezmoi.sourceDir "Skillsfile" }}"
 fi
+{{ end -}}

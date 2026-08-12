@@ -2,6 +2,7 @@
 param(
   [switch]$SkipPackages,
   [switch]$SkipApply,
+  [switch]$ConfigureWakaTime,
   [string]$GhqRoot = (Join-Path $HOME 'src')
 )
 
@@ -46,30 +47,144 @@ function Initialize-ChezmoiConfig {
   )
 }
 
-function Set-GhqRoot {
-  param([Parameter(Mandatory)][string]$Root)
+function Add-WakaTimeConfig {
+  param([Parameter(Mandatory)][string]$ConfigPath)
 
+  $configContent = [IO.File]::ReadAllText($ConfigPath)
+  if ($configContent -match '(?m)^\s*\[data\.wakatime\]\s*$') {
+    Write-Info 'Existing WakaTime configuration was preserved.'
+    return
+  }
+
+  $secureApiKey = Read-Host 'Enter your WakaTime API key' -AsSecureString
+  if ($secureApiKey.Length -eq 0) {
+    Write-Warning 'No WakaTime API key was entered; configuration was skipped.'
+    return
+  }
+
+  $apiKeyPointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureApiKey)
+  try {
+    $apiKey = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($apiKeyPointer)
+    $escapedApiKey = $apiKey.Replace('\', '\\').Replace('"', '\"')
+    $newLine = [Environment]::NewLine
+    $prefix = if ($configContent.Length -eq 0) {
+      ''
+    } elseif ($configContent.EndsWith("\n")) {
+      $newLine
+    } else {
+      $newLine + $newLine
+    }
+    $wakatimeConfig = @"
+[data.wakatime]
+  api_key = "$escapedApiKey"
+"@
+    [IO.File]::AppendAllText(
+      $ConfigPath,
+      $prefix + $wakatimeConfig.Trim() + $newLine,
+      [Text.UTF8Encoding]::new($false)
+    )
+  } finally {
+    [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($apiKeyPointer)
+  }
+
+  Write-Info 'WakaTime API key was added to the local chezmoi config.'
+}
+
+function Write-GhqConfig {
+  param(
+    [Parameter(Mandatory)][string]$ConfigPath,
+    [Parameter(Mandatory)][string]$Root
+  )
+
+  $resolvedRoot = [IO.Path]::GetFullPath($Root)
+  New-Item -ItemType Directory -Path $resolvedRoot -Force | Out-Null
+
+  $normalizedRoot = $resolvedRoot -replace '\\', '/'
+  $escapedRoot = $normalizedRoot.Replace('\', '\\').Replace('"', '\"')
+  $rootSetting = "  root = `"$escapedRoot`""
+  $lines = [Collections.Generic.List[string]]::new()
+  $lines.AddRange([IO.File]::ReadAllLines($ConfigPath))
+
+  $sectionIndex = -1
+  for ($index = 0; $index -lt $lines.Count; $index++) {
+    if ($lines[$index] -match '^\s*\[data\.ghq\]\s*$') {
+      $sectionIndex = $index
+      break
+    }
+  }
+
+  if ($sectionIndex -eq -1) {
+    if ($lines.Count -gt 0 -and $lines[$lines.Count - 1].Length -gt 0) {
+      $lines.Add('')
+    }
+    $lines.Add('[data.ghq]')
+    $lines.Add($rootSetting)
+  } else {
+    $nextSectionIndex = $lines.Count
+    for ($index = $sectionIndex + 1; $index -lt $lines.Count; $index++) {
+      if ($lines[$index] -match '^\s*\[') {
+        $nextSectionIndex = $index
+        break
+      }
+    }
+
+    $rootIndex = -1
+    for ($index = $sectionIndex + 1; $index -lt $nextSectionIndex; $index++) {
+      if ($lines[$index] -match '^\s*root\s*=') {
+        $rootIndex = $index
+        break
+      }
+    }
+
+    if ($rootIndex -eq -1) {
+      $lines.Insert($nextSectionIndex, $rootSetting)
+    } else {
+      $lines[$rootIndex] = $rootSetting
+    }
+  }
+
+  [IO.File]::WriteAllLines(
+    $ConfigPath,
+    $lines,
+    [Text.UTF8Encoding]::new($false)
+  )
+  Write-Info "Windows ghq root: $resolvedRoot"
+  return $resolvedRoot
+}
+
+function Add-GitConfigInclude {
   $git = Get-Command git.exe -ErrorAction SilentlyContinue
   if (-not $git) {
     throw 'git.exe was not found after package installation.'
   }
 
-  $resolvedRoot = [IO.Path]::GetFullPath($Root)
-  New-Item -ItemType Directory -Path $resolvedRoot -Force | Out-Null
-
-  $gitPath = $git.Source
-  & $gitPath config --global ghq.root ($resolvedRoot -replace '\\', '/')
-  if ($LASTEXITCODE -ne 0) {
-    throw "Failed to configure the Windows ghq root at $resolvedRoot."
+  $gitProcess = Start-Process `
+    -FilePath $git.Source `
+    -ArgumentList @(
+      'config',
+      '--global',
+      '--replace-all',
+      'include.path',
+      '~/.config/git/.gitconfig'
+    ) `
+    -NoNewWindow `
+    -Wait `
+    -PassThru
+  if ($gitProcess.ExitCode -ne 0) {
+    throw 'Failed to configure the managed Git config include.'
   }
-  Write-Info "Windows ghq root: $resolvedRoot"
+  Write-Info 'Windows Git config includes ~/.config/git/.gitconfig'
+}
+
+function Sync-WslGhqRoot {
+  param([Parameter(Mandatory)][string]$Root)
 
   if (-not (Get-Command wsl.exe -ErrorAction SilentlyContinue)) {
     Write-Warning 'WSL was not found; skipped WSL ghq root configuration.'
     return
   }
 
-  $wslRootOutput = & wsl.exe --exec wslpath -a -u $resolvedRoot 2>$null
+  $wslRootOutput = & wsl.exe --exec wslpath -a -u $Root 2>$null
   if ($LASTEXITCODE -ne 0 -or -not $wslRootOutput) {
     Write-Warning 'Could not convert the Windows ghq root to a WSL path.'
     return
@@ -120,6 +235,11 @@ if (-not $SkipApply) {
   }
 
   Initialize-ChezmoiConfig
+  $chezmoiConfigPath = Join-Path $HOME '.config\chezmoi\chezmoi.toml'
+  $resolvedGhqRoot = Write-GhqConfig -ConfigPath $chezmoiConfigPath -Root $GhqRoot
+  if ($ConfigureWakaTime) {
+    Add-WakaTimeConfig -ConfigPath $chezmoiConfigPath
+  }
   Write-Info 'Applying dotfiles with chezmoi'
   $chezmoiPath = $chezmoi.Source
   & $chezmoiPath apply --source $repositoryRoot --destination $HOME
@@ -128,7 +248,8 @@ if (-not $SkipApply) {
     throw "chezmoi apply failed with exit code $LASTEXITCODE."
   }
 
-  Set-GhqRoot -Root $GhqRoot
+  Add-GitConfigInclude
+  Sync-WslGhqRoot -Root $resolvedGhqRoot
 }
 
 Write-Info 'Windows dotfiles initialization complete'
