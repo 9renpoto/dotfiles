@@ -6,6 +6,10 @@ SECURITY.md
 Skillsfile
 initialize.sh
 initialize.ps1
+devcontainer-setup.sh
+setup-chezmoi-config.sh
+scripts
+scripts/**
 lefthook.yml
 winget-packages.json
 .gitignore
