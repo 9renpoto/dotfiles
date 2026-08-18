@@ -27,9 +27,9 @@ chezmoi update --apply                           # pull + apply in one step
 ./initialize.sh                                  # bootstrap (installs chezmoi + Brewfile)
 bash .devcontainer/scripts/check-chezmoi.sh     # validate templates (same as CI)
 
-bun install                                      # install JS toolchain (after cloning)
 lefthook install                                 # enable pre-commit hook
-lefthook run pre-commit --all-files              # run Secretlint manually
+gitleaks git --staged                            # scan staged changes (what the hook runs)
+gitleaks dir .                                   # scan the whole working tree
 
 brew bundle --file=Brewfile                      # install packages
 brew bundle check --file=Brewfile               # check drift

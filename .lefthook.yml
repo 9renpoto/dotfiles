@@ -1,5 +1,6 @@
 pre-commit:
   commands:
-    secretlint:
-      glob: "*"
-      run: bun run secretlint -- {staged_files}
+    gitleaks:
+      # gitleaks is already a Brewfile dependency, so this needs no package
+      # manager or JS manifest.
+      run: gitleaks git --staged --redact --no-banner
