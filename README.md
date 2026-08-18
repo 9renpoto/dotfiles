@@ -164,7 +164,7 @@ Use `chezmoidata.darwin.toml.tmpl` as a starting point when you need to pin macO
 - `brew bundle --file=Brewfile` keeps CLI/GUI packages in sync with the tracked Brewfile.
 - `brew bundle check --file=Brewfile` inspects for drift; pair with `brew bundle cleanup --file=Brewfile` to prune unused packages.
 - `winget import --import-file winget-packages.json --ignore-unavailable --ignore-versions` installs the Windows toolset.
-- `lefthook run pre-commit --all-files` runs Secretlint locally; enable the hook permanently with `lefthook install`.
+- `gitleaks git --staged` is what the pre-commit hook runs; enable the hook permanently with `lefthook install`. Use `gitleaks dir .` to scan the whole working tree.
 
 ## Working Locally
 
