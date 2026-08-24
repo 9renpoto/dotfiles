@@ -3,7 +3,6 @@ AGENTS.md
 Brewfile
 README.md
 SECURITY.md
-Skillsfile
 initialize.sh
 initialize.ps1
 devcontainer-setup.sh

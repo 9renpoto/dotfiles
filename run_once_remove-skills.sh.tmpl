@@ -1,0 +1,49 @@
+{{ if ne .chezmoi.os "windows" -}}
+#!/bin/bash
+
+# Remove skills previously installed via Skillsfile
+SKILLS=(
+    "context-map"
+    "documentation-writer"
+    "doublecheck"
+    "gh-cli"
+    "git-commit"
+    "github-issues"
+    "grill-with-docs"
+    "grill-me"
+)
+
+AGENTS=(
+    "claude-code"
+    "gemini-cli"
+    "github-copilot"
+)
+
+SKILL_DIRS=(
+    "$HOME/.claude/skills"
+    "$HOME/.gemini/skills"
+    "$HOME/.copilot/skills"
+    "$HOME/.github-copilot/skills"
+    "$HOME/.agents/skills"
+    "$HOME/.config/github-copilot/skills"
+    "$HOME/.config/claude/skills"
+)
+
+echo "Removing installed skills..."
+
+for skill in "${SKILLS[@]}"; do
+    if command -v gh >/dev/null 2>&1; then
+        for agent in "${AGENTS[@]}"; do
+            gh skill remove "$skill" --agent "$agent" --scope user 2>/dev/null || true
+            gh skill uninstall "$skill" --agent "$agent" --scope user 2>/dev/null || true
+        done
+    fi
+
+    for base in "${SKILL_DIRS[@]}"; do
+        if [ -d "$base/$skill" ]; then
+            echo "Removing skill directory: $base/$skill"
+            rm -rf "$base/$skill"
+        fi
+    done
+done
+{{ end -}}
