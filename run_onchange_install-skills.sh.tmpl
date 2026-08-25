@@ -1,24 +1,152 @@
 {{ if ne .chezmoi.os "windows" -}}
 #!/bin/bash
-
+# Sync agent skills with the Skillsfile:
+#   - entries listed in the Skillsfile are installed/updated
+#   - entries dropped from the Skillsfile are uninstalled (user scope only)
+#
+# 'gh skill' has no uninstall command yet (cli/cli#13706), so removal means
+# deleting the directories reported by 'gh skill list' plus the matching entry
+# in gh's skill lock file.
+#
+# The previous state is tracked in $STATE_FILE so that skills installed by hand
+# (outside of the Skillsfile) are never touched.
+#
 # Skillsfile hash: {{ include "Skillsfile" | sha256sum }}
 
-if command -v gh >/dev/null 2>&1; then
-    echo "Installing/updating gh skills from Skillsfile..."
-    while read -r line; do
-        # Ignore comments and empty lines
-        [[ "$line" =~ ^#.*$ ]] || [[ -z "$line" ]] && continue
-        
-        # Check if the line already specifies agent/scope flags
-        if [[ "$line" =~ "--agent" ]] || [[ "$line" =~ "--scope" ]] || [[ "$line" =~ "--dir" ]]; then
-            echo "Installing skill (explicit flags): $line"
-            gh skill install $line || true
-        else
-            echo "Installing skill (default agents/scope): $line"
-            for agent in claude-code gemini-cli github-copilot; do
-                gh skill install $line --agent "$agent" --scope user || true
-            done
-        fi
-    done < "{{ joinPath .chezmoi.sourceDir "Skillsfile" }}"
+set -u
+
+SKILLSFILE="{{ joinPath .chezmoi.sourceDir "Skillsfile" }}"
+STATE_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/chezmoi/installed-skills.tsv"
+LOCK_FILE="$HOME/.agents/.skill-lock.json" # written by 'gh skill install' at user scope
+DEFAULT_AGENTS=(claude-code gemini-cli github-copilot)
+
+if ! command -v gh >/dev/null 2>&1; then
+    echo "gh not found; skipping skill sync."
+    exit 0
 fi
+
+if ! gh skill list --help >/dev/null 2>&1; then
+    echo "'gh skill' is unavailable (requires gh >= 2.90.0); skipping skill sync."
+    exit 0
+fi
+
+# Delete a skill directory reported by 'gh skill list', with guards so that a
+# surprising path never turns into a destructive rm.
+remove_skill_path() {
+    local path="$1"
+    [ -n "$path" ] || return 0
+    [ -e "$path" ] || return 0
+    if [ -f "$path" ]; then
+        path="$(dirname "$path")"
+    fi
+    case "$path" in
+        "$HOME"/*/skills/*) ;;
+        *)
+            echo "  refusing to remove unexpected path: $path"
+            return 0
+            ;;
+    esac
+    case "${path##*/}" in
+        skills | '' | . | ..)
+            echo "  refusing to remove the skills root: $path"
+            return 0
+            ;;
+    esac
+    echo "  removing $path"
+    rm -rf -- "$path"
+}
+
+# 'gh skill' has no uninstall command, so its lock file keeps an entry per skill
+# name even after the skill directories are gone. Drop the entry too, otherwise
+# 'gh skill update' keeps chasing a skill that is no longer installed.
+remove_lock_entry() {
+    local repo="$1" skill="$2" tmp
+    [ -f "$LOCK_FILE" ] || return 0
+    tmp="$(mktemp "${LOCK_FILE}.XXXXXX")" || return 0
+    if jq --arg repo "$repo" --arg name "$skill" '
+        if (.skills[$name].source // "") == $repo then del(.skills[$name]) else . end
+    ' "$LOCK_FILE" > "$tmp" 2>/dev/null; then
+        mv -- "$tmp" "$LOCK_FILE"
+    else
+        rm -f -- "$tmp"
+        echo "  could not update $LOCK_FILE; leaving it untouched."
+    fi
+}
+
+# 1. Read the desired state: one "<owner/repo>\t<skill>" key per line.
+desired=""
+while read -r repo skill rest || [ -n "$repo" ]; do
+    case "$repo" in '' | \#*) continue ;; esac
+    if [ -z "$skill" ]; then
+        echo "Skipping malformed Skillsfile entry: $repo"
+        continue
+    fi
+    skill_id="${skill%%@*}" # drop any @version suffix
+    desired="${desired}${repo}"$'\t'"${skill_id##*/}"$'\n'
+done < "$SKILLSFILE"
+
+# 2. Uninstall what disappeared from the Skillsfile since the last run.
+if [ -f "$STATE_FILE" ]; then
+    if ! command -v jq >/dev/null 2>&1; then
+        echo "jq not found; skipping removal of skills dropped from the Skillsfile."
+    else
+        installed="$(gh skill list --scope user --json skillName,sourceURL,path 2>/dev/null)"
+        [ -n "$installed" ] || installed="[]"
+        while IFS=$'\t' read -r repo skill || [ -n "$repo" ]; do
+            [ -n "$repo" ] && [ -n "$skill" ] || continue
+            printf '%s' "$desired" | grep -Fxq "${repo}"$'\t'"${skill}" && continue
+            echo "Removing skill dropped from Skillsfile: $repo $skill"
+            paths="$(printf '%s' "$installed" | jq -r --arg repo "$repo" --arg name "$skill" '
+                def repo_of(u):
+                    (u
+                     | sub("^[a-zA-Z]+://"; "")
+                     | sub("^git@"; "")
+                     | sub(":"; "/")
+                     | sub("\\.git$"; "")
+                     | split("/"))
+                    | (if (.[0] | test("\\.")) then .[1:] else . end)
+                    | .[0:2]
+                    | join("/");
+                .[]
+                | select((.skillName // "") == $name)
+                | select(repo_of(.sourceURL // "") == $repo)
+                | .path // empty
+            ')"
+            if [ -z "$paths" ]; then
+                echo "  no installed copy found at user scope."
+            else
+                while IFS= read -r path; do
+                    remove_skill_path "$path"
+                done <<EOF
+$paths
+EOF
+            fi
+            remove_lock_entry "$repo" "$skill"
+        done < "$STATE_FILE"
+    fi
+fi
+
+# 3. Install/update everything the Skillsfile asks for.
+echo "Installing/updating gh skills from Skillsfile..."
+while read -r repo skill rest || [ -n "$repo" ]; do
+    case "$repo" in '' | \#*) continue ;; esac
+    [ -n "$skill" ] || continue
+    case "$rest" in
+        *--agent* | *--scope* | *--dir*)
+            echo "Installing skill (explicit flags): $repo $skill $rest"
+            # shellcheck disable=SC2086 # $rest holds user-supplied flags
+            gh skill install "$repo" "$skill" $rest || true
+            ;;
+        *)
+            for agent in "${DEFAULT_AGENTS[@]}"; do
+                echo "Installing skill ($agent): $repo $skill"
+                gh skill install "$repo" "$skill" --agent "$agent" --scope user || true
+            done
+            ;;
+    esac
+done < "$SKILLSFILE"
+
+# 4. Record the state this run applied, for the next diff.
+mkdir -p "$(dirname "$STATE_FILE")"
+printf '%s' "$desired" > "$STATE_FILE"
 {{ end -}}

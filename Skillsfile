@@ -1,9 +1,14 @@
-# GitHub CLI Agent Skills to install
-# Format: <owner/repo> <skill_name> [optional flags]
+# GitHub CLI Agent Skills to install (see run_onchange_install-skills.sh.tmpl)
 #
-# If no flags are provided, skills are installed for claude-code, gemini-cli, and github-copilot at the user scope.
+# Format: <owner/repo> <skill_name>[@version] [optional flags]
+#
+# - No flags: installed for claude-code, gemini-cli and github-copilot at user scope.
+# - With --agent/--scope/--dir: the flags are passed through to `gh skill install` as-is.
+# - Removing a line uninstalls that skill on the next `chezmoi apply`
+#   (user scope only; --dir installs must be cleaned up by hand).
+# - Keep entries grouped by source repo and sorted alphabetically.
 
-# Core Skills from github/awesome-copilot
+# github/awesome-copilot
 github/awesome-copilot context-map
 github/awesome-copilot documentation-writer
 github/awesome-copilot doublecheck
@@ -11,6 +16,6 @@ github/awesome-copilot gh-cli
 github/awesome-copilot git-commit
 github/awesome-copilot github-issues
 
-# Engineering Skills from mattpocock/skills
+# mattpocock/skills
 mattpocock/skills engineering/grill-with-docs
 mattpocock/skills productivity/grill-me
