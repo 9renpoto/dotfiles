@@ -9,10 +9,6 @@
 # - Keep entries grouped by source repo and sorted alphabetically.
 
 # github/awesome-copilot
-github/awesome-copilot context-map
-github/awesome-copilot documentation-writer
-github/awesome-copilot doublecheck
-github/awesome-copilot gh-cli
 github/awesome-copilot git-commit
 github/awesome-copilot github-issues
 
