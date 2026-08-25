@@ -45,6 +45,7 @@ mise install                                     # sync language runtimes
 - **Language**: Chat responses should be in Japanese; commit messages and code comments should be in English
 - **Brewfile**: grouped (taps → casks → brews), sorted within groups
 - **New dotfiles**: `dot_config/<appname>/` for `~/.config/`, `dot_<name>` for `~/.<name>`
+- **Skillsfile**: one `gh skill` entry per line, grouped by repo and sorted; removing a line uninstalls that skill on the next `chezmoi apply`
 - **Secrets**: `private_dot_` prefix + template variables from `~/.config/chezmoi/chezmoi.toml`; never hardcode
 - **Shell scripts**: POSIX-compatible, pass `shellcheck`; gate OS-specific logic to avoid cross-platform breakage
 - **Indent**: 2 spaces (4 for Python), UTF-8, LF
