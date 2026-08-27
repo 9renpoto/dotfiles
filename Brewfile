@@ -1,3 +1,4 @@
+tap 'grafana/grafana'
 tap 'neovim/neovim'
 tap 'songmu/tap'
 
@@ -42,6 +43,7 @@ brew 'ghq'
 brew 'gibo'
 brew 'git'
 brew 'gitleaks'
+brew 'grafana/grafana/alloy'
 brew 'hadolint'
 brew 'herdr'
 brew 'jq'

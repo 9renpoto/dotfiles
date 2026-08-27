@@ -10,6 +10,10 @@ devcontainer-setup.sh
 setup-chezmoi-config.sh
 scripts
 scripts/**
+docs
+docs/**
+examples
+examples/**
 lefthook.yml
 winget-packages.json
 .gitignore

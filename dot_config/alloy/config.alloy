@@ -1,0 +1,35 @@
+logging {
+	level  = "info"
+	format = "logfmt"
+}
+
+prometheus.exporter.unix "macos" {
+	include_exporter_metrics = true
+}
+
+prometheus.scrape "macos" {
+	targets         = prometheus.exporter.unix.macos.targets
+	forward_to      = [prometheus.remote_write.grafana_cloud.receiver]
+	job_name        = "integrations/macos-node"
+	scrape_interval = "15s"
+}
+
+prometheus.exporter.self "alloy" { }
+
+prometheus.scrape "alloy" {
+	targets         = prometheus.exporter.self.alloy.targets
+	forward_to      = [prometheus.remote_write.grafana_cloud.receiver]
+	job_name        = "integrations/alloy"
+	scrape_interval = "30s"
+}
+
+prometheus.remote_write "grafana_cloud" {
+	endpoint {
+		url = sys.env("GRAFANA_CLOUD_PROMETHEUS_URL")
+
+		basic_auth {
+			username = sys.env("GRAFANA_CLOUD_PROMETHEUS_USERNAME")
+			password = sys.env("GRAFANA_CLOUD_API_KEY")
+		}
+	}
+}
