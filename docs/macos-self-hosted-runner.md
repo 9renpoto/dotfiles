@@ -16,8 +16,16 @@ free-tier usage.
 
 ## Configure Grafana Cloud credentials
 
-Add the following values to the local
-`~/.config/chezmoi/chezmoi.toml`. Never commit this file.
+Run the interactive setup. On a new machine, `initialize.sh` invokes it
+automatically. If the chezmoi configuration already exists, the script updates
+only the Grafana Cloud section and preserves other settings.
+
+```sh
+./setup-chezmoi-config.sh
+```
+
+The token prompt does not echo its value. The resulting local configuration is
+equivalent to the following. Never commit this file.
 
 ```toml
 [data.grafana_cloud]

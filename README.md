@@ -111,6 +111,7 @@ This script will prompt you for:
 - WakaTime API key (optional)
 - Email address override (optional)
 - Machine profile (optional)
+- Grafana Cloud metrics connection on macOS (optional; token input is hidden)
 
 #### Manual Setup
 
