@@ -4,3 +4,11 @@ updates:
     directory: "/.devcontainer"
     schedule:
       interval: "weekly"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "terraform"
+    directory: "/terraform/grafana"
+    schedule:
+      interval: "weekly"

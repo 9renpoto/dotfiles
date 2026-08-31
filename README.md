@@ -30,6 +30,10 @@ Before running `chezmoi apply` on macOS, make sure the base toolchain is ready:
 - Install Homebrew if it's missing (see [brew.sh](https://brew.sh/) for the latest install command)
 - Confirm Homebrew works: `brew doctor`
 
+For a private-repository GitHub Actions runner with Grafana Cloud monitoring,
+including Terraform-managed dashboards and alerts, see
+[the macOS self-hosted runner guide](docs/macos-self-hosted-runner.md).
+
 ### Windows Preparation
 
 Run the Windows bootstrap from PowerShell in a development clone:
@@ -108,6 +112,7 @@ This script will prompt you for:
 - WakaTime API key (optional)
 - Email address override (optional)
 - Machine profile (optional)
+- Grafana Cloud metrics connection on macOS (optional; token input is hidden)
 
 #### Manual Setup
 

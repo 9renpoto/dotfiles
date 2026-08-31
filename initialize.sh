@@ -44,11 +44,6 @@ EOM
 
 apply_with_chezmoi() {
     info "Applying dotfiles using chezmoi..."
-    # If the config file doesn't exist, run setup script to trigger prompts
-    if [ ! -f "$HOME/.config/chezmoi/chezmoi.toml" ]; then
-        info "Configuration file not found. Starting interactive setup..."
-        "$DOTFILES_ROOT/setup-chezmoi-config.sh"
-    fi
     chezmoi apply --source="$DOTFILES_ROOT" --destination="$HOME"
     info "chezmoi apply completed."
 }
@@ -60,12 +55,8 @@ ensure_chezmoi_config() {
         return 0
     fi
 
-    info "chezmoi config not found. Generating default config..."
-    if [ -x "$DOTFILES_ROOT/scripts/chezmoi-init" ]; then
-        "$DOTFILES_ROOT/scripts/chezmoi-init"
-    else
-        bash "$DOTFILES_ROOT/scripts/chezmoi-init"
-    fi
+    info "Chezmoi config not found. Starting interactive setup..."
+    "$DOTFILES_ROOT/setup-chezmoi-config.sh"
 }
 
 setup_homebrew() {
