@@ -52,3 +52,19 @@ unset GRAFANA_AUTH
 Integration upgrades are implemented by the provider as uninstall and
 reinstall operations. Always inspect `terraform plan` before applying provider
 or integration version updates.
+
+## Validation
+
+Run the same checks used by CI before committing changes:
+
+```sh
+terraform fmt -check -recursive
+terraform init -backend=false -lockfile=readonly
+terraform validate
+tflint --init
+tflint --format=compact
+```
+
+CI does not run `terraform plan` or `terraform apply` and does not receive
+Grafana credentials. Dependabot checks weekly for Terraform provider and GitHub
+Actions updates.
