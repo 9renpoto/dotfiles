@@ -58,9 +58,21 @@ brew services info grafana/grafana/alloy
 curl --fail http://127.0.0.1:12345/-/ready
 ```
 
-In Grafana Cloud, install the macOS integration or import its dashboards after
-the first metrics arrive. The configuration collects host and Alloy health
-metrics at low cardinality. Logs are excluded initially.
+Install the Grafana Cloud macOS integration with Terraform after the first
+metrics arrive. Do not install it from the Grafana Cloud UI first.
+
+```sh
+cd terraform/grafana
+terraform init
+terraform plan
+terraform apply
+```
+
+See [`terraform/grafana/README.md`](../terraform/grafana/README.md) for service
+account permissions and authentication. Terraform manages the dashboards and
+alert rules; chezmoi continues to manage Alloy and its metrics write token. The
+configuration collects host and Alloy health metrics at low cardinality. Logs
+are excluded initially.
 
 ## Register the GitHub Actions runner
 

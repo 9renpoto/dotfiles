@@ -7,10 +7,24 @@ prometheus.exporter.unix "macos" {
 	include_exporter_metrics = true
 }
 
+discovery.relabel "macos" {
+	targets = prometheus.exporter.unix.macos.targets
+
+	rule {
+		target_label = "instance"
+		replacement  = constants.hostname
+	}
+
+	rule {
+		target_label = "job"
+		replacement  = "integrations/macos-node"
+	}
+}
+
 prometheus.scrape "macos" {
-	targets         = prometheus.exporter.unix.macos.targets
+	targets         = discovery.relabel.macos.output
 	forward_to      = [prometheus.remote_write.grafana_cloud.receiver]
-	job_name        = "integrations/macos-node"
+	job_name        = "integrations/node_exporter"
 	scrape_interval = "15s"
 }
 

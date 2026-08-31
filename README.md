@@ -31,7 +31,8 @@ Before running `chezmoi apply` on macOS, make sure the base toolchain is ready:
 - Confirm Homebrew works: `brew doctor`
 
 For a private-repository GitHub Actions runner with Grafana Cloud monitoring,
-see [the macOS self-hosted runner guide](docs/macos-self-hosted-runner.md).
+including Terraform-managed dashboards and alerts, see
+[the macOS self-hosted runner guide](docs/macos-self-hosted-runner.md).
 
 ### Windows Preparation
 

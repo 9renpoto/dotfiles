@@ -1,4 +1,5 @@
 tap 'grafana/grafana'
+tap 'hashicorp/tap'
 tap 'neovim/neovim'
 tap 'songmu/tap'
 
@@ -45,6 +46,7 @@ brew 'git'
 brew 'gitleaks'
 brew 'grafana/grafana/alloy'
 brew 'hadolint'
+brew 'hashicorp/tap/terraform'
 brew 'herdr'
 brew 'jq'
 brew 'lefthook'
