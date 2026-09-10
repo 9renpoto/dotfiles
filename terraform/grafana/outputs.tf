@@ -6,3 +6,8 @@ output "macos_integration" {
     dashboard_folder  = grafana_cloud_integration.macos.dashboard_folder
   }
 }
+
+output "homelabs_folder_uid" {
+  description = "UID of the folder containing Terraform-managed homelabs resources."
+  value       = grafana_folder.homelabs.uid
+}
