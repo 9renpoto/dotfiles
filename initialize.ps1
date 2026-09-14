@@ -37,8 +37,7 @@ function Initialize-ChezmoiConfig {
   Write-Info "Creating default chezmoi config at $configPath"
   New-Item -ItemType Directory -Path $configDirectory -Force | Out-Null
   $config = @'
-[data.ssh]
-  github_identity_file = "~/.ssh/id_ed25519"
+[data]
 '@
   [IO.File]::WriteAllText(
     $configPath,
