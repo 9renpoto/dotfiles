@@ -108,7 +108,7 @@ if [ -f "$STATE_FILE" ]; then
                     | .[0:2]
                     | join("/");
                 .[]
-                | select((.skillName // "") == $name)
+                | select(((.skillName // "") | split("/") | last) == $name)
                 | select(repo_of(.sourceURL // "") == $repo)
                 | .path // empty
             ')"
