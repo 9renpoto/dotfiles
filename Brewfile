@@ -19,6 +19,7 @@ cask 'ghostty'
 cask 'google-chrome'
 cask 'obsidian'
 cask 'orbstack'
+cask 'raycast'
 cask 'session-manager-plugin'
 cask 'slack'
 

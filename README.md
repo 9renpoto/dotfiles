@@ -51,7 +51,7 @@ the ghq root as `%USERPROFILE%\src` on Windows and the corresponding
 `/mnt/<drive>/Users/<user>/src` path in the default WSL distribution. Override
 the location with `.\initialize.ps1 -GhqRoot D:\src` when needed.
 
-The winget manifest installs WakaTime CLI. To configure its API key without
+The winget manifest installs Raycast and WakaTime CLI. To configure its API key without
 showing it in the terminal, run:
 
 ```powershell

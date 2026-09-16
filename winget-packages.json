@@ -19,6 +19,7 @@
         { "PackageIdentifier": "Microsoft.WindowsTerminal" },
         { "PackageIdentifier": "Neovim.Neovim" },
         { "PackageIdentifier": "Obsidian.Obsidian" },
+        { "PackageIdentifier": "9PFXXSHC64H3" },
         { "PackageIdentifier": "sharkdp.bat" },
         { "PackageIdentifier": "sharkdp.fd" },
         { "PackageIdentifier": "Starship.Starship" },
