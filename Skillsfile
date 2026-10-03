@@ -12,6 +12,9 @@
 github/awesome-copilot git-commit
 github/awesome-copilot github-issues
 
+# github/gh-stack
+github/gh-stack gh-stack
+
 # mattpocock/skills
 mattpocock/skills engineering/domain-modeling
 mattpocock/skills engineering/grill-with-docs
