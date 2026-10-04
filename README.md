@@ -15,6 +15,12 @@ Opinionated dotfiles and setup scripts for macOS, Linux/WSL, and Windows termina
 
 Re-run `chezmoi apply` whenever you pull updates to keep `$HOME` in sync.
 
+### Codex User Skills
+
+Author personal Codex skills under `dot_agents/skills/<name>/` in this repository. Chezmoi maps that source tree to `~/.agents/skills/<name>/`, Codex's user-scope skill directory. Each skill is a folder containing a `SKILL.md`; add future skills as sibling folders and run `chezmoi apply` to deploy them. Codex detects skill changes automatically; restart Codex if a newly added skill does not appear.
+
+The initial skill is `review-preflight`, which checks the current change and its pull request base before a GitHub or Codex review. Its source is [dot_agents/skills/review-preflight/SKILL.md](dot_agents/skills/review-preflight/SKILL.md).
+
 ### Shell Recommendation
 
 While this repository supports multiple shells, **zsh** is the recommended default. Our zsh configuration includes:
