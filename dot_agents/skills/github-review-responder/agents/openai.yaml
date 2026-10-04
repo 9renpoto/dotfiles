@@ -1,0 +1,3 @@
+interface:
+  display_name: "GitHub Review Responder"
+  short_description: "Fix and respond to PR review feedback"
