@@ -2,7 +2,7 @@
 #
 # Format: <owner/repo> <skill_name>[@version] [optional flags]
 #
-# - No flags: installed for claude-code, gemini-cli and github-copilot at user scope.
+# - No flags: installed for Codex and Antigravity at user scope.
 # - With --agent/--scope/--dir: the flags are passed through to `gh skill install` as-is.
 # - Removing a line uninstalls that skill on the next `chezmoi apply`
 #   (user scope only; --dir installs must be cleaned up by hand).
