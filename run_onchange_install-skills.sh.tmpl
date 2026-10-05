@@ -18,7 +18,7 @@ set -u
 SKILLSFILE="{{ joinPath .chezmoi.sourceDir "Skillsfile" }}"
 STATE_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/chezmoi/installed-skills.tsv"
 LOCK_FILE="$HOME/.agents/.skill-lock.json" # written by 'gh skill install' at user scope
-DEFAULT_AGENTS=(claude-code gemini-cli github-copilot)
+DEFAULT_AGENTS=(claude-code codex gemini-cli github-copilot)
 
 if ! command -v gh >/dev/null 2>&1; then
     echo "gh not found; skipping skill sync."
