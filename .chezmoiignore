@@ -42,10 +42,13 @@ dot_gitconfig.tmpl
 # Biome user configuration follows each platform's standard directory.
 {{ if ne .chezmoi.os "linux" }}
 .config/biome
+.config/biome/**
 {{ end }}
 {{ if ne .chezmoi.os "darwin" }}
 Library/Application Support/biome
+Library/Application Support/biome/**
 {{ end }}
 {{ if ne .chezmoi.os "windows" }}
 AppData/Roaming/biome
+AppData/Roaming/biome/**
 {{ end }}
