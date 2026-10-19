@@ -9,10 +9,3 @@ steps {
   ["typos"] = Builtins.typos
   ["gitleaks"] = Builtins.gitleaks
 }
-
-hooks {
-  ["pre-commit"] {
-    fix = false
-    stage = false
-  }
-}

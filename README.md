@@ -181,8 +181,9 @@ Use `chezmoidata.darwin.toml.tmpl` as a starting point when you need to pin macO
 
 `dot_config/hk/config.pkl` deploys to `~/.config/hk/config.pkl` and supplies
 zizmor, Biome, typos (`typos-cli`), and gitleaks to participating repositories.
-The pre-commit hook checks staged changes without automatically fixing or staging
-files. Gitleaks scans the whole working tree with redacted output, including
+The pre-commit hook applies available fixes to staged files and stages the
+results, including Biome formatting, typos corrections, and zizmor fixes.
+Unfixable findings still fail the hook. Gitleaks scans the whole working tree with redacted output, including
 untracked files. Project-specific tool configuration stays in each project.
 
 Biome defaults are managed once in `.chezmoitemplates/biome-config.json` and deployed
@@ -256,7 +257,8 @@ OS ごとの標準ユーザー設定ディレクトリへ展開します。
 
 4ツールの共通ステップは `~/.config/hk/config.pkl` で管理します。
 各リポジトリには最小の `hk.pkl` を置き、Git 2.54 以降で
-`hk install --global` を一度実行します。コミット時の自動修正は行いません。
+`hk install --global` を一度実行します。コミット時は Biome のフォーマット・typos の誤字修正・zizmor の修正を自動適用し、
+修正結果をステージします。修正できない問題はエラーになります。
 Gitleaks は未追跡ファイルを含む作業ツリー全体を検査します。
 旧フックは旧ツールの uninstall で解除し、不要な `core.hooksPath` も確認してください。
 共通設定は個人環境向けなので、CI や他の開発者向けの検査は別途維持します。
