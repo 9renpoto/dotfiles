@@ -1,0 +1,4 @@
+amends "package://github.com/jdx/hk/releases/download/v2.7.1/hk@2.7.1#/Config.pkl"
+
+// Shared checks are supplied by ~/.config/hk/config.pkl.
+min_hk_version = "2.7.1"
