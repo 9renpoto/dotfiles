@@ -1,4 +1,6 @@
 [settings]
+cargo.binstall = false
 
 [tools]
+"cargo:hk" = "2.7.1"
 codex = "latest"

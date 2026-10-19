@@ -175,7 +175,93 @@ Use `chezmoidata.darwin.toml.tmpl` as a starting point when you need to pin macO
 - `brew bundle --file=Brewfile` keeps CLI/GUI packages in sync with the tracked Brewfile.
 - `brew bundle check --file=Brewfile` inspects for drift; pair with `brew bundle cleanup --file=Brewfile` to prune unused packages.
 - `winget import --import-file winget-packages.json --ignore-unavailable --ignore-versions` installs the Windows toolset.
-- `gitleaks git --staged` is what the pre-commit hook runs; enable the hook permanently with `lefthook install`. Use `gitleaks dir .` to scan the whole working tree.
+- `hk check --all` runs the shared checks on all tracked files; `hk check` checks changed files.
+
+### Shared Git hooks
+
+`dot_config/hk/config.pkl` deploys to `~/.config/hk/config.pkl` and supplies
+zizmor, Biome, typos (`typos-cli`), and gitleaks to participating repositories.
+The pre-commit hook checks staged changes without automatically fixing or staging
+files. Gitleaks scans the whole working tree with redacted output, including
+untracked files. Project-specific tool configuration stays in each project.
+
+Biome defaults are managed once in `.chezmoitemplates/biome-config.json` and deployed
+using its standard user configuration location:
+
+| Platform | Destination |
+|---|---|
+| macOS | `~/Library/Application Support/biome/biome.json` |
+| Linux | `~/.config/biome/biome.json` |
+| Windows | `~/AppData/Roaming/biome/config/biome.json` |
+
+The shared defaults enable formatting with two spaces and LF line endings,
+recommended lint rules, and assist. Biome searches the project and its parents
+before the user configuration; a project config replaces these defaults rather
+than automatically merging them. No `--config-path` is forced by hk.
+Linux deployment assumes the default `XDG_CONFIG_HOME` (`~/.config`); custom
+XDG or Windows roaming directories need a matching deployment destination.
+Validate fallback and project precedence with
+`python3 scripts/tests/test_biome_config.py`.
+
+On macOS/Linux, install the Brewfile dependencies, apply the shared configuration,
+then build hk through mise and install the global launcher once (Git 2.54+):
+
+```sh
+brew bundle --file=Brewfile
+chezmoi apply --source=. --destination="$HOME"
+mise install cargo:hk
+mise exec cargo:hk -- hk install --global --mise
+mise exec cargo:hk -- hk validate
+mise exec cargo:hk -- hk check --all
+```
+
+hk is managed by `dot_config/mise/config.toml` using the Cargo backend with
+`cargo.binstall = false`, so it builds from source, including on Intel macOS.
+Install Rust/Cargo and the platform C/C++ build tools before `mise install`.
+This mise setting also makes other Cargo-managed tools build from source.
+
+On Windows, install Git 2.54+, hk 2.7.1+, zizmor, Biome, typos, and gitleaks
+separately and ensure they are on PATH. The typos builtin also requires a POSIX
+shell; use Git for Windows with `sh` on PATH and configure that step's `shell`
+when needed.
+
+Each repository opts in with this minimal `hk.pkl`; repositories without a
+project configuration are skipped by the global launcher:
+
+```pkl
+amends "package://github.com/jdx/hk/releases/download/v2.7.1/hk@2.7.1#/Config.pkl"
+
+min_hk_version = "2.7.1"
+```
+
+Project steps are added to the shared steps; a project step with the same name
+replaces the shared definition. CI and other contributors need their own checks:
+the minimal project file alone does not distribute this personal configuration.
+
+Before migrating an existing repository, run `lefthook uninstall` or
+`prek uninstall` while the old manager is still available, then remove its
+configuration and add `hk.pkl`. Inspect `git config --show-origin --get-all
+core.hooksPath` and clear any obsolete override in its owning scope. Remove the
+old package after migrating its repositories. This repository no longer uses
+Lefthook; the Brewfile no longer installs it. Repeat the opt-in migration in other
+repositories as they are moved to hk.
+
+<details>
+<summary>日本語</summary>
+
+Biome の共通設定本体は `.chezmoitemplates/biome-config.json` で管理し、
+OS ごとの標準ユーザー設定ディレクトリへ展開します。
+スペース2文字・LF・推奨 lint を有効にします。
+プロジェクトや親ディレクトリの設定があれば、そちらが優先され、共通設定とは自動マージされません。
+
+4ツールの共通ステップは `~/.config/hk/config.pkl` で管理します。
+各リポジトリには最小の `hk.pkl` を置き、Git 2.54 以降で
+`hk install --global` を一度実行します。コミット時の自動修正は行いません。
+Gitleaks は未追跡ファイルを含む作業ツリー全体を検査します。
+旧フックは旧ツールの uninstall で解除し、不要な `core.hooksPath` も確認してください。
+共通設定は個人環境向けなので、CI や他の開発者向けの検査は別途維持します。
+
+</details>
 
 ## Working Locally
 

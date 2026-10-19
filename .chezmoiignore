@@ -16,7 +16,7 @@ examples
 examples/**
 terraform
 terraform/**
-lefthook.yml
+hk.pkl
 winget-packages.json
 .gitignore
 
@@ -37,3 +37,14 @@ config/nvim
 {{- if eq (env "REMOTE_CONTAINERS") "true" }}
 dot_gitconfig.tmpl
 {{ end -}}
+
+# Biome user configuration follows each platform's standard directory.
+{{ if ne .chezmoi.os "linux" }}
+.config/biome
+{{ end }}
+{{ if ne .chezmoi.os "darwin" }}
+Library/Application Support/biome
+{{ end }}
+{{ if ne .chezmoi.os "windows" }}
+AppData/Roaming/biome
+{{ end }}

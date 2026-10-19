@@ -27,8 +27,8 @@ chezmoi update --apply                           # pull + apply in one step
 ./initialize.sh                                  # bootstrap (installs chezmoi + Brewfile)
 bash .devcontainer/scripts/check-chezmoi.sh     # validate templates (same as CI)
 
-lefthook install                                 # enable pre-commit hook
-gitleaks git --staged                            # scan staged changes (what the hook runs)
+hk install --global                             # enable shared Git hooks (Git 2.54+)
+hk check --all                                  # run shared checks on all tracked files
 gitleaks dir .                                   # scan the whole working tree
 
 brew bundle --file=Brewfile                      # install packages
@@ -50,5 +50,5 @@ mise install                                     # sync language runtimes
 - **Secrets**: `private_dot_` prefix + template variables from `~/.config/chezmoi/chezmoi.toml`; never hardcode
 - **Shell scripts**: POSIX-compatible, pass `shellcheck`; gate OS-specific logic to avoid cross-platform breakage
 - **Indent**: 2 spaces (4 for Python), UTF-8, LF
-- **JS/TS**: `biome check`; spelling: `cspell lint`
+- **JS/TS**: `biome check`; spelling: `typos`
 - **PRs**: describe intent, list validation steps (`commands run + outcomes`); screenshots for UI changes
