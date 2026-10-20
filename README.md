@@ -183,8 +183,10 @@ Use `chezmoidata.darwin.toml.tmpl` as a starting point when you need to pin macO
 zizmor, Biome, typos (`typos-cli`), and gitleaks to participating repositories.
 The pre-commit hook applies available fixes to staged files and stages the
 results, including Biome formatting, typos corrections, and zizmor fixes.
-Unfixable findings still fail the hook. Gitleaks scans the whole working tree with redacted output, including
-untracked files. Project-specific tool configuration stays in each project.
+Unfixable findings still fail the hook. Gitleaks scans staged content only, so
+unstaged, ignored, and untracked files do not block a commit. Run `gitleaks dir .`
+to intentionally scan the whole working tree, including local files outside the
+commit. Project-specific tool configuration stays in each project.
 
 Biome defaults are managed once in `.chezmoitemplates/biome-config.json` and deployed
 using its standard user configuration location:
