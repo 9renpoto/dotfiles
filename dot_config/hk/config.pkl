@@ -7,5 +7,5 @@ steps {
   ["zizmor"] = Builtins.zizmor
   ["biome"] = Builtins.biome
   ["typos"] = Builtins.typos
-  ["gitleaks"] = Builtins.gitleaks
+  ["gitleaks"] = (Builtins.gitleaks) { scan = "staged" }
 }
