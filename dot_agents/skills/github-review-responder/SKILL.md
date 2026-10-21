@@ -30,6 +30,12 @@ Handle the requested pull request review from inspection through agreed code cha
 - Resolve an inline thread only after its feedback is addressed on the PR and the reply is posted. Never resolve a thread that needs the user's decision, remains unaddressed, or refers to a local-only fix.
 - For actionable review feedback in a general PR comment, reply in that conversation; only inline review threads have a resolvable thread state. Do not post a broad review summary unless the user asks for one.
 
+## Request Codex re-review after high-priority fixes
+
+- When handling a specific PR includes fixing a `must`, `P0`, or `P1` finding, request a fresh Codex review once the validated fix is present on the PR. This request is authorized as part of handling the review; it does not authorize committing or pushing local changes.
+- Request once for the current PR head after the `must`/`P0`/`P1` fixes in that batch are present. Check for an existing Codex review request or run for that head to avoid duplicates. If fixes remain local or the request cannot be made, report the pending re-review and its blocker.
+- Inspect the resulting feedback using the same priority rules above. A new `must`/`P0`/`P1` fix requires another review of the updated PR head; P2/P3 findings still require the user's item-specific decision.
+
 ## Report completion
 
-Completion does not require an AI review to report zero `P2`/`P3` findings. Report whether every `must`/`P0`/`P1` item was addressed and validated, and give each lower-priority item its confirmed disposition (fixed, accepted as intentional, deferred, disputed, or awaiting the user's decision). Summarize replies, resolved threads, validation, and any local changes not yet present on the PR. If a lower-priority finding repeats, report the cause analysis instead of proposing another blind fix.
+Completion does not require an AI review to report zero `P2`/`P3` findings. Report whether every `must`/`P0`/`P1` item was addressed and validated, and give each lower-priority item its confirmed disposition (fixed, accepted as intentional, deferred, disputed, or awaiting the user's decision). Summarize replies, resolved threads, validation, and any local changes not yet present on the PR. For `must`/`P0`/`P1` fixes, include the Codex re-review request and its current result or pending status; do not claim re-review passed while it is pending. If a lower-priority finding repeats, report the cause analysis instead of proposing another blind fix.
