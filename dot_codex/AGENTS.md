@@ -9,6 +9,15 @@
 - Avoid committing planning documents. Prefer using the `grill-with-docs` skill to create ADRs that record decisions and GitHub issues to decompose and track tasks.
 - Before starting development, check that the relevant assumptions and decisions are documented in ADRs. If they are missing or unresolved, stop implementation and use `grill-with-docs` to clarify and record them before resuming development.
 
+## GitHub Pull Request and Issue Metadata
+
+- When creating a pull request or issue, inspect the target repository's `.github/release.yml` or `.github/release.yaml` and existing labels. Apply the release-category labels that match the work, respecting category rules and exclusions. Use release-note exclusion labels only when the work should intentionally be excluded.
+- Apply release-category labels even when an issue type is set. Issue types do not replace the labels used by release notes.
+- Verify release-category labels on the pull request itself, even when its linked issue is already labeled; automatic release notes categorize pull requests by their labels.
+- Set the assignee to the authenticated GitHub account used to create the pull request or issue. Resolve that account from the active authentication context rather than hardcoding a username.
+- After creation, fetch the pull request or issue again and verify its labels and assignee. Report any failure to apply or verify them.
+- If release configuration is missing or no existing label clearly fits, report the gap rather than inventing a release classification or creating labels. Still set and verify the assignee.
+
 ## Pull Requests
 
 - Never merge a pull request into its base branch. This prohibition applies to every method, including CLI commands, REST or GraphQL APIs, connectors, browser actions, automation, and delegated agents. It remains in effect even when the user explicitly asks to merge a specific pull request.
