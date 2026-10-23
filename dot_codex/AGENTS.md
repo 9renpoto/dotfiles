@@ -8,6 +8,8 @@
 
 - Do not leave personal information or proper names that identify analysis subjects in committed files, commit messages, code comments, or GitHub issue, pull request, and review text, including comments. This also applies to copied logs, examples, and screenshots.
 - Replace identifying details with neutral placeholders or synthetic examples. Remove identifying paths, URLs, and metadata as well; do not include a mapping back to the original identities.
+- When providing feedback to another repository or project, communicate the problem without disclosing information about the originating project. This applies even when using a reproduction environment or a minimal reproduction.
+- Build shared reproductions from neutral, synthetic code, data, and configuration. Remove originating project names, source code, internal architecture, paths, URLs, logs, screenshots, and metadata that could reveal its identity or confidential details; preserve only the technical facts needed to explain and reproduce the problem.
 - Before committing or posting, inspect the diff and outgoing text for identifying information and anonymize it.
 
 ## Planning and Architecture Decisions
