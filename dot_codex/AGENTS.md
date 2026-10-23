@@ -4,6 +4,12 @@
 - Develop with TDD: write a failing test first, implement the smallest change that makes it pass, then refactor. Do not require this mechanically for changes that do not affect behavior, such as documentation-only edits.
 - If a change grows too large to review or verify clearly, stop implementation and decompose the work into independently reviewable tasks. Do not use a fixed line-count threshold.
 
+## Privacy and Anonymization
+
+- Do not leave personal information or proper names that identify analysis subjects in committed files, commit messages, code comments, or GitHub issue, pull request, and review text, including comments. This also applies to copied logs, examples, and screenshots.
+- Replace identifying details with neutral placeholders or synthetic examples. Remove identifying paths, URLs, and metadata as well; do not include a mapping back to the original identities.
+- Before committing or posting, inspect the diff and outgoing text for identifying information and anonymize it.
+
 ## Planning and Architecture Decisions
 
 - Avoid committing planning documents. Prefer using the `grill-with-docs` skill to create ADRs that record decisions and GitHub issues to decompose and track tasks.
