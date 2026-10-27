@@ -1,95 +1,12 @@
 #!/bin/sh
-
-# Bootstrap script for the dotfiles repository.
-# Ensures chezmoi is available, applies the source state, and optionally runs Homebrew.
-
-set -e
-
-# --- Helper Functions ---
-info() {
-    printf "\033[1;34m%s\033[0m\n" "$1"
+set -eu
+cd "$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd)"
+command -v mise >/dev/null 2>&1 || {
+  echo 'Install mise 2026.10.19+ first: https://mise.jdx.dev/installing-mise.html' >&2
+  exit 1
 }
-
-get_dotfiles_root() {
-    # Resolves the absolute path of the script's directory.
-    cd "$(dirname "$0")" && pwd
-}
-
-# --- Main Logic ---
-DOTFILES_ROOT=$(get_dotfiles_root)
-info "Dotfiles repository located at: $DOTFILES_ROOT"
-
-ensure_chezmoi() {
-    if command -v chezmoi >/dev/null 2>&1; then
-        return 0
-    fi
-
-    info "chezmoi not found on PATH. Installing..."
-
-    if command -v brew >/dev/null 2>&1; then
-        brew install chezmoi
-        return 0
-    fi
-
-    cat <<'EOM'
-chezmoi is required to apply the dotfiles.
-Install it using one of the supported methods:
-  • macOS/Linux (Homebrew): brew install chezmoi
-  • Windows (winget): winget install twpayne.chezmoi
-  • Manual options: https://www.chezmoi.io/install/
-Re-run initialize.sh after installing chezmoi.
-EOM
-    exit 1
-}
-
-apply_with_chezmoi() {
-    info "Applying dotfiles using chezmoi..."
-    chezmoi apply --source="$DOTFILES_ROOT" --destination="$HOME"
-    info "chezmoi apply completed."
-}
-
-ensure_chezmoi_config() {
-    config_file="$HOME/.config/chezmoi/chezmoi.toml"
-
-    if [ -f "$config_file" ]; then
-        return 0
-    fi
-
-    info "Chezmoi config not found. Starting interactive setup..."
-    "$DOTFILES_ROOT/setup-chezmoi-config.sh"
-}
-
-setup_homebrew() {
-    info "Running Homebrew setup..."
-    if ! command -v brew >/dev/null 2>&1; then
-        info "Homebrew not detected. Skipping package installation."
-        return
-    fi
-
-    brewfile="$DOTFILES_ROOT/Brewfile"
-    if [ -f "$brewfile" ]; then
-        info "Installing packages listed in Brewfile..."
-        brew bundle --file="$brewfile"
-    else
-        info "Brewfile not found in repository root."
-    fi
-}
-
-main() {
-    ensure_chezmoi
-    ensure_chezmoi_config
-    apply_with_chezmoi
-
-    case "$(uname -s)" in
-        Darwin|Linux)
-            setup_homebrew
-            ;;
-        *)
-            info "Homebrew automation skipped on $(uname -s)."
-            ;;
-    esac
-
-    info "✅ Dotfiles initialization complete!"
-}
-
-main
+mise trust
+if [ -f "$HOME/.config/chezmoi/chezmoi.toml" ] && [ ! -f mise.local.toml ]; then
+  mise exec python@3.13 -- python scripts/migrate-local-config.py
+fi
+exec mise bootstrap "$@"

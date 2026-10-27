@@ -2,7 +2,7 @@
 
 This configuration installs the Grafana Cloud macOS integration and manages a
 small set of homelabs folders, dashboards, and alert rules. Alloy installation
-and remote-write credentials remain machine-local and are managed with chezmoi.
+and remote-write credentials remain machine-local and are managed with mise.
 
 Kubernetes Monitoring backend installation, Helm deployment, kubeconfig, and
 Kubernetes Secret values are intentionally outside this Terraform state. See

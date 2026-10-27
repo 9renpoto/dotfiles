@@ -1,4 +1,0 @@
-{{- $ghq := default (dict) (get . "ghq") -}}
-{{- $ghqRoot := default "~/src" (get $ghq "root") -}}
-[ghq]
-  root = {{ $ghqRoot | quote }}

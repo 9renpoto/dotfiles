@@ -1,0 +1,27 @@
+name: mise configuration
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Install mise
+        run: |
+          curl -fsSL https://mise.jdx.dev/install.sh -o /tmp/install-mise.sh
+          MISE_VERSION=2026.10.19 sh /tmp/install-mise.sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+      - name: Validate deployment in isolated home
+        run: python3 scripts/tests/test_mise_config.py
+      - name: Check shell syntax
+        run: |
+          sh -n initialize.sh devcontainer-setup.sh scripts/integrate.sh scripts/setup-git-credentials.sh
+          bash -n scripts/sync-skills.sh

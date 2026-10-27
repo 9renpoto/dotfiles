@@ -12,33 +12,9 @@ REPO = Path(__file__).resolve().parents[2]
 
 
 class BiomeConfigTest(unittest.TestCase):
-    def test_only_target_platform_config_is_managed(self):
-        destinations = {
-            "darwin": "Library/Application Support/biome/biome.json",
-            "linux": ".config/biome/biome.json",
-            "windows": "AppData/Roaming/biome/config/biome.json",
-        }
-        for platform, expected in destinations.items():
-            with self.subTest(platform=platform):
-                result = subprocess.run(
-                    ["chezmoi", "managed", f"--source={REPO}",
-                     "--override-data", json.dumps({"chezmoi": {"os": platform}})],
-                    text=True, capture_output=True, check=True,
-                )
-                configs = set(result.stdout.splitlines()) & set(destinations.values())
-                self.assertEqual(configs, {expected})
-
+    @unittest.skipUnless(__import__("shutil").which("biome"), "biome is not installed")
     def test_user_config_and_project_override(self):
-        if sys.platform == "darwin":
-            source = REPO / "Library/Application Support/biome/biome.json.tmpl"
-        elif sys.platform == "win32":
-            source = REPO / "AppData/Roaming/biome/config/biome.json.tmpl"
-        else:
-            source = REPO / "dot_config/biome/biome.json.tmpl"
-        config = subprocess.run(
-            ["chezmoi", "execute-template", f"--source={REPO}"],
-            input=source.read_text(), text=True, capture_output=True, check=True,
-        ).stdout
+        config = (REPO / "home/.config/biome/biome.json").read_text()
         json.loads(config)
         with tempfile.TemporaryDirectory() as directory:
             home = Path(directory)

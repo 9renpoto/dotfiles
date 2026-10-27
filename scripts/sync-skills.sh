@@ -1,4 +1,3 @@
-{{ if ne .chezmoi.os "windows" -}}
 #!/bin/bash
 # Sync agent skills with the Skillsfile:
 #   - entries listed in the Skillsfile are installed/updated
@@ -11,12 +10,11 @@
 # The previous state is tracked in $STATE_FILE so that skills installed by hand
 # (outside of the Skillsfile) are never touched.
 #
-# Skillsfile hash: {{ include "Skillsfile" | sha256sum }}
 
 set -u
 
-SKILLSFILE="{{ joinPath .chezmoi.sourceDir "Skillsfile" }}"
-STATE_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/chezmoi/installed-skills.tsv"
+SKILLSFILE="$(CDPATH='' cd -- "$(dirname -- "$0")/.." && pwd)/Skillsfile"
+STATE_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/mise-dotfiles/installed-skills.tsv"
 LOCK_FILE="$HOME/.agents/.skill-lock.json" # written by 'gh skill install' at user scope
 DEFAULT_AGENTS=(codex antigravity)
 
@@ -72,6 +70,12 @@ remove_lock_entry() {
         echo "  could not update $LOCK_FILE; leaving it untouched."
     fi
 }
+
+legacy_state="${XDG_STATE_HOME:-$HOME/.local/state}/chezmoi/installed-skills.tsv"
+if [ ! -f "$STATE_FILE" ] && [ -f "$legacy_state" ]; then
+    mkdir -p "$(dirname "$STATE_FILE")"
+    cp "$legacy_state" "$STATE_FILE"
+fi
 
 # 1. Read the desired state: one "<owner/repo>\t<skill>" key per line.
 desired=""
@@ -149,4 +153,3 @@ done < "$SKILLSFILE"
 # 4. Record the state this run applied, for the next diff.
 mkdir -p "$(dirname "$STATE_FILE")"
 printf '%s' "$desired" > "$STATE_FILE"
-{{ end -}}

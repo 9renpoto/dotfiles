@@ -1,0 +1,10 @@
+{% set api_key = get_env(name="WAKATIME_API_KEY", default=vars.wakatime_api_key) %}
+[settings]
+{% if api_key %}api_key = {{ api_key }}{% endif %}
+debug = false
+hidefilenames = true
+ignore =
+    COMMIT_EDITMSG$
+    PULLREQ_EDITMSG$
+    MERGE_MSG$
+    TAG_EDITMSG$

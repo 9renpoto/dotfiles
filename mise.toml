@@ -1,0 +1,157 @@
+min_version = "2026.10.19"
+
+[vars]
+email = ""
+ghq_root = "~/src"
+editor = "nvim"
+wakatime_api_key = ""
+grafana_url = ""
+grafana_username = ""
+grafana_api_key = ""
+
+[settings]
+cargo.binstall = false
+
+[tools]
+"cargo:hk" = "2.7.1"
+codex = "latest"
+
+[bootstrap.repos]
+"~/.config/nvim" = { url = "https://github.com/9renpoto/astronvim_config.git" }
+"~/.tmux/plugins/tpm" = { url = "https://github.com/tmux-plugins/tpm" }
+
+[dotfiles]
+
+"~/.agents/skills/github-review-responder/SKILL.md" = { source = "home/.agents/skills/github-review-responder/SKILL.md", mode = "copy" }
+"~/.agents/skills/github-review-responder/agents/openai.yaml" = { source = "home/.agents/skills/github-review-responder/agents/openai.yaml", mode = "copy" }
+"~/.agents/skills/review-preflight/SKILL.md" = { source = "home/.agents/skills/review-preflight/SKILL.md", mode = "copy" }
+"~/.bashrc" = { source = "home/.bashrc", mode = "copy" }
+"~/.codex/AGENTS.md" = { source = "home/.codex/AGENTS.md", mode = "copy" }
+"~/.config/alacritty/alacritty.toml" = { source = "home/.config/alacritty/alacritty.toml", mode = "copy" }
+"~/.config/alacritty/dracula.toml" = { source = "home/.config/alacritty/dracula.toml", mode = "copy" }
+"~/.config/alloy/config.alloy" = { source = "home/.config/alloy/config.alloy", mode = "copy" }
+"~/.config/alloy/config.env" = { source = "home/.config/alloy/config.env.tera", mode = "template", permissions = "0600" }
+"~/.config/alloy/extra-args.txt" = { source = "home/.config/alloy/extra-args.txt", mode = "copy" }
+"~/.config/fish/config.fish" = { source = "home/.config/fish/config.fish", mode = "copy" }
+"~/.config/fish/fish_plugins" = { source = "home/.config/fish/fish_plugins", mode = "copy" }
+"~/.config/ghostty/config" = { source = "home/.config/ghostty/config", mode = "copy" }
+"~/.config/git/config" = { source = "home/.config/git/config.tera", mode = "template" }
+"~/.config/git/ignore" = { source = "home/.config/git/ignore", mode = "copy" }
+"~/.config/herdr/config.toml" = { source = "home/.config/herdr/config.toml", mode = "copy" }
+"~/.config/hk/config.pkl" = { source = "home/.config/hk/config.pkl", mode = "copy" }
+"~/.config/mise/config.toml" = { source = "home/.config/mise/config.toml", mode = "copy" }
+"~/.config/powershell/profile.ps1" = { source = "home/.config/powershell/profile.ps1", mode = "copy" }
+"~/.config/starship.toml" = { source = "home/.config/starship.toml", mode = "copy" }
+"~/.default-cargo-crates" = { source = "home/.default-cargo-crates", mode = "copy" }
+"~/.tmux.conf" = { source = "home/.tmux.conf", mode = "copy" }
+"~/.wakatime.cfg" = { source = "home/.wakatime.cfg.tera", mode = "template", permissions = "0600" }
+"~/.zsh_plugins.txt" = { source = "home/.zsh_plugins.txt", mode = "copy" }
+"~/.zshrc" = { source = "home/.zshrc", mode = "copy" }
+
+[dotfiles."gitconfig"]
+source = "home/.gitconfig.tera"
+mode = "template"
+variants = [{ os = "linux", target = "~/.gitconfig" }, { os = "macos", target = "~/.gitconfig" }]
+
+[dotfiles.biome]
+source = "home/.config/biome/biome.json"
+mode = "copy"
+variants = [
+  { os = "linux", target = "~/.config/biome/biome.json" },
+  { os = "macos", target = "~/Library/Application Support/biome/biome.json" },
+  { os = "windows", target = "~/AppData/Roaming/biome/config/biome.json" },
+]
+
+[tasks.apply]
+description = "Deploy configuration and run platform integration"
+run = ["mise dot apply", "mise run integrate"]
+
+[tasks.integrate]
+run = "sh scripts/integrate.sh"
+run_windows = "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/integrate.ps1"
+
+[tasks.bootstrap]
+description = "Finish platform integration after native bootstrap"
+depends = ["integrate"]
+
+[tasks.check]
+run = 'python3 -m unittest discover -s scripts/tests -p "test_*.py"'
+
+[bootstrap.packages]
+"brew-cask:1password" = { version = "latest", os = ["macos"] }
+"brew-cask:alacritty" = { version = "latest", os = ["macos"] }
+"brew-cask:ankerwork" = { version = "latest", os = ["macos"] }
+"brew-cask:antigravity-cli" = { version = "latest", os = ["macos"] }
+"brew-cask:bitwarden" = { version = "latest", os = ["macos"] }
+"brew-cask:casemd" = { version = "latest", os = ["macos"] }
+"brew-cask:chatgpt" = { version = "latest", os = ["macos"] }
+"brew-cask:claude" = { version = "latest", os = ["macos"] }
+"brew-cask:firefox@nightly" = { version = "latest", os = ["macos"] }
+"brew-cask:font-sf-mono" = { version = "latest", os = ["macos"] }
+"brew-cask:font-udev-gothic-nf" = { version = "latest", os = ["macos"] }
+"brew-cask:gather" = { version = "latest", os = ["macos"] }
+"brew-cask:gcloud-cli" = { version = "latest", os = ["macos"] }
+"brew-cask:ghostty" = { version = "latest", os = ["macos"] }
+"brew-cask:google-chrome" = { version = "latest", os = ["macos"] }
+"brew-cask:obsidian" = { version = "latest", os = ["macos"] }
+"brew-cask:orbstack" = { version = "latest", os = ["macos"] }
+"brew-cask:raycast" = { version = "latest", os = ["macos"] }
+"brew-cask:slack" = { version = "latest", os = ["macos"] }
+"brew:actionlint" = { version = "latest", os = ["macos", "linux"] }
+"brew:antidote" = { version = "latest", os = ["macos", "linux"] }
+"brew:awscli" = { version = "latest", os = ["macos", "linux"] }
+"brew:biome" = { version = "latest", os = ["macos", "linux"] }
+"brew:carapace" = { version = "latest", os = ["macos", "linux"] }
+"brew:crit" = { version = "latest", os = ["macos", "linux"] }
+"brew:cspell" = { version = "latest", os = ["macos", "linux"] }
+"brew:devcontainer" = { version = "latest", os = ["macos", "linux"] }
+"brew:direnv" = { version = "latest", os = ["macos", "linux"] }
+"brew:ecschedule" = { version = "latest", os = ["macos", "linux"] }
+"brew:eza" = { version = "latest", os = ["macos", "linux"] }
+"brew:fd" = { version = "latest", os = ["macos", "linux"] }
+"brew:fzf" = { version = "latest", os = ["macos", "linux"] }
+"brew:gh" = { version = "latest", os = ["macos", "linux"] }
+"brew:ghq" = { version = "latest", os = ["macos", "linux"] }
+"brew:gibo" = { version = "latest", os = ["macos", "linux"] }
+"brew:git" = { version = "latest", os = ["macos", "linux"] }
+"brew:gitleaks" = { version = "latest", os = ["macos", "linux"] }
+"brew:grafana/grafana/alloy" = { version = "latest", os = ["macos", "linux"] }
+"brew:herdr" = { version = "latest", os = ["macos", "linux"] }
+"brew:jq" = { version = "latest", os = ["macos", "linux"] }
+"brew:mdbook" = { version = "latest", os = ["macos", "linux"] }
+"brew:neovim" = { version = "latest", os = ["macos", "linux"] }
+"brew:pinact" = { version = "latest", os = ["macos", "linux"] }
+"brew:postgresql" = { version = "latest", os = ["macos", "linux"] }
+"brew:ripgrep" = { version = "latest", os = ["macos", "linux"] }
+"brew:starship" = { version = "latest", os = ["macos", "linux"] }
+"brew:tig" = { version = "latest", os = ["macos", "linux"] }
+"brew:tmux" = { version = "latest", os = ["macos", "linux"] }
+"brew:typos-cli" = { version = "latest", os = ["macos", "linux"] }
+"brew:zig" = { version = "latest", os = ["macos", "linux"] }
+"brew:zizmor" = { version = "latest", os = ["macos", "linux"] }
+"winget:Alacritty.Alacritty" = { version = "latest", os = "windows" }
+"winget:Amazon.AWSCLI" = { version = "latest", os = "windows" }
+"winget:Bitwarden.Bitwarden" = { version = "latest", os = "windows" }
+"winget:BurntSushi.ripgrep.MSVC" = { version = "latest", os = "windows" }
+"winget:eza-community.eza" = { version = "latest", os = "windows" }
+"winget:Git.Git" = { version = "latest", os = "windows" }
+"winget:GitHub.cli" = { version = "latest", os = "windows" }
+"winget:Google.Chrome" = { version = "latest", os = "windows" }
+"winget:jqlang.jq" = { version = "latest", os = "windows" }
+"winget:junegunn.fzf" = { version = "latest", os = "windows" }
+"winget:Microsoft.PowerShell" = { version = "latest", os = "windows" }
+"winget:Microsoft.VisualStudioCode" = { version = "latest", os = "windows" }
+"winget:Microsoft.WindowsTerminal" = { version = "latest", os = "windows" }
+"winget:Neovim.Neovim" = { version = "latest", os = "windows" }
+"winget:Obsidian.Obsidian" = { version = "latest", os = "windows" }
+"winget:9PFXXSHC64H3" = { version = "latest", os = "windows" }
+"winget:sharkdp.bat" = { version = "latest", os = "windows" }
+"winget:sharkdp.fd" = { version = "latest", os = "windows" }
+"winget:Starship.Starship" = { version = "latest", os = "windows" }
+"winget:Wakatime.CLIWakatime" = { version = "latest", os = "windows" }
+"winget:x-motemen.ghq" = { version = "latest", os = "windows" }
+
+[bootstrap.brew.taps]
+"9renpoto/tap" = "https://github.com/9renpoto/homebrew-tap.git"
+"grafana/grafana" = "https://github.com/grafana/homebrew-grafana.git"
+"songmu/tap" = "https://github.com/Songmu/homebrew-tap.git"

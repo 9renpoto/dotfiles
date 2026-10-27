@@ -1,54 +1,14 @@
 # Repository Guidelines
 
-[chezmoi](https://www.chezmoi.io/)-managed dotfiles for macOS, Linux/WSL, and Windows. Source files are the *source state*; `chezmoi apply` renders them into `$HOME`.
+mise manages dotfiles for macOS, Linux/WSL, and Windows.
 
-## File Naming
-
-| Prefix | Destination |
-|---|---|
-| `dot_foo` | `~/.foo` |
-| `dot_config/` | `~/.config/` |
-| `private_dot_foo` | `~/.foo` (restricted permissions) |
-| `foo.tmpl` | rendered via Go templates |
-
-`.chezmoiexternal.toml` pulls external repos (currently: Neovim config). `.chezmoiignore` is itself a template.
-
-## Template Data
-
-Defaults and platform values (Homebrew prefix, package manager) are defined/computed in `dot_chezmoi.toml.tmpl` from `chezmoi.os`/`chezmoi.arch`. Machine-local overrides in `~/.config/chezmoi/chezmoi.toml` (never commit this file).
-
-Platform branching: `{{ if eq .chezmoi.os "darwin" }} ... {{ else if eq .chezmoi.os "linux" }} ... {{ end }}`
-
-## Commands
-
-```sh
-chezmoi apply --source=. --destination="$HOME"  # apply from working tree
-chezmoi update --apply                           # pull + apply in one step
-./initialize.sh                                  # bootstrap (installs chezmoi + Brewfile)
-bash .devcontainer/scripts/check-chezmoi.sh     # validate templates (same as CI)
-
-hk install --global                             # enable shared Git hooks (Git 2.54+)
-hk check --all                                  # run shared checks on all tracked files
-gitleaks dir .                                   # scan the whole working tree
-
-brew bundle --file=Brewfile                      # install packages
-brew bundle check --file=Brewfile               # check drift
-brew bundle cleanup --file=Brewfile             # prune unlisted
-
-shellcheck initialize.sh                         # lint shell scripts
-mise install                                     # sync language runtimes
-```
-
-## Conventions
-
-- **Commits**: Conventional Commit syntax — `type(scope): summary`
-- **Language**: Chat responses should be in Japanese; commit messages and code comments should be in English
-- **Brewfile**: grouped (taps → casks → brews), sorted within groups
-- **New dotfiles**: `dot_config/<appname>/` for `~/.config/`, `dot_<name>` for `~/.<name>`
-- **Codex user skills**: `dot_agents/skills/<name>/SKILL.md` deploys to `~/.agents/skills/<name>/SKILL.md`; keep each skill self-contained
-- **Skillsfile**: one `gh skill` entry per line, grouped by repo and sorted; removing a line uninstalls that skill on the next `chezmoi apply`
-- **Secrets**: `private_dot_` prefix + template variables from `~/.config/chezmoi/chezmoi.toml`; never hardcode
-- **Shell scripts**: POSIX-compatible, pass `shellcheck`; gate OS-specific logic to avoid cross-platform breakage
-- **Indent**: 2 spaces (4 for Python), UTF-8, LF
-- **JS/TS**: `biome check`; spelling: `typos`
-- **PRs**: describe intent, list validation steps (`commands run + outcomes`); screenshots for UI changes
+- Literal sources live under `home/`; Tera templates end in `.tera`.
+- Declare every destination in `[dotfiles]` in `mise.toml`; use variants for OS paths.
+- Machine-local values and secrets belong in untracked `mise.local.toml` under `[vars]`.
+- Run `mise run apply` from this checkout, or `mise -C /path/to/dotfiles run apply`.
+- `mise bootstrap` provisions packages, external repositories, dotfiles, tools, and integration.
+- Keep custom PowerShell profiles intact. Skills synchronization must only remove owned skills.
+- New user skills live under `home/.agents/skills/<name>/` and need deployment entries.
+- Shell scripts must gate platform-specific logic and pass shellcheck; use POSIX sh unless Bash is required.
+- Use Conventional Commits; chat in Japanese, code comments and commit messages in English.
+- Validate with `mise run check` and `hk check --all`; report commands and results in PRs.

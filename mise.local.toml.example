@@ -1,0 +1,9 @@
+# Copy to mise.local.toml, keep it untracked, and chmod 600 on Unix.
+[vars]
+email = "you@example.com"
+ghq_root = "~/src"
+editor = "nvim"
+wakatime_api_key = ""
+grafana_url = ""
+grafana_username = ""
+grafana_api_key = ""

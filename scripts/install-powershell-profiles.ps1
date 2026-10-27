@@ -1,4 +1,3 @@
-{{ if eq .chezmoi.os "windows" -}}
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
@@ -76,4 +75,3 @@ foreach ($profileDirectoryName in @('WindowsPowerShell', 'PowerShell')) {
 }
 
 Write-Host "PowerShell profiles load $sharedProfilePath"
-{{ end -}}

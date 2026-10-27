@@ -1,5 +1,5 @@
 {
-  "name": "chezmoi-devcontainer",
+  "name": "mise-devcontainer",
   "image": "mcr.microsoft.com/devcontainers/base:noble",
   "features": {
     "ghcr.io/anthropics/devcontainer-features/claude-code:1": {},

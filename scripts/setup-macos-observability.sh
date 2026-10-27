@@ -37,16 +37,16 @@ source_config="$source_dir/config.alloy"
 source_env="$source_dir/config.env"
 source_args="$source_dir/extra-args.txt"
 
-[ -f "$source_config" ] || fail "$source_config was not found. Run chezmoi apply first."
-[ -f "$source_env" ] || fail "$source_env was not found. Run chezmoi apply first."
-[ -f "$source_args" ] || fail "$source_args was not found. Run chezmoi apply first."
+[ -f "$source_config" ] || fail "$source_config was not found. Run mise run apply first."
+[ -f "$source_env" ] || fail "$source_env was not found. Run mise run apply first."
+[ -f "$source_args" ] || fail "$source_args was not found. Run mise run apply first."
 
 # Load credentials only into this process; do not print them.
 # shellcheck disable=SC1090
 . "$source_env"
-: "${GRAFANA_CLOUD_PROMETHEUS_URL:?Configure grafana_cloud.prometheus_url in chezmoi.toml}"
-: "${GRAFANA_CLOUD_PROMETHEUS_USERNAME:?Configure grafana_cloud.prometheus_username in chezmoi.toml}"
-: "${GRAFANA_CLOUD_API_KEY:?Configure grafana_cloud.api_key in chezmoi.toml}"
+: "${GRAFANA_CLOUD_PROMETHEUS_URL:?Configure vars.grafana_url in mise.local.toml}"
+: "${GRAFANA_CLOUD_PROMETHEUS_USERNAME:?Configure vars.grafana_username in mise.local.toml}"
+: "${GRAFANA_CLOUD_API_KEY:?Configure vars.grafana_api_key in mise.local.toml}"
 
 alloy validate "$source_config"
 
