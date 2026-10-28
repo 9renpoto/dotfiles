@@ -2,6 +2,8 @@
 
 mise-managed workstation configuration for macOS, Linux/WSL, and Windows.
 
+[![Coverage](https://9renpoto.github.io/dotfiles/coverage.svg)](https://github.com/9renpoto/dotfiles/actions/workflows/mise-check.yml)
+
 Deploy configuration files, install platform packages and runtime tools, and
 integrate workstation services from one checkout. Configuration sources live
 under `home/`; machine-specific values stay in untracked local configuration.
