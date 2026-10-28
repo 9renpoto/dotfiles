@@ -56,6 +56,41 @@ class DeploymentTest(unittest.TestCase):
             run('bootstrap', 'repos', 'apply', '--dry-run')
             run('bootstrap', 'packages', 'status')
 
+    def test_ghq_root_survives_plain_apply_and_preserves_local_values(self):
+        with tempfile.TemporaryDirectory() as directory:
+            home = Path(directory)
+            checkout = home / 'checkout'
+            checkout.mkdir()
+            shutil.copy(REPO / 'mise.toml', checkout / 'mise.toml')
+            shutil.copytree(REPO / 'home', checkout / 'home')
+            local = checkout / 'mise.local.toml'
+            local.write_text('# Machine secrets remain local\n[vars]\n'
+                             'email = "keep@example.com"\n'
+                             'wakatime_api_key = "keep-key"\n'
+                             'ghq_root = "C:/old"\n'
+                             '[env]\nKEEP_SETTING = "yes"\n')
+            env = dict(os.environ, HOME=directory, USERPROFILE=directory,
+                       XDG_CONFIG_HOME=str(home / '.config'),
+                       MISE_CONFIG_DIR=str(home / '.config/mise'),
+                       MISE_DATA_DIR=str(home / 'data'), MISE_CACHE_DIR=str(home / 'cache'),
+                       MISE_STATE_DIR=str(home / 'state'), MISE_OFFLINE='1',
+                       MISE_TRUSTED_CONFIG_PATHS=str(checkout))
+            def run(*args):
+                result = subprocess.run([MISE, *args], cwd=checkout, env=env,
+                                        text=True, capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+            # Match initialize.ps1's native TOML edit, including a root with spaces.
+            run('config', 'set', '--file', str(local), '--type', 'string',
+                'vars.ghq_root', 'D:/source repos')
+            data = tomllib.loads(local.read_text())
+            self.assertEqual(data['vars']['email'], 'keep@example.com')
+            self.assertEqual(data['vars']['wakatime_api_key'], 'keep-key')
+            self.assertEqual(data['env']['KEEP_SETTING'], 'yes')
+            self.assertIn('# Machine secrets remain local', local.read_text())
+            for _ in range(2):
+                run('dot', 'apply')  # Deliberately no -E windows-host.
+                self.assertIn('D:/source repos', (home / '.config/git/config').read_text())
+
     def test_local_data_migration_is_private_and_non_destructive(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

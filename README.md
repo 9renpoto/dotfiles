@@ -17,7 +17,8 @@ On Windows, install mise (`winget install --id jdx.mise --exact`) and run
 `./initialize.ps1` from PowerShell. The wrapper refreshes PATH after package
 installation, installs the PowerShell 5.1/7 shared-profile loaders without
 replacing custom profiles, and synchronizes the ghq root with the default WSL
-distribution. Options: `-SkipPackages`, `-SkipApply`, `-GhqRoot D:\src`.
+distribution. The ghq root is saved in `mise.local.toml`, preserving other local
+values, so ordinary `mise run apply` keeps using it. Options: `-SkipPackages`, `-SkipApply`, `-GhqRoot D:\src`.
 `-ConfigureWakaTime` reads a hidden key for this invocation only. Store it in
 local configuration to persist it.
 

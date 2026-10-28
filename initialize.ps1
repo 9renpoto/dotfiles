@@ -61,11 +61,15 @@ if ((Test-Path "$HOME/.config/chezmoi/chezmoi.toml") -and -not (Test-Path mise.l
   & mise exec python@3.13 -- python scripts/migrate-local-config.py
   if ($LASTEXITCODE -ne 0) { throw 'Local configuration migration failed' }
 }
-# -E selects machine overrides without altering other local settings.
-$localConfig = Join-Path $PSScriptRoot 'mise.windows-host.local.toml'
+# Persist machine overrides in the config used by ordinary apply commands.
+$localConfig = Join-Path $PSScriptRoot 'mise.local.toml'
 $normalizedRoot = [IO.Path]::GetFullPath($GhqRoot).Replace('\', '/')
 New-Item -ItemType Directory -Path $normalizedRoot -Force | Out-Null
-$lines = @('[vars]', ('ghq_root = "' + $normalizedRoot.Replace('"', '\"') + '"'))
+if (-not (Test-Path -LiteralPath $localConfig)) {
+  [IO.File]::WriteAllText($localConfig, '', [Text.UTF8Encoding]::new($false))
+}
+& mise config set --file $localConfig --type string vars.ghq_root $normalizedRoot
+if ($LASTEXITCODE -ne 0) { throw 'Failed to persist ghq root' }
 if ($ConfigureWakaTime) {
   # Process-scoped only; no secret is printed or passed on the command line.
   $key = Read-Host 'WakaTime API key' -AsSecureString
@@ -73,7 +77,6 @@ if ($ConfigureWakaTime) {
   try { $env:WAKATIME_API_KEY = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($ptr) }
   finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ptr) }
 }
-[IO.File]::WriteAllLines($localConfig, $lines, [Text.UTF8Encoding]::new($false))
 try {
   if (-not $SkipPackages) {
     & "$PSScriptRoot/scripts/install-winget-packages.ps1"
@@ -81,7 +84,7 @@ try {
     Update-ProcessPath
   }
   if (-not $SkipApply) {
-    & mise -E windows-host bootstrap --skip packages
+    & mise bootstrap --skip packages
     if ($LASTEXITCODE -ne 0) { throw 'mise bootstrap failed' }
     Sync-WslGhqRoot -Root $normalizedRoot
   }
