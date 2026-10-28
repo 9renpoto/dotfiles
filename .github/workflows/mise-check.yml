@@ -36,7 +36,38 @@ jobs:
         with:
           version: v0.83.1
           checksum: 8e9980e02a2713d0335d9928761b2bfa111c6f9ff879252dc2b11e0bd712e332
+      - name: Record coverage badge artifact
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: coverage-badge
+          path: coverage.svg
+          if-no-files-found: error
       - name: Check shell syntax
         run: |
           sh -n initialize.sh devcontainer-setup.sh scripts/integrate.sh scripts/setup-git-credentials.sh
           bash -n scripts/sync-skills.sh
+
+  deploy-pages:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Download coverage badge
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: coverage-badge
+          path: public
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: public
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
