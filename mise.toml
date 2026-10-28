@@ -13,6 +13,7 @@ grafana_api_key = ""
 cargo.binstall = false
 
 [tools]
+go = "latest"
 "cargo:hk" = "2.7.1"
 codex = "latest"
 
@@ -78,9 +79,9 @@ depends = ["integrate"]
 run = 'python3 -m unittest discover -s scripts/tests -p "test_*.py"'
 
 [bootstrap.hooks]
-pre-packages = { run = "sh scripts/install-homebrew-packages.sh", run_windows = "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-winget-packages.ps1" }
+pre-packages = { run = "mise exec -- go run ./cmd/dotfiles packages", run_windows = "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-winget-packages.ps1" }
 
 [tasks.packages]
 description = "Install packages from the platform manifest"
-run = "sh scripts/install-homebrew-packages.sh"
+run = "mise exec -- go run ./cmd/dotfiles packages"
 run_windows = "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-winget-packages.ps1"

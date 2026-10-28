@@ -6,4 +6,4 @@ command -v mise >/dev/null 2>&1 || {
   exit 1
 }
 mise trust
-exec mise bootstrap "$@"
+exec mise exec -- go run ./cmd/dotfiles bootstrap "$@"
