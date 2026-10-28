@@ -21,11 +21,14 @@ distribution. Options: `-SkipPackages`, `-SkipApply`, `-GhqRoot D:\src`.
 `-ConfigureWakaTime` reads a hidden key for this invocation only. Store it in
 local configuration to persist it.
 
-`mise bootstrap` natively manages system packages, Neovim/TPM Git checkouts,
+`mise bootstrap` installs Homebrew packages from `Brewfile` through a pre-packages
+hook and natively manages Windows packages, Neovim/TPM Git checkouts,
 dotfiles and runtime tools, then runs the integration task. Existing external
 repositories are preserved; `mise bootstrap --update` explicitly updates them.
-Review the package list before bootstrap. Homebrew itself is a prerequisite.
-The Firefox cask uses its default language; configure application language in Firefox.
+Review the package lists before bootstrap. Homebrew itself is a prerequisite.
+`Brewfile` is the single source for Homebrew taps, formulae and casks; casks are
+guarded by `OS.mac?` so the same file works on Linux. The Firefox language
+option is preserved. Windows packages remain in `mise.toml`.
 
 ## Existing chezmoi users
 
@@ -61,6 +64,9 @@ Run commands inside the checkout (or use `mise -C /path/to/dotfiles ...`):
 mise dot diff
 mise run apply
 mise bootstrap --dry-run
+mise run packages
+brew bundle check --file=Brewfile
+# Windows packages only:
 mise bootstrap packages status
 mise bootstrap repos update
 mise run check

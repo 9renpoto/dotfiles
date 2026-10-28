@@ -78,57 +78,6 @@ depends = ["integrate"]
 run = 'python3 -m unittest discover -s scripts/tests -p "test_*.py"'
 
 [bootstrap.packages]
-"brew-cask:1password" = { version = "latest", os = ["macos"] }
-"brew-cask:alacritty" = { version = "latest", os = ["macos"] }
-"brew-cask:ankerwork" = { version = "latest", os = ["macos"] }
-"brew-cask:antigravity-cli" = { version = "latest", os = ["macos"] }
-"brew-cask:bitwarden" = { version = "latest", os = ["macos"] }
-"brew-cask:casemd" = { version = "latest", os = ["macos"] }
-"brew-cask:chatgpt" = { version = "latest", os = ["macos"] }
-"brew-cask:claude" = { version = "latest", os = ["macos"] }
-"brew-cask:firefox@nightly" = { version = "latest", os = ["macos"] }
-"brew-cask:font-sf-mono" = { version = "latest", os = ["macos"] }
-"brew-cask:font-udev-gothic-nf" = { version = "latest", os = ["macos"] }
-"brew-cask:gather" = { version = "latest", os = ["macos"] }
-"brew-cask:gcloud-cli" = { version = "latest", os = ["macos"] }
-"brew-cask:ghostty" = { version = "latest", os = ["macos"] }
-"brew-cask:google-chrome" = { version = "latest", os = ["macos"] }
-"brew-cask:obsidian" = { version = "latest", os = ["macos"] }
-"brew-cask:orbstack" = { version = "latest", os = ["macos"] }
-"brew-cask:raycast" = { version = "latest", os = ["macos"] }
-"brew-cask:slack" = { version = "latest", os = ["macos"] }
-"brew:actionlint" = { version = "latest", os = ["macos", "linux"] }
-"brew:antidote" = { version = "latest", os = ["macos", "linux"] }
-"brew:awscli" = { version = "latest", os = ["macos", "linux"] }
-"brew:biome" = { version = "latest", os = ["macos", "linux"] }
-"brew:carapace" = { version = "latest", os = ["macos", "linux"] }
-"brew:crit" = { version = "latest", os = ["macos", "linux"] }
-"brew:cspell" = { version = "latest", os = ["macos", "linux"] }
-"brew:devcontainer" = { version = "latest", os = ["macos", "linux"] }
-"brew:direnv" = { version = "latest", os = ["macos", "linux"] }
-"brew:ecschedule" = { version = "latest", os = ["macos", "linux"] }
-"brew:eza" = { version = "latest", os = ["macos", "linux"] }
-"brew:fd" = { version = "latest", os = ["macos", "linux"] }
-"brew:fzf" = { version = "latest", os = ["macos", "linux"] }
-"brew:gh" = { version = "latest", os = ["macos", "linux"] }
-"brew:ghq" = { version = "latest", os = ["macos", "linux"] }
-"brew:gibo" = { version = "latest", os = ["macos", "linux"] }
-"brew:git" = { version = "latest", os = ["macos", "linux"] }
-"brew:gitleaks" = { version = "latest", os = ["macos", "linux"] }
-"brew:grafana/grafana/alloy" = { version = "latest", os = ["macos", "linux"] }
-"brew:herdr" = { version = "latest", os = ["macos", "linux"] }
-"brew:jq" = { version = "latest", os = ["macos", "linux"] }
-"brew:mdbook" = { version = "latest", os = ["macos", "linux"] }
-"brew:neovim" = { version = "latest", os = ["macos", "linux"] }
-"brew:pinact" = { version = "latest", os = ["macos", "linux"] }
-"brew:postgresql" = { version = "latest", os = ["macos", "linux"] }
-"brew:ripgrep" = { version = "latest", os = ["macos", "linux"] }
-"brew:starship" = { version = "latest", os = ["macos", "linux"] }
-"brew:tig" = { version = "latest", os = ["macos", "linux"] }
-"brew:tmux" = { version = "latest", os = ["macos", "linux"] }
-"brew:typos-cli" = { version = "latest", os = ["macos", "linux"] }
-"brew:zig" = { version = "latest", os = ["macos", "linux"] }
-"brew:zizmor" = { version = "latest", os = ["macos", "linux"] }
 "winget:Alacritty.Alacritty" = { version = "latest", os = "windows" }
 "winget:Amazon.AWSCLI" = { version = "latest", os = "windows" }
 "winget:Bitwarden.Bitwarden" = { version = "latest", os = "windows" }
@@ -151,7 +100,10 @@ run = 'python3 -m unittest discover -s scripts/tests -p "test_*.py"'
 "winget:Wakatime.CLIWakatime" = { version = "latest", os = "windows" }
 "winget:x-motemen.ghq" = { version = "latest", os = "windows" }
 
-[bootstrap.brew.taps]
-"9renpoto/tap" = "https://github.com/9renpoto/homebrew-tap.git"
-"grafana/grafana" = "https://github.com/grafana/homebrew-grafana.git"
-"songmu/tap" = "https://github.com/Songmu/homebrew-tap.git"
+[bootstrap.hooks]
+pre-packages = { run = "sh scripts/install-homebrew-packages.sh", run_windows = "echo Homebrew is managed on macOS and Linux only" }
+
+[tasks.packages]
+description = "Install Homebrew packages from Brewfile"
+run = "sh scripts/install-homebrew-packages.sh"
+run_windows = "mise bootstrap packages apply"

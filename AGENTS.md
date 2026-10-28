@@ -12,3 +12,6 @@ mise manages dotfiles for macOS, Linux/WSL, and Windows.
 - Shell scripts must gate platform-specific logic and pass shellcheck; use POSIX sh unless Bash is required.
 - Use Conventional Commits; chat in Japanese, code comments and commit messages in English.
 - Validate with `mise run check` and `hk check --all`; report commands and results in PRs.
+
+- Homebrew packages belong only in `Brewfile`; guard macOS-only casks with `OS.mac?`.
+- `mise run packages` runs Brew Bundle; do not duplicate Homebrew entries in mise.toml.

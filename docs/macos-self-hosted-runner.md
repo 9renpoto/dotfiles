@@ -31,7 +31,7 @@ Apply the dotfiles and install Homebrew dependencies:
 
 ```sh
 mise run apply
-mise bootstrap packages apply
+mise run packages
 ```
 
 Configure and start Alloy from a development clone of this repository:
