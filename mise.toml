@@ -76,7 +76,7 @@ description = "Finish platform integration after native bootstrap"
 depends = ["integrate"]
 
 [tasks.check]
-run = 'python3 -m unittest discover -s scripts/tests -p "test_*.py"'
+run = 'go test ./...'
 
 [bootstrap.hooks]
 pre-packages = { run = "mise exec -- go run ./cmd/dotfiles packages", run_windows = "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-winget-packages.ps1" }

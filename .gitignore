@@ -163,3 +163,4 @@ mise.local.toml
 mise.*.local.toml
 
 __pycache__/
+coverage.out
