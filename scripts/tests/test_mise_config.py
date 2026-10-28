@@ -89,7 +89,7 @@ class DeploymentTest(unittest.TestCase):
         for entry in config['dotfiles'].values():
             self.assertTrue((REPO / entry['source']).is_file())
         self.assertNotIn('windows', {v['os'] for v in config['dotfiles']['gitconfig']['variants']})
-        self.assertFalse(any('chezmoi' in p for p in config['bootstrap']['packages']))
+        self.assertFalse(any('chezmoi' in p for p in config['bootstrap'].get('packages', {})))
 
 
 if __name__ == '__main__':

@@ -22,14 +22,16 @@ distribution. Options: `-SkipPackages`, `-SkipApply`, `-GhqRoot D:\src`.
 local configuration to persist it.
 
 `mise bootstrap` installs Homebrew packages from `Brewfile` through a pre-packages
-hook and natively manages Windows packages, Neovim/TPM Git checkouts,
+hook (or imports `winget-packages.json` on Windows) and natively manages
+Neovim/TPM Git checkouts,
 dotfiles and runtime tools, then runs the integration task. Existing external
 repositories are preserved; `mise bootstrap --update` explicitly updates them.
 Review the package lists before bootstrap. Homebrew itself is a prerequisite.
 `Brewfile` is the single source for Homebrew taps, formulae and casks.
 Homebrew determines platform compatibility; this repository adds no OS guards
 to package declarations. The Firefox language option is preserved.
-Windows packages remain in `mise.toml`.
+`winget-packages.json` is the single source for Windows packages. Both manifests
+are invoked by `mise run packages` and the bootstrap pre-packages hook.
 
 ## Existing chezmoi users
 
@@ -67,8 +69,8 @@ mise run apply
 mise bootstrap --dry-run
 mise run packages
 brew bundle check --file=Brewfile
-# Windows packages only:
-mise bootstrap packages status
+# Windows package manifest:
+# winget import -i winget-packages.json --ignore-unavailable --ignore-versions
 mise bootstrap repos update
 mise run check
 ```

@@ -77,33 +77,10 @@ depends = ["integrate"]
 [tasks.check]
 run = 'python3 -m unittest discover -s scripts/tests -p "test_*.py"'
 
-[bootstrap.packages]
-"winget:Alacritty.Alacritty" = { version = "latest", os = "windows" }
-"winget:Amazon.AWSCLI" = { version = "latest", os = "windows" }
-"winget:Bitwarden.Bitwarden" = { version = "latest", os = "windows" }
-"winget:BurntSushi.ripgrep.MSVC" = { version = "latest", os = "windows" }
-"winget:eza-community.eza" = { version = "latest", os = "windows" }
-"winget:Git.Git" = { version = "latest", os = "windows" }
-"winget:GitHub.cli" = { version = "latest", os = "windows" }
-"winget:Google.Chrome" = { version = "latest", os = "windows" }
-"winget:jqlang.jq" = { version = "latest", os = "windows" }
-"winget:junegunn.fzf" = { version = "latest", os = "windows" }
-"winget:Microsoft.PowerShell" = { version = "latest", os = "windows" }
-"winget:Microsoft.VisualStudioCode" = { version = "latest", os = "windows" }
-"winget:Microsoft.WindowsTerminal" = { version = "latest", os = "windows" }
-"winget:Neovim.Neovim" = { version = "latest", os = "windows" }
-"winget:Obsidian.Obsidian" = { version = "latest", os = "windows" }
-"winget:9PFXXSHC64H3" = { version = "latest", os = "windows" }
-"winget:sharkdp.bat" = { version = "latest", os = "windows" }
-"winget:sharkdp.fd" = { version = "latest", os = "windows" }
-"winget:Starship.Starship" = { version = "latest", os = "windows" }
-"winget:Wakatime.CLIWakatime" = { version = "latest", os = "windows" }
-"winget:x-motemen.ghq" = { version = "latest", os = "windows" }
-
 [bootstrap.hooks]
-pre-packages = { run = "sh scripts/install-homebrew-packages.sh", run_windows = "echo Homebrew is managed on macOS and Linux only" }
+pre-packages = { run = "sh scripts/install-homebrew-packages.sh", run_windows = "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-winget-packages.ps1" }
 
 [tasks.packages]
-description = "Install Homebrew packages from Brewfile"
+description = "Install packages from the platform manifest"
 run = "sh scripts/install-homebrew-packages.sh"
-run_windows = "mise bootstrap packages apply"
+run_windows = "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-winget-packages.ps1"

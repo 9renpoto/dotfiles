@@ -76,7 +76,7 @@ if ($ConfigureWakaTime) {
 [IO.File]::WriteAllLines($localConfig, $lines, [Text.UTF8Encoding]::new($false))
 try {
   if (-not $SkipPackages) {
-    & mise -E windows-host bootstrap packages apply
+    & "$PSScriptRoot/scripts/install-winget-packages.ps1"
     if ($LASTEXITCODE -ne 0) { throw 'Package installation failed' }
     Update-ProcessPath
   }
