@@ -26,9 +26,10 @@ hook and natively manages Windows packages, Neovim/TPM Git checkouts,
 dotfiles and runtime tools, then runs the integration task. Existing external
 repositories are preserved; `mise bootstrap --update` explicitly updates them.
 Review the package lists before bootstrap. Homebrew itself is a prerequisite.
-`Brewfile` is the single source for Homebrew taps, formulae and casks; casks are
-guarded by `OS.mac?` so the same file works on Linux. The Firefox language
-option is preserved. Windows packages remain in `mise.toml`.
+`Brewfile` is the single source for Homebrew taps, formulae and casks.
+Homebrew determines platform compatibility; this repository adds no OS guards
+to package declarations. The Firefox language option is preserved.
+Windows packages remain in `mise.toml`.
 
 ## Existing chezmoi users
 
