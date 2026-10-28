@@ -5,16 +5,9 @@ param(
   [switch]$ConfigureWakaTime,
   [string]$GhqRoot = (Join-Path $HOME 'src')
 )
-
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
-
-function Write-Info {
-  param([Parameter(Mandatory)][string]$Message)
-
-  Write-Host "==> $Message" -ForegroundColor Cyan
-}
-
+function Write-Info { param([string]$Message) Write-Host "==> $Message" }
 function Update-ProcessPath {
   $machinePath = [Environment]::GetEnvironmentVariable('Path', 'Machine')
   $userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
@@ -24,155 +17,6 @@ function Update-ProcessPath {
     | Where-Object { $_ } `
     | Select-Object -Unique
   $env:Path = $pathEntries -join $separator
-}
-
-function Initialize-ChezmoiConfig {
-  $configDirectory = Join-Path $HOME '.config\chezmoi'
-  $configPath = Join-Path $configDirectory 'chezmoi.toml'
-
-  if (Test-Path $configPath) {
-    return
-  }
-
-  Write-Info "Creating default chezmoi config at $configPath"
-  New-Item -ItemType Directory -Path $configDirectory -Force | Out-Null
-  $config = @'
-[data]
-'@
-  [IO.File]::WriteAllText(
-    $configPath,
-    $config + [Environment]::NewLine,
-    [Text.UTF8Encoding]::new($false)
-  )
-}
-
-function Add-WakaTimeConfig {
-  param([Parameter(Mandatory)][string]$ConfigPath)
-
-  $configContent = [IO.File]::ReadAllText($ConfigPath)
-  if ($configContent -match '(?m)^\s*\[data\.wakatime\]\s*$') {
-    Write-Info 'Existing WakaTime configuration was preserved.'
-    return
-  }
-
-  $secureApiKey = Read-Host 'Enter your WakaTime API key' -AsSecureString
-  if ($secureApiKey.Length -eq 0) {
-    Write-Warning 'No WakaTime API key was entered; configuration was skipped.'
-    return
-  }
-
-  $apiKeyPointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureApiKey)
-  try {
-    $apiKey = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($apiKeyPointer)
-    $escapedApiKey = $apiKey.Replace('\', '\\').Replace('"', '\"')
-    $newLine = [Environment]::NewLine
-    $prefix = if ($configContent.Length -eq 0) {
-      ''
-    } elseif ($configContent.EndsWith("\n")) {
-      $newLine
-    } else {
-      $newLine + $newLine
-    }
-    $wakatimeConfig = @"
-[data.wakatime]
-  api_key = "$escapedApiKey"
-"@
-    [IO.File]::AppendAllText(
-      $ConfigPath,
-      $prefix + $wakatimeConfig.Trim() + $newLine,
-      [Text.UTF8Encoding]::new($false)
-    )
-  } finally {
-    [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($apiKeyPointer)
-  }
-
-  Write-Info 'WakaTime API key was added to the local chezmoi config.'
-}
-
-function Write-GhqConfig {
-  param(
-    [Parameter(Mandatory)][string]$ConfigPath,
-    [Parameter(Mandatory)][string]$Root
-  )
-
-  $resolvedRoot = [IO.Path]::GetFullPath($Root)
-  New-Item -ItemType Directory -Path $resolvedRoot -Force | Out-Null
-
-  $normalizedRoot = $resolvedRoot -replace '\\', '/'
-  $escapedRoot = $normalizedRoot.Replace('\', '\\').Replace('"', '\"')
-  $rootSetting = "  root = `"$escapedRoot`""
-  $lines = [Collections.Generic.List[string]]::new()
-  $lines.AddRange([IO.File]::ReadAllLines($ConfigPath))
-
-  $sectionIndex = -1
-  for ($index = 0; $index -lt $lines.Count; $index++) {
-    if ($lines[$index] -match '^\s*\[data\.ghq\]\s*$') {
-      $sectionIndex = $index
-      break
-    }
-  }
-
-  if ($sectionIndex -eq -1) {
-    if ($lines.Count -gt 0 -and $lines[$lines.Count - 1].Length -gt 0) {
-      $lines.Add('')
-    }
-    $lines.Add('[data.ghq]')
-    $lines.Add($rootSetting)
-  } else {
-    $nextSectionIndex = $lines.Count
-    for ($index = $sectionIndex + 1; $index -lt $lines.Count; $index++) {
-      if ($lines[$index] -match '^\s*\[') {
-        $nextSectionIndex = $index
-        break
-      }
-    }
-
-    $rootIndex = -1
-    for ($index = $sectionIndex + 1; $index -lt $nextSectionIndex; $index++) {
-      if ($lines[$index] -match '^\s*root\s*=') {
-        $rootIndex = $index
-        break
-      }
-    }
-
-    if ($rootIndex -eq -1) {
-      $lines.Insert($nextSectionIndex, $rootSetting)
-    } else {
-      $lines[$rootIndex] = $rootSetting
-    }
-  }
-
-  [IO.File]::WriteAllLines(
-    $ConfigPath,
-    $lines,
-    [Text.UTF8Encoding]::new($false)
-  )
-  Write-Info "Windows ghq root: $resolvedRoot"
-  return $resolvedRoot
-}
-
-function Add-GitConfigInclude {
-  $git = Get-Command git.exe -ErrorAction SilentlyContinue
-  if (-not $git) {
-    throw 'git.exe was not found after package installation.'
-  }
-
-  $gitProcess = Start-Process `
-    -FilePath $git.Source `
-    -ArgumentList @(
-      'config',
-      '--global',
-      '--replace-all',
-      'include.path',
-      '~/.config/git/.gitconfig'
-    ) `
-    -NoNewWindow `
-    -Wait `
-    -PassThru
-  if ($gitProcess.ExitCode -ne 0) {
-    throw 'Failed to configure the managed Git config include.'
-  }
-  Write-Info 'Windows Git config includes ~/.config/git/.gitconfig'
 }
 
 function Sync-WslGhqRoot {
@@ -204,51 +48,42 @@ function Sync-WslGhqRoot {
   Write-Info "WSL ghq root: $wslRoot"
 }
 
-$repositoryRoot = $PSScriptRoot
-$packageManifest = Join-Path $repositoryRoot 'winget-packages.json'
 
-if (-not $SkipPackages) {
-  if (-not (Get-Command winget.exe -ErrorAction SilentlyContinue)) {
-    throw 'winget.exe was not found. Install App Installer from Microsoft Store and retry.'
-  }
-
-  Write-Info 'Installing Windows packages with winget'
-  & winget.exe import `
-    --import-file $packageManifest `
-    --ignore-unavailable `
-    --ignore-versions `
-    --accept-package-agreements `
-    --accept-source-agreements
-
-  if ($LASTEXITCODE -ne 0) {
-    throw "winget import failed with exit code $LASTEXITCODE."
-  }
-
+Set-Location $PSScriptRoot
+if (-not (Get-Command mise -ErrorAction SilentlyContinue)) {
+  & winget install --id jdx.mise --exact --accept-package-agreements --accept-source-agreements
+  if ($LASTEXITCODE -ne 0) { throw 'mise installation failed' }
   Update-ProcessPath
 }
-
-if (-not $SkipApply) {
-  $chezmoi = Get-Command chezmoi.exe -ErrorAction SilentlyContinue
-  if (-not $chezmoi) {
-    throw 'chezmoi.exe was not found. Open a new PowerShell session and run .\initialize.ps1 -SkipPackages.'
-  }
-
-  Initialize-ChezmoiConfig
-  $chezmoiConfigPath = Join-Path $HOME '.config\chezmoi\chezmoi.toml'
-  $resolvedGhqRoot = Write-GhqConfig -ConfigPath $chezmoiConfigPath -Root $GhqRoot
-  if ($ConfigureWakaTime) {
-    Add-WakaTimeConfig -ConfigPath $chezmoiConfigPath
-  }
-  Write-Info 'Applying dotfiles with chezmoi'
-  $chezmoiPath = $chezmoi.Source
-  & $chezmoiPath apply --source $repositoryRoot --destination $HOME
-
-  if ($LASTEXITCODE -ne 0) {
-    throw "chezmoi apply failed with exit code $LASTEXITCODE."
-  }
-
-  Add-GitConfigInclude
-  Sync-WslGhqRoot -Root $resolvedGhqRoot
+& mise trust
+if ($LASTEXITCODE -ne 0) { throw 'mise trust failed' }
+# Persist machine overrides in the config used by ordinary apply commands.
+$localConfig = Join-Path $PSScriptRoot 'mise.local.toml'
+$normalizedRoot = [IO.Path]::GetFullPath($GhqRoot).Replace('\', '/')
+New-Item -ItemType Directory -Path $normalizedRoot -Force | Out-Null
+if (-not (Test-Path -LiteralPath $localConfig)) {
+  [IO.File]::WriteAllText($localConfig, '', [Text.UTF8Encoding]::new($false))
 }
-
-Write-Info 'Windows dotfiles initialization complete'
+& mise config set --file $localConfig --type string vars.ghq_root $normalizedRoot
+if ($LASTEXITCODE -ne 0) { throw 'Failed to persist ghq root' }
+if ($ConfigureWakaTime) {
+  # Process-scoped only; no secret is printed or passed on the command line.
+  $key = Read-Host 'WakaTime API key' -AsSecureString
+  $ptr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($key)
+  try { $env:WAKATIME_API_KEY = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($ptr) }
+  finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ptr) }
+}
+try {
+  if (-not $SkipPackages) {
+    & "$PSScriptRoot/scripts/install-winget-packages.ps1"
+    if ($LASTEXITCODE -ne 0) { throw 'Package installation failed' }
+    Update-ProcessPath
+  }
+  if (-not $SkipApply) {
+    & mise bootstrap --skip packages
+    if ($LASTEXITCODE -ne 0) { throw 'mise bootstrap failed' }
+    Sync-WslGhqRoot -Root $normalizedRoot
+  }
+} finally {
+  if ($ConfigureWakaTime) { Remove-Item Env:WAKATIME_API_KEY -ErrorAction SilentlyContinue }
+}

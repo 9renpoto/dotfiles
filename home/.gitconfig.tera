@@ -1,0 +1,7 @@
+[user]
+  name = Keisuke Umeno
+{% if vars.email %}  email = {{ vars.email }}{% endif %}
+[color]
+  ui = auto
+[include]
+  path = ~/.config/git/config

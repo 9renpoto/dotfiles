@@ -4,7 +4,7 @@
 #
 # - No flags: installed for Codex and Antigravity at user scope.
 # - With --agent/--scope/--dir: the flags are passed through to `gh skill install` as-is.
-# - Removing a line uninstalls that skill on the next `chezmoi apply`
+# - Removing a line uninstalls that skill on the next `mise run apply`
 #   (user scope only; --dir installs must be cleaned up by hand).
 # - Keep entries grouped by source repo and sorted alphabetically.
 

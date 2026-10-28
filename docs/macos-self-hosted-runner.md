@@ -16,29 +16,23 @@ free-tier usage.
 
 ## Configure Grafana Cloud credentials
 
-Run the interactive setup. On a new machine, `initialize.sh` invokes it
-automatically. If the chezmoi configuration already exists, the script updates
-only the Grafana Cloud section and preserves other settings.
-
-```sh
-./setup-chezmoi-config.sh
-```
-
-The token prompt does not echo its value. The resulting local configuration is
-equivalent to the following. Never commit this file.
+Set these values in untracked `mise.local.toml` in the checkout, using
+`mise.local.toml.example` as a starting point. Restrict it with `chmod 600`.
+Rotate the Grafana Cloud token and configure the newly issued value.
+Never commit this file.
 
 ```toml
-[data.grafana_cloud]
-  prometheus_url = "https://prometheus-REGION.grafana.net/api/prom/push"
-  prometheus_username = "YOUR_METRICS_INSTANCE_ID"
-  api_key = "glc_YOUR_ACCESS_POLICY_TOKEN"
+[vars]
+grafana_url = "https://prometheus-REGION.grafana.net/api/prom/push"
+grafana_username = "YOUR_METRICS_INSTANCE_ID"
+grafana_api_key = "glc_YOUR_ACCESS_POLICY_TOKEN"
 ```
 
 Apply the dotfiles and install Homebrew dependencies:
 
 ```sh
-chezmoi apply
-brew bundle --file="$(chezmoi source-path)/Brewfile"
+mise run apply
+mise run packages
 ```
 
 Configure and start Alloy from a development clone of this repository:
@@ -70,7 +64,7 @@ terraform apply
 
 See [`terraform/grafana/README.md`](../terraform/grafana/README.md) for service
 account permissions and authentication. Terraform manages the dashboards and
-alert rules; chezmoi continues to manage Alloy and its metrics write token. The
+alert rules; mise continues to manage Alloy and its metrics write token. The
 configuration collects host and Alloy health metrics at low cardinality. Logs
 are excluded initially.
 

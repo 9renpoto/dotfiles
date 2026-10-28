@@ -1,0 +1,5 @@
+[ghq]
+  root = {{ vars.ghq_root | json_encode }}
+[core]
+  excludesfile = ~/.config/git/ignore
+  editor = {{ vars.editor | json_encode }}

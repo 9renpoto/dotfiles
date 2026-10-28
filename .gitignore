@@ -157,3 +157,9 @@ override.tf.json
 *_override.tf.json
 .terraformrc
 terraform.rc
+
+# Machine-only values and secrets
+mise.local.toml
+mise.*.local.toml
+
+__pycache__/

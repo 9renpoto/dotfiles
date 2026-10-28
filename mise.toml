@@ -1,0 +1,86 @@
+min_version = "2026.10.19"
+
+[vars]
+email = ""
+ghq_root = "~/src"
+editor = "nvim"
+wakatime_api_key = ""
+grafana_url = ""
+grafana_username = ""
+grafana_api_key = ""
+
+[settings]
+cargo.binstall = false
+
+[tools]
+"cargo:hk" = "2.7.1"
+codex = "latest"
+
+[bootstrap.repos]
+"~/.config/nvim" = { url = "https://github.com/9renpoto/astronvim_config.git" }
+"~/.tmux/plugins/tpm" = { url = "https://github.com/tmux-plugins/tpm" }
+
+[dotfiles]
+
+"~/.agents/skills/github-review-responder/SKILL.md" = { source = "home/.agents/skills/github-review-responder/SKILL.md", mode = "copy" }
+"~/.agents/skills/github-review-responder/agents/openai.yaml" = { source = "home/.agents/skills/github-review-responder/agents/openai.yaml", mode = "copy" }
+"~/.agents/skills/review-preflight/SKILL.md" = { source = "home/.agents/skills/review-preflight/SKILL.md", mode = "copy" }
+"~/.bashrc" = { source = "home/.bashrc", mode = "copy" }
+"~/.codex/AGENTS.md" = { source = "home/.codex/AGENTS.md", mode = "copy" }
+"~/.config/alacritty/alacritty.toml" = { source = "home/.config/alacritty/alacritty.toml", mode = "copy" }
+"~/.config/alacritty/dracula.toml" = { source = "home/.config/alacritty/dracula.toml", mode = "copy" }
+"~/.config/alloy/config.alloy" = { source = "home/.config/alloy/config.alloy", mode = "copy" }
+"~/.config/alloy/config.env" = { source = "home/.config/alloy/config.env.tera", mode = "template", permissions = "0600" }
+"~/.config/alloy/extra-args.txt" = { source = "home/.config/alloy/extra-args.txt", mode = "copy" }
+"~/.config/fish/config.fish" = { source = "home/.config/fish/config.fish", mode = "copy" }
+"~/.config/fish/fish_plugins" = { source = "home/.config/fish/fish_plugins", mode = "copy" }
+"~/.config/ghostty/config" = { source = "home/.config/ghostty/config", mode = "copy" }
+"~/.config/git/config" = { source = "home/.config/git/config.tera", mode = "template" }
+"~/.config/git/ignore" = { source = "home/.config/git/ignore", mode = "copy" }
+"~/.config/herdr/config.toml" = { source = "home/.config/herdr/config.toml", mode = "copy" }
+"~/.config/hk/config.pkl" = { source = "home/.config/hk/config.pkl", mode = "copy" }
+"~/.config/mise/config.toml" = { source = "home/.config/mise/config.toml", mode = "copy" }
+"~/.config/powershell/profile.ps1" = { source = "home/.config/powershell/profile.ps1", mode = "copy" }
+"~/.config/starship.toml" = { source = "home/.config/starship.toml", mode = "copy" }
+"~/.default-cargo-crates" = { source = "home/.default-cargo-crates", mode = "copy" }
+"~/.tmux.conf" = { source = "home/.tmux.conf", mode = "copy" }
+"~/.wakatime.cfg" = { source = "home/.wakatime.cfg.tera", mode = "template", permissions = "0600" }
+"~/.zsh_plugins.txt" = { source = "home/.zsh_plugins.txt", mode = "copy" }
+"~/.zshrc" = { source = "home/.zshrc", mode = "copy" }
+
+[dotfiles."gitconfig"]
+source = "home/.gitconfig.tera"
+mode = "template"
+variants = [{ os = "linux", target = "~/.gitconfig" }, { os = "macos", target = "~/.gitconfig" }]
+
+[dotfiles.biome]
+source = "home/.config/biome/biome.json"
+mode = "copy"
+variants = [
+  { os = "linux", target = "~/.config/biome/biome.json" },
+  { os = "macos", target = "~/Library/Application Support/biome/biome.json" },
+  { os = "windows", target = "~/AppData/Roaming/biome/config/biome.json" },
+]
+
+[tasks.apply]
+description = "Deploy configuration and run platform integration"
+run = ["mise dot apply", "mise run integrate"]
+
+[tasks.integrate]
+run = "sh scripts/integrate.sh"
+run_windows = "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/integrate.ps1"
+
+[tasks.bootstrap]
+description = "Finish platform integration after native bootstrap"
+depends = ["integrate"]
+
+[tasks.check]
+run = 'python3 -m unittest discover -s scripts/tests -p "test_*.py"'
+
+[bootstrap.hooks]
+pre-packages = { run = "sh scripts/install-homebrew-packages.sh", run_windows = "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-winget-packages.ps1" }
+
+[tasks.packages]
+description = "Install packages from the platform manifest"
+run = "sh scripts/install-homebrew-packages.sh"
+run_windows = "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-winget-packages.ps1"

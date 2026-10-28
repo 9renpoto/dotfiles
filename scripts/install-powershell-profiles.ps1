@@ -1,4 +1,3 @@
-{{ if eq .chezmoi.os "windows" -}}
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
@@ -11,7 +10,6 @@ if (Test-Path -LiteralPath `$sharedProfilePath) {
 }
 "@
 $loader = $loader.Trim() + [Environment]::NewLine
-$legacyProfile = 'Invoke-Expression (&starship init powershell)'
 $utf8WithoutBom = [Text.UTF8Encoding]::new($false)
 
 function Install-ProfileLoader {
@@ -31,7 +29,6 @@ function Install-ProfileLoader {
   $currentContent = [IO.File]::ReadAllText($Path).Trim()
   if (
     $currentContent.Length -eq 0 -or
-    $currentContent -eq $legacyProfile -or
     $currentContent -eq $loader.Trim()
   ) {
     [IO.File]::WriteAllText($Path, $loader, $utf8WithoutBom)
@@ -42,38 +39,12 @@ function Install-ProfileLoader {
   }
 }
 
-function Remove-MigratedProfileContent {
-  param(
-    [Parameter(Mandatory)][string]$Path
-  )
-
-  if (-not (Test-Path -LiteralPath $Path)) {
-    return
-  }
-
-  $currentContent = [IO.File]::ReadAllText($Path).Trim()
-  if (
-    $currentContent -eq $legacyProfile -or
-    $currentContent -eq $loader.Trim()
-  ) {
-    [IO.File]::WriteAllText($Path, '', $utf8WithoutBom)
-  } elseif ($currentContent.Length -gt 0) {
-    Write-Warning "Preserving customized PowerShell profile: $Path"
-  }
-}
-
 foreach ($profileDirectoryName in @('WindowsPowerShell', 'PowerShell')) {
   $profileDirectory = Join-Path $documentsDirectory $profileDirectoryName
   New-Item -ItemType Directory -Path $profileDirectory -Force | Out-Null
 
   $allHostsProfile = Join-Path $profileDirectory 'profile.ps1'
-  $loaderInstalled = Install-ProfileLoader -Path $allHostsProfile -CreateIfMissing
-
-  if ($loaderInstalled) {
-    $currentHostProfile = Join-Path $profileDirectory 'Microsoft.PowerShell_profile.ps1'
-    Remove-MigratedProfileContent -Path $currentHostProfile
-  }
+  Install-ProfileLoader -Path $allHostsProfile -CreateIfMissing | Out-Null
 }
 
 Write-Host "PowerShell profiles load $sharedProfilePath"
-{{ end -}}

@@ -1,290 +1,97 @@
 # dotfiles
 
-Opinionated dotfiles and setup scripts for macOS, Linux/WSL, and Windows terminals.
+mise-managed workstation configuration for macOS, Linux/WSL, and Windows.
+Requires **mise 2026.10.19 or newer**, Git, and the platform build toolchain
+(Rust/Cargo and C/C++ tools for hk). Install Homebrew on macOS/Linux first.
 
-## Quick Start
+## Setup
 
-1. Install [`chezmoi`](https://www.chezmoi.io/):
-   - macOS / Linux: `brew install chezmoi`
-   - Windows: `winget install twpayne.chezmoi`
-2. Apply the configuration: `chezmoi init 9renpoto/dotfiles --apply`
-   - During `init`, you will be prompted for your email and other information. These values are used to personalize your configuration.
-3. Finish runtime setup:
-   - Run `mise install` to install language runtimes.
-   - Switch to **zsh** (highly recommended): `chsh -s $(which zsh)`
-
-Re-run `chezmoi apply` whenever you pull updates to keep `$HOME` in sync.
-
-### Codex User Skills
-
-Author personal Codex skills under `dot_agents/skills/<name>/` in this repository. Chezmoi maps that source tree to `~/.agents/skills/<name>/`, Codex's user-scope skill directory. Each skill is a folder containing a `SKILL.md`; add future skills as sibling folders and run `chezmoi apply` to deploy them. Codex detects skill changes automatically; restart Codex if a newly added skill does not appear.
-
-The initial skill is `review-preflight`, which checks the current change and its pull request base before a GitHub or Codex review. Its source is [dot_agents/skills/review-preflight/SKILL.md](dot_agents/skills/review-preflight/SKILL.md).
-
-### Shell Recommendation
-
-While this repository supports multiple shells, **zsh** is the recommended default. Our zsh configuration includes:
-- [antidote](https://getantidote.github.io/) for fast plugin management.
-- Syntax highlighting and autosuggestions.
-- [starship](https://starship.rs/) prompt integration.
-
-### macOS Preparation
-
-Before running `chezmoi apply` on macOS, make sure the base toolchain is ready:
-
-- Install Apple's Command Line Tools: `xcode-select --install`
-- Install Homebrew if it's missing (see [brew.sh](https://brew.sh/) for the latest install command)
-- Confirm Homebrew works: `brew doctor`
-
-For a private-repository GitHub Actions runner with Grafana Cloud monitoring,
-including Terraform-managed dashboards and alerts, see
-[the macOS self-hosted runner guide](docs/macos-self-hosted-runner.md).
-
-### Windows Preparation
-
-Run the Windows bootstrap from PowerShell in a development clone:
-
-```powershell
-Set-ExecutionPolicy -Scope Process Bypass
-.\initialize.ps1
-```
-
-The script imports `winget-packages.json`, refreshes `PATH` for the current
-process, and applies the local source state with `chezmoi`. Use
-`.\initialize.ps1 -SkipPackages` to reapply only the dotfiles, or
-`.\initialize.ps1 -SkipApply` to install only the packages. It also configures
-the ghq root as `%USERPROFILE%\src` on Windows and the corresponding
-`/mnt/<drive>/Users/<user>/src` path in the default WSL distribution. Override
-the location with `.\initialize.ps1 -GhqRoot D:\src` when needed.
-
-The winget manifest installs Raycast and WakaTime CLI. To configure its API key without
-showing it in the terminal, run:
-
-```powershell
-.\initialize.ps1 -SkipPackages -ConfigureWakaTime
-```
-
-The key is stored only in the local chezmoi config, then rendered into
-`~/.wakatime.cfg`. Existing `[data.wakatime]` settings are preserved.
-The managed Neovim configuration already includes the WakaTime plugin.
-
-PowerShell 5.1 and PowerShell 7 load the shared
-`~/.config/powershell/profile.ps1` profile. The shared profile initializes
-Starship and activates mise. Their cross-platform configuration lives in
-`~/.config/starship.toml` and `~/.config/mise/config.toml`.
-
-## Configuration
-
-Some configurations can be customized using variables. Create a `~/.config/chezmoi/chezmoi.toml` file to override default values.
-
-For example, to change the Git email address:
-
-```toml
-[data]
-  email = "your-email@example.com"
-```
-
-`chezmoi apply` will then use this email address in your `~/.gitconfig`.
-
-### Environment-Specific Data
-
-- Global defaults live in `chezmoidata.toml`; platform-specific files such as `chezmoidata.darwin.toml.tmpl` and `chezmoidata.linux.toml` layer on automatic values (e.g., the Homebrew prefix).
-- Sensitive or machine-local overrides can stay outside the repo: use `~/.config/chezmoi/chezmoi.toml` and nest keys under `[data]` to match the structure in `chezmoidata`.
-
-### GitHub Authentication
-
-`~/.ssh/config` is **not** managed by this repository. GitHub authentication is delegated to the GitHub CLI:
-
-1. Authenticate once per machine: `gh auth login`
-2. `run_after_setup-git-credentials.sh` runs `gh auth setup-git` after every `chezmoi apply`, which registers `gh` as the git credential helper for GitHub over HTTPS.
-
-The script re-runs on each apply because applying rewrites `~/.gitconfig` from `dot_gitconfig.tmpl`, which is where `gh auth setup-git` stores its entries. It exits quietly when `gh` is missing or not authenticated, so first-time setup order does not matter — just re-run `chezmoi apply` after `gh auth login`.
-
-Run `gh config set git_protocol https` if you want git remotes to go through that credential helper. With the `ssh` protocol, `gh` keeps handing out SSH URLs and git authenticates with your default key (`~/.ssh/id_ed25519`) instead.
-
-### Secret Management
-
-Secrets are managed locally through `~/.config/chezmoi/chezmoi.toml`.
-
-#### Quick Setup
-
-Run the interactive setup script to create your configuration file:
+Clone this repository, review `mise.toml`, and configure local values and newly
+issued secrets as described below before running:
 
 ```sh
-./setup-chezmoi-config.sh
+mise trust
+./initialize.sh
 ```
 
-This script will prompt you for:
-- WakaTime API key (optional)
-- Email address override (optional)
-- Machine profile (optional)
-- Grafana Cloud metrics connection on macOS (optional; token input is hidden)
+On Windows, install mise (`winget install --id jdx.mise --exact`) and run
+`./initialize.ps1` from PowerShell. The wrapper refreshes PATH after package
+installation, installs the PowerShell 5.1/7 shared-profile loaders without
+replacing custom profiles, and synchronizes the ghq root with the default WSL
+distribution. The ghq root is saved in `mise.local.toml`, preserving other local
+values, so ordinary `mise run apply` keeps using it. Options: `-SkipPackages`, `-SkipApply`, `-GhqRoot D:\src`.
+`-ConfigureWakaTime` reads a hidden key for this invocation only. Store it in
+local configuration to persist it.
 
-#### Manual Setup
+`mise bootstrap` installs Homebrew packages from `Brewfile` through a pre-packages
+hook (or imports `winget-packages.json` on Windows) and natively manages
+Neovim/TPM Git checkouts,
+dotfiles and runtime tools, then runs the integration task. Existing external
+repositories are preserved; `mise bootstrap --update` explicitly updates them.
+Review the package lists before bootstrap. Homebrew itself is a prerequisite.
+`Brewfile` is the single source for Homebrew taps, formulae and casks.
+Homebrew determines platform compatibility; this repository adds no OS guards
+to package declarations. The Firefox language option is preserved.
+`winget-packages.json` is the single source for Windows packages. Both manifests
+are invoked by `mise run packages` and the bootstrap pre-packages hook.
 
-Alternatively, manually create or edit `~/.config/chezmoi/chezmoi.toml`:
+## Local configuration and secrets
 
-```toml
-[data.wakatime]
-  api_key = "waka_YOUR_API_KEY_HERE"
+Rotate WakaTime and Grafana credentials with their providers and configure the
+new values; setup does not import existing credentials or local settings.
+Copy `mise.local.toml.example` to `mise.local.toml`, then `chmod 600 mise.local.toml`
+on Unix. Use your Windows account's private checkout and restrict access with
+Windows ACLs. This file is ignored by Git and must not be committed or copied
+into a shared container. WakaTime and Grafana output files use mode 0600 on
+Unix; mise does not enforce POSIX permissions on Windows.
 
-[data.user]
-  email = "your-email@example.com"
+Environment variables `WAKATIME_API_KEY` and `GRAFANA_CLOUD_API_KEY` can override
+the local keys. Missing optional keys produce empty configuration values.
+Other values, including Git email, ghq root and Grafana endpoint, live under
+`[vars]`. Templates use Tera, with `os()` for branching. Target variants select
+Biome's standard path on each OS. Use `mise.work.toml` and `mise -E work ...`
+for profiles; `mise.local.toml` overrides shared defaults.
 
-[data.machine]
-  profile = "dev"
-```
+## Daily use
 
-After configuration, run `chezmoi apply` to generate your dotfiles with the provided values.
-
-**Important**: Never commit `~/.config/chezmoi/chezmoi.toml` to version control. This file should remain local to each machine.
-
-### Devcontainer
-
-This repository includes a devcontainer configuration that allows you to work in a consistent, pre-configured environment.
-
-1.  **Open in Devcontainer**: Open this project in a VS Code devcontainer. When the container starts, it will install necessary tools but will not apply dotfiles automatically.
-2.  **Run Setup from Host**: From your **host machine's terminal**, run the following command in the project root:
-
-    ```sh
-    ./devcontainer-setup.sh
-    ```
-
-    This script uses `chezmoi docker` to apply the dotfiles from your source tree directly into the running container's home directory.
-
-#### macOS Template Override Example
-
-Use `chezmoidata.darwin.toml.tmpl` as a starting point when you need to pin macOS-specific values locally:
-
-1. Render the current template to your local config: `chezmoi execute-template < "$(chezmoi source-path)/chezmoidata.darwin.toml.tmpl" > ~/.config/chezmoi/chezmoidata.darwin.toml`
-2. Edit the generated file and override only the keys you need, for example:
-
-   ```toml
-   [paths]
-   homebrew_prefix = "/opt/homebrew"
-
-   [machine]
-   profile = "work"
-   ```
-
-3. Re-run `chezmoi apply` (or `chezmoi update --apply`) to pick up the overrides.
-
-## Maintenance Commands
-
-- `chezmoi update --apply` pulls the latest repository changes and reapplies them.
-- `brew bundle --file=Brewfile` keeps CLI/GUI packages in sync with the tracked Brewfile.
-- `brew bundle check --file=Brewfile` inspects for drift; pair with `brew bundle cleanup --file=Brewfile` to prune unused packages.
-- `winget import --import-file winget-packages.json --ignore-unavailable --ignore-versions` installs the Windows toolset.
-- `hk check --all` runs the shared checks on all tracked files; `hk check` checks changed files.
-
-### Shared Git hooks
-
-`dot_config/hk/config.pkl` deploys to `~/.config/hk/config.pkl` and supplies
-zizmor, Biome, typos (`typos-cli`), and gitleaks to participating repositories.
-The pre-commit hook applies available fixes to staged files and stages the
-results, including Biome formatting, typos corrections, and zizmor fixes.
-Unfixable findings still fail the hook. Gitleaks scans staged content only, so
-unstaged, ignored, and untracked files do not block a commit. Run `gitleaks dir .`
-to intentionally scan the whole working tree, including local files outside the
-commit. Project-specific tool configuration stays in each project.
-
-Biome defaults are managed once in `.chezmoitemplates/biome-config.json` and deployed
-using its standard user configuration location:
-
-| Platform | Destination |
-|---|---|
-| macOS | `~/Library/Application Support/biome/biome.json` |
-| Linux | `~/.config/biome/biome.json` |
-| Windows | `~/AppData/Roaming/biome/config/biome.json` |
-
-The shared defaults enable formatting with two spaces and LF line endings,
-recommended lint rules, and assist. Biome searches the project and its parents
-before the user configuration; a project config replaces these defaults rather
-than automatically merging them. No `--config-path` is forced by hk.
-Linux deployment assumes the default `XDG_CONFIG_HOME` (`~/.config`); custom
-XDG or Windows roaming directories need a matching deployment destination.
-Validate fallback and project precedence with
-`python3 scripts/tests/test_biome_config.py`.
-
-On macOS/Linux, install the Brewfile dependencies, apply the shared configuration,
-then build hk through mise and install the global launcher once (Git 2.54+):
+Run commands inside the checkout (or use `mise -C /path/to/dotfiles ...`):
 
 ```sh
-brew bundle --file=Brewfile
-chezmoi apply --source=. --destination="$HOME"
-mise install cargo:hk
-mise exec cargo:hk -- hk install --global --mise
-mise exec cargo:hk -- hk validate
-mise exec cargo:hk -- hk check --all
+mise dot diff
+mise run apply
+mise bootstrap --dry-run
+mise run packages
+brew bundle check --file=Brewfile
+# Windows package manifest:
+# winget import -i winget-packages.json --ignore-unavailable --ignore-versions
+mise bootstrap repos update
+mise run check
 ```
 
-hk is managed by `dot_config/mise/config.toml` using the Cargo backend with
-`cargo.binstall = false`, so it builds from source, including on Intel macOS.
-Install Rust/Cargo and the platform C/C++ build tools before `mise install`.
-This mise setting also makes other Cargo-managed tools build from source.
+Deployment uses copies, so applications receive ordinary files on Windows too.
+Edit sources under `home/`, then apply; direct destination edits can be overwritten.
+Conflicts are reported by mise: inspect them and back up files before explicitly
+using `mise dot apply --force`. Nothing in the wrappers forces replacement.
+Global runtime versions are deployed separately to `~/.config/mise/config.toml`.
+The workstation tasks and local values belong to this checkout.
 
-On Windows, install Git 2.54+, hk 2.7.1+, zizmor, Biome, typos, and gitleaks
-separately and ensure they are on PATH. The typos builtin also requires a POSIX
-shell; use Git for Windows with `sh` on PATH and configure that step's `shell`
-when needed.
+Git's common settings live in `~/.config/git/config`. On Windows the existing
+main `.gitconfig` is preserved and includes that file. On Unix the main config
+is rendered and `gh auth setup-git` is reapplied afterward; authenticate using
+`gh auth login` and run `mise run apply` again.
 
-Each repository opts in with this minimal `hk.pkl`; repositories without a
-project configuration are skipped by the global launcher:
+`Skillsfile` is synchronized by the integration task on Unix. Only entries
+recorded by this setup are eligible for removal. Personal Codex skills live in
+`home/.agents/skills/`. Windows does not synchronize `gh skill` entries.
 
-```pkl
-amends "package://github.com/jdx/hk/releases/download/v2.7.1/hk@2.7.1#/Config.pkl"
+## Development
 
-min_hk_version = "2.7.1"
-```
+`mise run check` deploys into a temporary home, verifies idempotency, secret
+permissions and Git/Biome output without installing packages or executing
+integration scripts. CI runs this same check. Devcontainer setup installs mise;
+run `./devcontainer-setup.sh` from the host to opt into dotfiles deployment.
 
-Project steps are added to the shared steps; a project step with the same name
-replaces the shared definition. CI and other contributors need their own checks:
-the minimal project file alone does not distribute this personal configuration.
-
-Before migrating an existing repository, run `lefthook uninstall` or
-`prek uninstall` while the old manager is still available, then remove its
-configuration and add `hk.pkl`. Inspect `git config --show-origin --get-all
-core.hooksPath` and clear any obsolete override in its owning scope. Remove the
-old package after migrating its repositories. This repository no longer uses
-Lefthook; the Brewfile no longer installs it. Repeat the opt-in migration in other
-repositories as they are moved to hk.
-
-<details>
-<summary>日本語</summary>
-
-Biome の共通設定本体は `.chezmoitemplates/biome-config.json` で管理し、
-OS ごとの標準ユーザー設定ディレクトリへ展開します。
-スペース2文字・LF・推奨 lint を有効にします。
-プロジェクトや親ディレクトリの設定があれば、そちらが優先され、共通設定とは自動マージされません。
-
-4ツールの共通ステップは `~/.config/hk/config.pkl` で管理します。
-各リポジトリには最小の `hk.pkl` を置き、Git 2.54 以降で
-`hk install --global` を一度実行します。コミット時は Biome のフォーマット・typos の誤字修正・zizmor の修正を自動適用し、
-修正結果をステージします。修正できない問題はエラーになります。
-Gitleaks は未追跡ファイルを含む作業ツリー全体を検査します。
-旧フックは旧ツールの uninstall で解除し、不要な `core.hooksPath` も確認してください。
-共通設定は個人環境向けなので、CI や他の開発者向けの検査は別途維持します。
-
-</details>
-
-## Working Locally
-
-When hacking on the repository from a development clone, `./initialize.sh` ensures `chezmoi` is installed, runs an interactive configuration setup if needed, applies the local working tree with `chezmoi apply`, and optionally runs the Brewfile on macOS/Linux hosts.
-
-1. Clone the repository.
-2. Run `./initialize.sh`.
-3. Follow the prompts to configure your email and other settings.
-   - Run `gh auth login` so `gh auth setup-git` can wire up git credentials (see [GitHub Authentication](#github-authentication)).
-4. Switch to **zsh** if you haven't already: `chsh -s $(which zsh)`.
-
-## Configuration Layout
-
-Source files follow the `chezmoi` naming conventions: `dot_*` represent files that land directly in `$HOME` (e.g., `dot_zshrc` → `~/.zshrc`) and `dot_config/` mirrors `~/.config/`. Update the source tree with these prefixes when adding new files so `chezmoi` can track them correctly.
-
-## Contributing
-
-Review [AGENTS.md](AGENTS.md) for contributor expectations, coding standards, and pull request requirements.
-
-## License
-
-MIT
+The shared hk settings live in `home/.config/hk/config.pkl`; install its global
+launcher with `mise exec cargo:hk -- hk install --global --mise` (Git 2.54+).
+macOS runner and monitoring setup is documented in
+[the runner guide](docs/macos-self-hosted-runner.md).
