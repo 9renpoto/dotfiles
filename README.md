@@ -150,8 +150,10 @@ macOS runner and monitoring setup is documented in
 The decision to migrate workstation automation to Go and publish Octocov
 coverage badges on GitHub Pages is recorded in
 [ADR 0001](docs/adr/0001-go-automation-and-coverage.md).
-The current checks still use Python unittest; Go coverage and the public badge
-will be added with the implementation migration.
+`mise run check` runs the Go test suite, including isolated deployment and
+Biome configuration checks. CI records `coverage.out` as the `go-coverage`
+artifact and reports it in the Octocov Job Summary. Public badge hosting
+remains tracked in the coverage migration issue.
 
 <details>
 <summary>日本語</summary>
@@ -160,7 +162,8 @@ will be added with the implementation migration.
 提出前に `mise run check` と `hk check --all` を実行してください。
 現在のテストは一時ホームへの設定配置を検証し、パッケージ導入や統合処理は実行しません。
 Go への移行と Octocov・GitHub Pages の採用方針は ADR 0001 に記録しています。
-Go のカバレッジ計測と badge 公開は移行時に追加します。
+Go テストへの移行後、CI はカバレッジを artifact と Octocov の Job Summary に記録します。
+badge 公開はカバレッジ移行 Issue で追跡します。
 
 </details>
 
