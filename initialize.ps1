@@ -57,10 +57,6 @@ if (-not (Get-Command mise -ErrorAction SilentlyContinue)) {
 }
 & mise trust
 if ($LASTEXITCODE -ne 0) { throw 'mise trust failed' }
-if ((Test-Path "$HOME/.config/chezmoi/chezmoi.toml") -and -not (Test-Path mise.local.toml)) {
-  & mise exec python@3.13 -- python scripts/migrate-local-config.py
-  if ($LASTEXITCODE -ne 0) { throw 'Local configuration migration failed' }
-}
 # Persist machine overrides in the config used by ordinary apply commands.
 $localConfig = Join-Path $PSScriptRoot 'mise.local.toml'
 $normalizedRoot = [IO.Path]::GetFullPath($GhqRoot).Replace('\', '/')

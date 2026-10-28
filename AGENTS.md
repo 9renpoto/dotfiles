@@ -5,6 +5,7 @@ mise manages dotfiles for macOS, Linux/WSL, and Windows.
 - Literal sources live under `home/`; Tera templates end in `.tera`.
 - Declare every destination in `[dotfiles]` in `mise.toml`; use variants for OS paths.
 - Machine-local values and secrets belong in untracked `mise.local.toml` under `[vars]`.
+- Configure newly issued secrets after rotation; do not import settings, secrets, or ownership state from previous managers.
 - Run `mise run apply` from this checkout, or `mise -C /path/to/dotfiles run apply`.
 - `mise bootstrap` provisions packages, external repositories, dotfiles, tools, and integration.
 - Keep custom PowerShell profiles intact. Skills synchronization must only remove owned skills.

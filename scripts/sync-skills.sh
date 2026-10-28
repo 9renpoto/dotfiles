@@ -71,12 +71,6 @@ remove_lock_entry() {
     fi
 }
 
-legacy_state="${XDG_STATE_HOME:-$HOME/.local/state}/chezmoi/installed-skills.tsv"
-if [ ! -f "$STATE_FILE" ] && [ -f "$legacy_state" ]; then
-    mkdir -p "$(dirname "$STATE_FILE")"
-    cp "$legacy_state" "$STATE_FILE"
-fi
-
 # 1. Read the desired state: one "<owner/repo>\t<skill>" key per line.
 desired=""
 while read -r repo skill rest || [ -n "$repo" ]; do

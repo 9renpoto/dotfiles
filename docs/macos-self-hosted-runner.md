@@ -18,6 +18,7 @@ free-tier usage.
 
 Set these values in untracked `mise.local.toml` in the checkout, using
 `mise.local.toml.example` as a starting point. Restrict it with `chmod 600`.
+Rotate the Grafana Cloud token and configure the newly issued value.
 Never commit this file.
 
 ```toml

@@ -91,32 +91,6 @@ class DeploymentTest(unittest.TestCase):
                 run('dot', 'apply')  # Deliberately no -E windows-host.
                 self.assertIn('D:/source repos', (home / '.config/git/config').read_text())
 
-    def test_local_data_migration_is_private_and_non_destructive(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            script = root / 'checkout/scripts/migrate-local-config.py'
-            script.parent.mkdir(parents=True)
-            shutil.copy(REPO / 'scripts/migrate-local-config.py', script)
-            legacy = root / '.config/chezmoi/chezmoi.toml'
-            legacy.parent.mkdir(parents=True)
-            original = '[data.user]\nemail = "test@example.com"\n[data.wakatime]\napi_key = "fake-key"\n'
-            legacy.write_text(original)
-            env = dict(os.environ, HOME=directory, USERPROFILE=directory)
-            import sys
-            result = subprocess.run([sys.executable, str(script)], env=env,
-                                    text=True, capture_output=True, check=True)
-            self.assertNotIn('fake-key', result.stdout + result.stderr)
-            target = script.parents[1] / 'mise.local.toml'
-            values = tomllib.loads(target.read_text())['vars']
-            self.assertEqual(values['wakatime_api_key'], 'fake-key')
-            self.assertEqual(values['email'], 'test@example.com')
-            if os.name != 'nt':
-                self.assertEqual(stat.S_IMODE(target.stat().st_mode), 0o600)
-            target.write_text('[vars]\nemail = "keep@example.com"\n')
-            subprocess.run([sys.executable, str(script)], env=env, check=True)
-            self.assertEqual(tomllib.loads(target.read_text())['vars']['email'], 'keep@example.com')
-            self.assertEqual(legacy.read_text(), original)
-
     def test_platform_destinations_and_sources(self):
         config = tomllib.loads((REPO / 'mise.toml').read_text())
         variants = config['dotfiles']['biome']['variants']
@@ -124,7 +98,6 @@ class DeploymentTest(unittest.TestCase):
         for entry in config['dotfiles'].values():
             self.assertTrue((REPO / entry['source']).is_file())
         self.assertNotIn('windows', {v['os'] for v in config['dotfiles']['gitconfig']['variants']})
-        self.assertFalse(any('chezmoi' in p for p in config['bootstrap'].get('packages', {})))
 
 
 if __name__ == '__main__':

@@ -6,7 +6,4 @@ command -v mise >/dev/null 2>&1 || {
   exit 1
 }
 mise trust
-if [ -f "$HOME/.config/chezmoi/chezmoi.toml" ] && [ ! -f mise.local.toml ]; then
-  mise exec python@3.13 -- python scripts/migrate-local-config.py
-fi
 exec mise bootstrap "$@"

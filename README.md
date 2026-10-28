@@ -6,7 +6,8 @@ Requires **mise 2026.10.19 or newer**, Git, and the platform build toolchain
 
 ## Setup
 
-Clone this repository, review `mise.toml`, then run:
+Clone this repository, review `mise.toml`, and configure local values and newly
+issued secrets as described below before running:
 
 ```sh
 mise trust
@@ -34,19 +35,10 @@ to package declarations. The Firefox language option is preserved.
 `winget-packages.json` is the single source for Windows packages. Both manifests
 are invoked by `mise run packages` and the bootstrap pre-packages hook.
 
-## Existing chezmoi users
-
-The initialization wrappers copy known personal values from
-`~/.config/chezmoi/chezmoi.toml` into `mise.local.toml` once, using a managed
-Python runtime. They never modify or remove the old file. An existing
-`mise.local.toml` is preserved; merge old values manually if it already exists.
-Back up local edits and compare `mise dot diff` before the first application.
-Do not run the old manager after migration: both would write the same files.
-After checking all configurations, uninstall chezmoi using your package manager.
-The old configuration and ownership record are only read for migration.
-
 ## Local configuration and secrets
 
+Rotate WakaTime and Grafana credentials with their providers and configure the
+new values; setup does not import existing credentials or local settings.
 Copy `mise.local.toml.example` to `mise.local.toml`, then `chmod 600 mise.local.toml`
 on Unix. Use your Windows account's private checkout and restrict access with
 Windows ACLs. This file is ignored by Git and must not be committed or copied
@@ -88,10 +80,9 @@ main `.gitconfig` is preserved and includes that file. On Unix the main config
 is rendered and `gh auth setup-git` is reapplied afterward; authenticate using
 `gh auth login` and run `mise run apply` again.
 
-`Skillsfile` is synchronized by the integration task on Unix. It adopts the old
-ownership record and removes only previously owned entries. Personal Codex
-skills live in `home/.agents/skills/`. Windows retains the previous behavior of
-not synchronizing `gh skill` entries.
+`Skillsfile` is synchronized by the integration task on Unix. Only entries
+recorded by this setup are eligible for removal. Personal Codex skills live in
+`home/.agents/skills/`. Windows does not synchronize `gh skill` entries.
 
 ## Development
 
