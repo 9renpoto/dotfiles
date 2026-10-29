@@ -27,10 +27,16 @@ func TestOwnedSkillPathRejectsOutsideAndRootPaths(t *testing.T) {
 	if got := OwnedSkillPath(home, filepath.Join(home, ".agents", "skills", "owned")); !got {
 		t.Fatal("expected user skill path to be accepted")
 	}
-	for _, path := range []string{filepath.Join(home, "elsewhere", "skill"), filepath.Join(home, ".agents", "skills"), filepath.Join(home, ".agents", "skills", "..", "sensitive", "skills", "nested")} {
-		if OwnedSkillPath(home, path) {
-			t.Errorf("OwnedSkillPath(%q) accepted", path)
-		}
+	for _, tc := range []struct{ name, path string }{
+		{name: "outside", path: filepath.Join(home, "elsewhere", "skill")},
+		{name: "skills root", path: filepath.Join(home, ".agents", "skills")},
+		{name: "traversal", path: filepath.Join(home, ".agents", "skills", "..", "sensitive", "skills", "nested")},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			if OwnedSkillPath(home, tc.path) {
+				t.Fatalf("OwnedSkillPath(%q) accepted", tc.path)
+			}
+		})
 	}
 }
 
@@ -50,29 +56,41 @@ func TestOwnedSkillPathRejectsSymlinkEscape(t *testing.T) {
 }
 
 func TestSourceRepositoryMatchesSupportedURLs(t *testing.T) {
-	for _, source := range []string{"https://github.com/github/repo.git", "git@github.com:github/repo.git", "github.com/github/repo"} {
-		got, err := SourceRepository(source)
-		if err != nil || got != "github/repo" {
-			t.Errorf("SourceRepository(%q) = %q, %v", source, got, err)
-		}
+	for _, tc := range []struct{ name, source string }{
+		{name: "https", source: "https://github.com/github/repo.git"},
+		{name: "ssh", source: "git@github.com:github/repo.git"},
+		{name: "host path", source: "github.com/github/repo"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			got, err := SourceRepository(tc.source)
+			if err != nil || got != "github/repo" {
+				t.Fatalf("SourceRepository(%q) = %q, %v", tc.source, got, err)
+			}
+		})
 	}
 }
 
 func TestRemovalCandidatesRequireOwnedUserCopyAndMatchingSource(t *testing.T) {
-	home := t.TempDir()
-	path := filepath.Join(home, ".agents", "skills", "old")
-	if err := os.MkdirAll(path, 0o700); err != nil {
-		t.Fatal(err)
-	}
-	owned := []string{"github/repo\told"}
-	installed := []Installed{
-		{SkillName: "old", SourceURL: "https://github.com/github/repo", Path: path, Scope: "user"},
-		{SkillName: "old", SourceURL: "https://github.com/other/repo", Path: path, Scope: "user"},
-		{SkillName: "old", SourceURL: "https://github.com/github/repo", Path: path, Scope: "project"},
-	}
-	got := RemovalCandidates(home, owned, nil, installed)
-	if len(got) != 1 || got[0].SourceURL != installed[0].SourceURL {
-		t.Fatalf("RemovalCandidates() = %#v", got)
+	for _, tc := range []struct {
+		name, source, scope string
+		want                bool
+	}{
+		{name: "owned user copy", source: "https://github.com/github/repo", scope: "user", want: true},
+		{name: "different source", source: "https://github.com/other/repo", scope: "user"},
+		{name: "project scope", source: "https://github.com/github/repo", scope: "project"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			home := t.TempDir()
+			path := filepath.Join(home, ".agents", "skills", "old")
+			if err := os.MkdirAll(path, 0o700); err != nil {
+				t.Fatal(err)
+			}
+			installed := []Installed{{SkillName: "old", SourceURL: tc.source, Path: path, Scope: tc.scope}}
+			got := RemovalCandidates(home, []string{"github/repo\told"}, nil, installed)
+			if (len(got) == 1) != tc.want {
+				t.Fatalf("RemovalCandidates() = %#v, want match %v", got, tc.want)
+			}
+		})
 	}
 }
 
