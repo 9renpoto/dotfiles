@@ -141,7 +141,7 @@ func TestDeployment(t *testing.T) {
 		})
 	}
 	env = append(env, "MISE_TRUSTED_CONFIG_PATHS="+root+string(os.PathListSeparator)+home, "WAKATIME_API_KEY=test-key", "GRAFANA_CLOUD_API_KEY=test-token '$HOME $(false)")
-	command(t, root, env, "mise", "dot", "apply")
+	applyOutput := command(t, root, env, "mise", "dot", "apply")
 	biome := filepath.Join(home, ".config/biome/biome.json")
 	if runtime.GOOS == "darwin" {
 		biome = filepath.Join(home, "Library/Application Support/biome/biome.json")
@@ -164,7 +164,13 @@ func TestDeployment(t *testing.T) {
 			}
 			return nil
 		})
-		t.Fatalf("Biome config was not deployed to %s; files under isolated home: %v", filepath.ToSlash(strings.TrimPrefix(biome, home+string(os.PathSeparator))), deployed)
+		var biomeOutput []string
+		for _, line := range strings.Split(applyOutput, "\n") {
+			if strings.Contains(strings.ToLower(line), "biome") {
+				biomeOutput = append(biomeOutput, strings.TrimSpace(line))
+			}
+		}
+		t.Fatalf("Biome config was not deployed to %s; files under isolated home: %v; mise output: %v", filepath.ToSlash(strings.TrimPrefix(biome, home+string(os.PathSeparator))), deployed, biomeOutput)
 	}
 	var config struct {
 		Formatter struct {
