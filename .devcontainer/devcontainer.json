@@ -1,11 +1,8 @@
 {
-  "name": "mise-devcontainer",
+  "name": "dotfiles-readme-test",
   "image": "mcr.microsoft.com/devcontainers/base:noble",
+  "remoteUser": "vscode",
   "features": {
-    "ghcr.io/anthropics/devcontainer-features/claude-code:1": {},
-    "ghcr.io/devcontainers/features/node:1": {}
-  },
-  "postCreateCommand": "bash .devcontainer/scripts/post-create.sh",
-  "postStartCommand": "echo 'Run ./devcontainer-setup.sh from your host to apply dotfiles.'",
-  "customizations": {}
+    "ghcr.io/meaningful-ooo/devcontainer-features/homebrew:2": {}
+  }
 }

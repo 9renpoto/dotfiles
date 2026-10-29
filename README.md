@@ -141,8 +141,13 @@ hk check --all
 
 `mise run check` deploys into a temporary home, verifies idempotency, secret
 permissions and Git/Biome output without installing packages or executing
-integration scripts. CI runs this same check. Devcontainer setup installs mise;
-run `./devcontainer-setup.sh` from the host to opt into dotfiles deployment.
+integration scripts. CI runs this same check.
+
+The devcontainer provides an Ubuntu base with Homebrew for manually testing
+these README instructions. It does not install mise, deploy dotfiles, or run
+bootstrap automatically. Inside the container, install mise and Rust/Cargo
+as required above, then follow the Install and local configuration sections.
+Run `mise run check` to validate deployment in a temporary home.
 
 The shared hk settings live in `home/.config/hk/config.pkl`; install its global
 launcher with `mise exec cargo:hk -- hk install --global --mise` (Git 2.54+).
