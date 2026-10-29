@@ -131,7 +131,7 @@ func runWindowsInitialize(ctx context.Context, root string, args []string, outpu
 }
 
 func refreshWindowsPath(ctx context.Context, run dotwindows.Runner) error {
-	const script = `$machine=[Environment]::GetEnvironmentVariable('Path','Machine'); $user=[Environment]::GetEnvironmentVariable('Path','User'); [pscustomobject]@{Machine=$machine;User=$user}|ConvertTo-Json -Compress`
+	const script = `[Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false); $machine=[Environment]::GetEnvironmentVariable('Path','Machine'); $user=[Environment]::GetEnvironmentVariable('Path','User'); [pscustomobject]@{Machine=$machine;User=$user}|ConvertTo-Json -Compress`
 	data, err := run(ctx, "powershell.exe", "-NoProfile", "-Command", script)
 	if err != nil {
 		return fmt.Errorf("could not refresh process PATH: %w", err)

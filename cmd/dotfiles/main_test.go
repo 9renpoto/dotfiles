@@ -5,12 +5,60 @@ import (
 	"context"
 	"errors"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"reflect"
 	"runtime"
 	"strings"
 	"testing"
 )
+
+func TestRefreshWindowsPathPreservesUnicode(t *testing.T) {
+	for _, native := range []bool{false, true} {
+		name := "UTF-8 output contract"
+		if native {
+			name = "Windows PowerShell legacy code page"
+		}
+		t.Run(name, func(t *testing.T) {
+			if native && runtime.GOOS != "windows" {
+				t.Skip("requires Windows PowerShell")
+			}
+			powershell := ""
+			if native {
+				var err error
+				powershell, err = exec.LookPath("powershell.exe")
+				if err != nil {
+					t.Fatal(err)
+				}
+			}
+			t.Setenv("PATH", "")
+			err := refreshWindowsPath(context.Background(), func(ctx context.Context, command string, args ...string) ([]byte, error) {
+				if command != "powershell.exe" || len(args) != 3 {
+					t.Fatalf("unexpected command: %s %q", command, args)
+				}
+				script := args[2]
+				if !native {
+					encoding := strings.Index(script, "[Console]::OutputEncoding")
+					if encoding < 0 || encoding > strings.Index(script, "ConvertTo-Json") {
+						t.Fatal("PowerShell output encoding must be set before JSON serialization")
+					}
+					return []byte(`{"Machine":"C:\\表","User":"D:\\利用者"}`), nil
+				}
+				script = strings.ReplaceAll(script, "[Environment]::GetEnvironmentVariable('Path','Machine')", "('C:\\'+[char]0x8868)")
+				script = strings.ReplaceAll(script, "[Environment]::GetEnvironmentVariable('Path','User')", "('D:\\'+[char]0x5229+[char]0x7528+[char]0x8005)")
+				script = "[Console]::OutputEncoding=[Text.Encoding]::GetEncoding(932); " + script
+				return exec.CommandContext(ctx, powershell, "-NoProfile", "-Command", script).CombinedOutput()
+			})
+			if err != nil {
+				t.Fatal(err)
+			}
+			want := strings.Join([]string{`C:\表`, `D:\利用者`}, string(os.PathListSeparator))
+			if got := os.Getenv("PATH"); got != want {
+				t.Fatalf("PATH = %q, want %q", got, want)
+			}
+		})
+	}
+}
 
 func TestRunPackages(t *testing.T) {
 	root := t.TempDir()
