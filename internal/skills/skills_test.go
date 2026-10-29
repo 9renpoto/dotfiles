@@ -239,7 +239,13 @@ func TestSyncRemovesOnlyPreviouslyOwnedUserSkill(t *testing.T) {
 	if err := os.WriteFile(lock, []byte(`{"skills":{"owned":{"source":"github/repo"},"manual":{"source":"other/repo"}}}`), 0o600); err != nil {
 		t.Fatal(err)
 	}
-	listing := []byte(`[{"skillName":"owned","sourceURL":"https://github.com/github/repo","path":"` + ownedPath + `"},{"skillName":"manual","sourceURL":"https://github.com/other/repo","path":"` + handPath + `"}]`)
+	listing, err := json.Marshal([]Installed{
+		{SkillName: "owned", SourceURL: "https://github.com/github/repo", Path: ownedPath},
+		{SkillName: "manual", SourceURL: "https://github.com/other/repo", Path: handPath},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
 	command := func(_ context.Context, _ string, args ...string) ([]byte, error) {
 		if len(args) == 3 && args[0] == "skill" && args[1] == "list" && args[2] == "--help" {
 			return nil, nil

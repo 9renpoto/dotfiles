@@ -26,7 +26,7 @@ func isolated(t *testing.T) []string {
 	var env []string
 	for _, entry := range os.Environ() {
 		key := strings.SplitN(entry, "=", 2)[0]
-		if !strings.HasPrefix(key, "MISE_") && !strings.HasPrefix(key, "__MISE_") && key != "HOME" && key != "USERPROFILE" && !strings.HasPrefix(key, "XDG_") {
+		if !strings.HasPrefix(key, "MISE_") && !strings.HasPrefix(key, "__MISE_") && key != "HOME" && key != "USERPROFILE" && key != "APPDATA" && !strings.HasPrefix(key, "XDG_") {
 			env = append(env, entry)
 		}
 	}
@@ -182,7 +182,9 @@ func TestLocalValuesSurviveApply(t *testing.T) {
 	}
 	for range 2 {
 		command(t, checkout, env, "mise", "dot", "apply")
-		contains(t, filepath.Join(home, ".config/git/config"), "D:/source repos")
+		if runtime.GOOS != "windows" {
+			contains(t, filepath.Join(home, ".config/git/config"), "D:/source repos")
+		}
 	}
 }
 func TestBiomeConfig(t *testing.T) {

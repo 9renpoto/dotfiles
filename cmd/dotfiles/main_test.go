@@ -7,19 +7,28 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"runtime"
 	"strings"
 	"testing"
 )
 
 func TestRunPackages(t *testing.T) {
 	root := t.TempDir()
-	if err := os.WriteFile(filepath.Join(root, "Brewfile"), nil, 0o600); err != nil {
+	manifest := "Brewfile"
+	commandName := "brew"
+	wantArgs := []string{"bundle", "--file=" + filepath.Join(root, manifest)}
+	if runtime.GOOS == "windows" {
+		manifest = "winget-packages.json"
+		commandName = "winget.exe"
+		wantArgs = []string{"import", "--import-file", filepath.Join(root, manifest), "--ignore-unavailable", "--ignore-versions", "--accept-package-agreements", "--accept-source-agreements"}
+	}
+	if err := os.WriteFile(filepath.Join(root, manifest), nil, 0o600); err != nil {
 		t.Fatal(err)
 	}
 	var gotName string
 	var gotArgs []string
 	var stdout, stderr bytes.Buffer
-	wantErr := errors.New("brew failed")
+	wantErr := errors.New("installer failed")
 	err := run(context.Background(), []string{"packages"}, root, &stdout, &stderr,
 		func(_ context.Context, name string, args ...string) error {
 			gotName, gotArgs = name, args
@@ -28,10 +37,13 @@ func TestRunPackages(t *testing.T) {
 	if !errors.Is(err, wantErr) {
 		t.Fatalf("run() error = %v, want %v", err, wantErr)
 	}
-	if gotName != "brew" || !reflect.DeepEqual(gotArgs, []string{"bundle", "--file=" + filepath.Join(root, "Brewfile")}) {
+	if gotName != commandName || !reflect.DeepEqual(gotArgs, wantArgs) {
 		t.Fatalf("command = %q %q", gotName, gotArgs)
 	}
-	if stdout.String() != "Installing Homebrew packages from Brewfile.\n" || stderr.Len() == 0 {
+	if runtime.GOOS == "windows" && (stdout.Len() != 0 || stderr.Len() != 0) {
+		t.Fatalf("stdout=%q stderr=%q", stdout.String(), stderr.String())
+	}
+	if runtime.GOOS != "windows" && (stdout.String() != "Installing Homebrew packages from Brewfile.\n" || stderr.Len() == 0) {
 		t.Fatalf("stdout=%q stderr=%q", stdout.String(), stderr.String())
 	}
 }
