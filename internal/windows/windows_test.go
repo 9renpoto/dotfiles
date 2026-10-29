@@ -1,12 +1,14 @@
 package windows
 
 import (
+	"bytes"
 	"context"
 	"os"
 	"path/filepath"
 	"reflect"
 	"strings"
 	"testing"
+	"unicode/utf8"
 )
 
 func TestMergePathEntries(t *testing.T) {
@@ -42,15 +44,50 @@ func TestProfileLoaderPreservesCustomizedProfiles(t *testing.T) {
 		content, want string
 		write         bool
 	}{
-		{name: "missing", want: loader + "\n", write: true},
-		{name: "empty", exists: true, content: "  ", want: loader + "\n", write: true},
-		{name: "loader", exists: true, content: loader, want: loader + "\n", write: true},
+		{name: "missing", want: "\ufeff" + loader + "\n", write: true},
+		{name: "empty", exists: true, content: "  ", want: "\ufeff" + loader + "\n", write: true},
+		{name: "loader", exists: true, content: loader, want: "\ufeff" + loader + "\n", write: true},
+		{name: "BOM loader", exists: true, content: "\ufeff" + loader + "\n", want: "\ufeff" + loader + "\n", write: true},
 		{name: "custom", exists: true, content: "# customized", want: "# customized", write: false},
+		{name: "BOM custom", exists: true, content: "\ufeff# customized", want: "\ufeff# customized", write: false},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			got, write := MergeProfile([]byte(tc.content), tc.exists, loader)
 			if string(got) != tc.want || write != tc.write {
 				t.Fatalf("MergeProfile() = %q, %v", got, write)
+			}
+		})
+	}
+}
+
+func TestInstallProfilesPreservesUnicodePathsAndReapplication(t *testing.T) {
+	documents := filepath.Join(t.TempDir(), "Documents")
+	home := filepath.Join(t.TempDir(), "利用者")
+	loader := ProfileLoader(filepath.Join(home, ".config", "powershell", "profile.ps1"))
+	for _, name := range []string{"WindowsPowerShell", "PowerShell"} {
+		t.Run(name, func(t *testing.T) {
+			path := filepath.Join(documents, name, "profile.ps1")
+			if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(path, []byte(loader+"\n"), 0o600); err != nil {
+				t.Fatal(err)
+			}
+			for run := 0; run < 2; run++ {
+				preserved, err := InstallProfiles(documents, home)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if len(preserved) != 0 {
+					t.Fatalf("managed profiles treated as customized: %v", preserved)
+				}
+				content, err := os.ReadFile(path)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if !bytes.HasPrefix(content, []byte{0xef, 0xbb, 0xbf}) || !utf8.Valid(content) || string(content) != "\ufeff"+loader+"\n" {
+					t.Fatalf("loader did not preserve UTF-8 BOM and Unicode path: %q", content)
+				}
 			}
 		})
 	}

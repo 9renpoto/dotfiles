@@ -132,8 +132,9 @@ func ProfileLoader(sharedProfilePath string) string {
 }
 
 func MergeProfile(existing []byte, exists bool, loader string) ([]byte, bool) {
-	if !exists || strings.TrimSpace(string(existing)) == "" || strings.TrimSpace(string(existing)) == strings.TrimSpace(loader) {
-		return []byte(loader + "\n"), true
+	content := strings.TrimSpace(strings.TrimPrefix(string(existing), "\ufeff"))
+	if !exists || content == "" || content == strings.TrimSpace(loader) {
+		return []byte("\ufeff" + loader + "\n"), true
 	}
 	return existing, false
 }
