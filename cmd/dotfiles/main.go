@@ -11,6 +11,7 @@ import (
 	"runtime"
 	"strings"
 
+	dotmacos "github.com/9renpoto/dotfiles/internal/macos"
 	"github.com/9renpoto/dotfiles/internal/skills"
 	dotwindows "github.com/9renpoto/dotfiles/internal/windows"
 )
@@ -65,8 +66,14 @@ func run(ctx context.Context, args []string, root string, stdout, stderr io.Writ
 	if len(args) > 0 && args[0] == "windows-init" {
 		return runWindowsInitialize(ctx, root, args[1:], stdout)
 	}
+	if len(args) == 1 && args[0] == "macos-observability" {
+		return setupMacOSObservability(ctx, stdout)
+	}
+	if len(args) > 0 && args[0] == "macos-runner" {
+		return setupMacOSRunner(ctx, args[1:], stdout)
+	}
 	if len(args) != 1 || args[0] != "packages" {
-		return fmt.Errorf("usage: dotfiles {bootstrap [args...]|integrate|git-credentials|sync-skills|windows-integrate|windows-profiles --documents PATH|windows-wsl-ghq --root PATH|packages}")
+		return fmt.Errorf("usage: dotfiles {bootstrap [args...]|integrate|git-credentials|sync-skills|macos-observability|macos-runner OWNER/REPOSITORY [NAME] [LABELS]|windows-init|windows-integrate|windows-profiles --documents PATH|windows-wsl-ghq --root PATH|packages}")
 	}
 	if runtime.GOOS == "windows" {
 		manifest := filepath.Join(root, "winget-packages.json")
@@ -91,6 +98,56 @@ func run(ctx context.Context, args []string, root string, stdout, stderr io.Writ
 		return err
 	}
 	return nil
+}
+
+func setupMacOSRunner(ctx context.Context, args []string, output io.Writer) error {
+	if len(args) < 1 || len(args) > 3 {
+		return fmt.Errorf("usage: dotfiles macos-runner OWNER/PRIVATE_REPOSITORY [RUNNER_NAME] [LABELS]")
+	}
+	options := dotmacos.RunnerOptions{Repository: args[0]}
+	if len(args) > 1 {
+		options.Name = args[1]
+	}
+	if len(args) > 2 {
+		options.Labels = args[2]
+	}
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return err
+	}
+	deps := dotmacos.RunnerDependencies{GOOS: runtime.GOOS, ARCH: runtime.GOARCH, UID: os.Geteuid(), Lookup: func(name string) error { _, err := exec.LookPath(name); return err }, Download: dotmacos.DownloadArchive, Extract: dotmacos.ExtractRunner}
+	deps.Run = func(ctx context.Context, dir, name string, args ...string) ([]byte, error) {
+		cmd := exec.CommandContext(ctx, name, args...)
+		cmd.Dir = dir
+		return cmd.CombinedOutput()
+	}
+	return dotmacos.SetupRunner(ctx, options, home, deps, output)
+}
+
+func setupMacOSObservability(ctx context.Context, output io.Writer) error {
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return err
+	}
+	configHome := os.Getenv("XDG_CONFIG_HOME")
+	run := func(ctx context.Context, name string, env map[string]string, args ...string) ([]byte, error) {
+		cmd := exec.CommandContext(ctx, name, args...)
+		if len(env) > 0 {
+			filtered := make([]string, 0, len(os.Environ())+len(env))
+			for _, entry := range os.Environ() {
+				key, _, _ := strings.Cut(entry, "=")
+				if _, replace := env[key]; !replace {
+					filtered = append(filtered, entry)
+				}
+			}
+			for key, value := range env {
+				filtered = append(filtered, key+"="+value)
+			}
+			cmd.Env = filtered
+		}
+		return cmd.CombinedOutput()
+	}
+	return dotmacos.SetupObservability(ctx, runtime.GOOS, home, configHome, func(name string) error { _, err := exec.LookPath(name); return err }, run, output)
 }
 
 func runWindowsInitialize(ctx context.Context, root string, args []string, output io.Writer) error {
