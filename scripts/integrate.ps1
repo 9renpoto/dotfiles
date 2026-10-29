@@ -1,5 +1,10 @@
 $ErrorActionPreference = 'Stop'
-& "$PSScriptRoot/install-powershell-profiles.ps1"
-# Preserve host settings and gh's credential helpers in the main config.
-& git config --global --replace-all include.path '~/.config/git/config'
-if ($LASTEXITCODE -ne 0) { throw 'Failed to configure Git include' }
+$root = Split-Path -Parent $PSScriptRoot
+$documents = [Environment]::GetFolderPath('MyDocuments')
+Push-Location $root
+try {
+  & mise exec -- go run ./cmd/dotfiles windows-integrate --documents $documents
+  if ($LASTEXITCODE -ne 0) { throw "Windows integration failed with exit code $LASTEXITCODE." }
+} finally {
+  Pop-Location
+}
