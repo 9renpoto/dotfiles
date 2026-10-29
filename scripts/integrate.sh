@@ -1,4 +1,5 @@
 #!/bin/sh
 set -eu
-sh scripts/setup-git-credentials.sh
-bash scripts/sync-skills.sh
+ROOT="$(CDPATH='' cd -- "$(dirname -- "$0")/.." && pwd)"
+cd "$ROOT"
+exec mise exec -- go run ./cmd/dotfiles integrate

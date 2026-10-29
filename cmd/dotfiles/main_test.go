@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"strings"
 	"testing"
 )
 
@@ -48,5 +49,45 @@ func TestRunRejectsUnknownCommand(t *testing.T) {
 		func(context.Context, string, ...string) error { t.Fatal("unexpected command"); return nil })
 	if err == nil {
 		t.Fatal("expected unknown command error")
+	}
+}
+
+func TestGitCredentialsSkipsWhenGitHubCLIIsMissing(t *testing.T) {
+	var stdout bytes.Buffer
+	err := gitCredentials(context.Background(), &stdout,
+		func(context.Context, string, ...string) error { t.Fatal("unexpected command"); return nil },
+		func(string) (string, error) { return "", errors.New("not found") })
+	if err != nil || stdout.String() != "gh not found; skipping 'gh auth setup-git'.\n" {
+		t.Fatalf("gitCredentials() = %v, output %q", err, stdout.String())
+	}
+}
+
+func TestGitCredentialsSkipsWhenUnauthenticated(t *testing.T) {
+	var stdout bytes.Buffer
+	var calls [][]string
+	err := gitCredentials(context.Background(), &stdout,
+		func(_ context.Context, name string, args ...string) error {
+			calls = append(calls, append([]string{name}, args...))
+			return errors.New("not authenticated")
+		}, func(string) (string, error) { return "/usr/bin/gh", nil })
+	if err != nil || !reflect.DeepEqual(calls, [][]string{{"gh", "auth", "status"}}) {
+		t.Fatalf("gitCredentials() = %v, calls %q", err, calls)
+	}
+	if !strings.Contains(stdout.String(), "gh is not authenticated") {
+		t.Fatalf("output = %q", stdout.String())
+	}
+}
+
+func TestGitCredentialsConfiguresAuthenticatedGitHubCLI(t *testing.T) {
+	var stdout bytes.Buffer
+	var calls [][]string
+	err := gitCredentials(context.Background(), &stdout,
+		func(_ context.Context, name string, args ...string) error {
+			calls = append(calls, append([]string{name}, args...))
+			return nil
+		}, func(string) (string, error) { return "/usr/bin/gh", nil })
+	want := [][]string{{"gh", "auth", "status"}, {"gh", "auth", "setup-git"}}
+	if err != nil || !reflect.DeepEqual(calls, want) {
+		t.Fatalf("gitCredentials() = %v, calls %q", err, calls)
 	}
 }

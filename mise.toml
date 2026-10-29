@@ -68,7 +68,7 @@ description = "Deploy configuration and run platform integration"
 run = ["mise dot apply", "mise run integrate"]
 
 [tasks.integrate]
-run = "sh scripts/integrate.sh"
+run = "mise exec -- go run ./cmd/dotfiles integrate"
 run_windows = "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/integrate.ps1"
 
 [tasks.bootstrap]
