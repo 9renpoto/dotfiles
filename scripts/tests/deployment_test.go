@@ -20,17 +20,30 @@ func repository(t *testing.T) string {
 	}
 	return root
 }
+func TestIsolatedEnvKey(t *testing.T) {
+	for _, key := range []string{"APPDATA", "AppData", "appdata"} {
+		t.Run(key, func(t *testing.T) {
+			if !isIsolatedEnvKey(key) {
+				t.Fatalf("%q should be removed from the isolated environment", key)
+			}
+		})
+	}
+}
 func isolated(t *testing.T) []string {
 	t.Helper()
 	home := t.TempDir()
 	var env []string
 	for _, entry := range os.Environ() {
 		key := strings.SplitN(entry, "=", 2)[0]
-		if !strings.HasPrefix(key, "MISE_") && !strings.HasPrefix(key, "__MISE_") && key != "HOME" && key != "USERPROFILE" && key != "APPDATA" && !strings.HasPrefix(key, "XDG_") {
+		if !isIsolatedEnvKey(key) {
 			env = append(env, entry)
 		}
 	}
 	return append(env, "HOME="+home, "USERPROFILE="+home, "XDG_CONFIG_HOME="+home+"/.config", "APPDATA="+home+"/AppData/Roaming", "MISE_CONFIG_DIR="+home+"/.config/mise", "MISE_DATA_DIR="+home+"/data", "MISE_CACHE_DIR="+home+"/cache", "MISE_STATE_DIR="+home+"/state", "MISE_SYSTEM_CONFIG_DIR="+home+"/system", "MISE_GLOBAL_CONFIG_FILE="+home+"/global.toml", "MISE_OFFLINE=1")
+}
+func isIsolatedEnvKey(key string) bool {
+	key = strings.ToUpper(key)
+	return strings.HasPrefix(key, "MISE_") || strings.HasPrefix(key, "__MISE_") || key == "HOME" || key == "USERPROFILE" || key == "APPDATA" || strings.HasPrefix(key, "XDG_")
 }
 func command(t *testing.T, dir string, env []string, name string, args ...string) string {
 	t.Helper()
