@@ -41,9 +41,11 @@ Configure and start Alloy from a development clone of this repository:
 ./scripts/setup-macos-observability.sh
 ```
 
-The script validates the configuration, links it into Homebrew's Alloy
-configuration directory, and starts the launchd service. The Alloy debugging UI
-remains bound to `127.0.0.1:12345`.
+The shell entry point launches the Go CLI. It validates the configuration,
+links it into Homebrew's Alloy configuration directory, restricts the rendered
+credential file to owner-only access, and starts the launchd service. Automated
+tests use temporary directories and mocked commands; they do not restart host
+services. The Alloy debugging UI remains bound to `127.0.0.1:12345`.
 
 Verify the local service:
 
@@ -71,7 +73,10 @@ are excluded initially.
 ## Register the GitHub Actions runner
 
 Run the setup against the private repository. The optional second and third
-arguments set the runner name and custom labels.
+arguments set the runner name and custom labels. The shell entry point launches
+the Go CLI, which verifies the selected release asset's SHA-256 digest before
+extracting it. Tests mock the GitHub API and runner commands; they do not
+register a runner or install a service.
 
 ```sh
 ./scripts/setup-github-actions-runner.sh OWNER/PRIVATE_REPOSITORY
