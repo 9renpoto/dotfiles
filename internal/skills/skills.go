@@ -59,15 +59,11 @@ func Sync(ctx context.Context, home, statePath, lockPath string, desired []Desir
 			}
 		}
 	}
-	previouslyOwned := make(map[string]bool, len(owned))
-	for _, key := range owned {
-		previouslyOwned[key] = true
-	}
 	for _, entry := range desired {
 		args := []string{"skill", "install", entry.Repository, entry.Skill}
+		args = append(args, entry.Flags...)
 		key := OwnedKey(entry.Repository, entry.Name)
-		if len(entry.Flags) > 0 {
-			args = append(args, entry.Flags...)
+		if hasInstallDestination(entry.Flags) {
 			if _, err := command(ctx, "gh", args...); err == nil {
 				ownedSet[key] = true
 			} else {
@@ -75,18 +71,17 @@ func Sync(ctx context.Context, home, statePath, lockPath string, desired []Desir
 			}
 			continue
 		}
-		success := true
+		success := false
 		for _, agent := range []string{"codex", "antigravity"} {
 			agentArgs := append(append([]string(nil), args...), "--agent", agent, "--scope", "user")
 			if _, err := command(ctx, "gh", agentArgs...); err != nil {
-				success = false
 				fmt.Fprintf(output, "Could not install skill for %s: %s %s: %v\n", agent, entry.Repository, entry.Skill, err)
+			} else {
+				success = true
 			}
 		}
 		if success {
 			ownedSet[key] = true
-		} else if !previouslyOwned[key] {
-			delete(ownedSet, key)
 		}
 	}
 	applied := make([]string, 0, len(ownedSet))
@@ -100,6 +95,17 @@ func Sync(ctx context.Context, home, statePath, lockPath string, desired []Desir
 		}
 		return ""
 	}()), 0o600)
+}
+
+func hasInstallDestination(flags []string) bool {
+	for _, flag := range flags {
+		name, _, _ := strings.Cut(flag, "=")
+		switch name {
+		case "--agent", "--scope", "--dir":
+			return true
+		}
+	}
+	return false
 }
 
 func readOwned(path string) []string {

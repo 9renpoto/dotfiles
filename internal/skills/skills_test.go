@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"reflect"
 	"strings"
 	"testing"
 )
@@ -116,11 +117,13 @@ func TestRemoveLockEntryPreservesOtherEntriesAndMismatchedSources(t *testing.T) 
 func TestSyncRecordsOnlySuccessfulInstalls(t *testing.T) {
 	for _, tc := range []struct {
 		name string
-		fail bool
+		fail string
 		want string
 	}{
 		{name: "success", want: "github/repo\tskill\n"},
-		{name: "failure", fail: true, want: ""},
+		{name: "failure", fail: "all", want: ""},
+		{name: "codex succeeds", fail: "antigravity", want: "github/repo\tskill\n"},
+		{name: "antigravity succeeds", fail: "codex", want: "github/repo\tskill\n"},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			home := t.TempDir()
@@ -130,7 +133,7 @@ func TestSyncRecordsOnlySuccessfulInstalls(t *testing.T) {
 				if len(args) == 3 && args[0] == "skill" && args[1] == "list" && args[2] == "--help" {
 					return nil, nil
 				}
-				if tc.fail {
+				if tc.fail == "all" || (tc.fail != "" && args[5] == tc.fail) {
 					return nil, os.ErrPermission
 				}
 				return nil, nil
@@ -144,6 +147,50 @@ func TestSyncRecordsOnlySuccessfulInstalls(t *testing.T) {
 			}
 			if string(data) != tc.want {
 				t.Fatalf("state = %q, want %q", data, tc.want)
+			}
+		})
+	}
+}
+
+func TestSyncInstallDestinations(t *testing.T) {
+	for _, tc := range []struct {
+		name     string
+		flags    []string
+		explicit bool
+	}{
+		{name: "force", flags: []string{"--force"}},
+		{name: "pin", flags: []string{"--pin", "v1"}},
+		{name: "agent", flags: []string{"--agent", "codex"}, explicit: true},
+		{name: "scope", flags: []string{"--scope", "user"}, explicit: true},
+		{name: "directory", flags: []string{"--dir", "custom"}, explicit: true},
+		{name: "agent equals", flags: []string{"--agent=codex"}, explicit: true},
+		{name: "scope equals", flags: []string{"--scope=user"}, explicit: true},
+		{name: "directory equals", flags: []string{"--dir=custom"}, explicit: true},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			home := t.TempDir()
+			desired := []Desired{{Repository: "github/repo", Skill: "skill", Name: "skill", Flags: tc.flags}}
+			var calls [][]string
+			command := func(_ context.Context, _ string, args ...string) ([]byte, error) {
+				if len(args) == 3 && args[1] == "list" {
+					return nil, nil
+				}
+				calls = append(calls, append([]string(nil), args...))
+				return nil, nil
+			}
+			if err := Sync(context.Background(), home, filepath.Join(home, "state"), filepath.Join(home, "lock"), desired, command, &strings.Builder{}); err != nil {
+				t.Fatal(err)
+			}
+			base := append([]string{"skill", "install", "github/repo", "skill"}, tc.flags...)
+			want := [][]string{base}
+			if !tc.explicit {
+				want = nil
+				for _, agent := range []string{"codex", "antigravity"} {
+					want = append(want, append(append([]string(nil), base...), "--agent", agent, "--scope", "user"))
+				}
+			}
+			if !reflect.DeepEqual(calls, want) {
+				t.Fatalf("calls = %q, want %q", calls, want)
 			}
 		})
 	}
