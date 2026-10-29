@@ -131,15 +131,17 @@ func TestDeployment(t *testing.T) {
 	}
 	copyTree(t, filepath.Join(sourceRoot, "home"), filepath.Join(root, "home"))
 	for _, name := range []string{"mise.toml", "Brewfile", "winget-packages.json"} {
-		destination := filepath.Join(root, name)
-		if name == "mise.toml" {
-			isolatedMiseConfig(t, filepath.Join(sourceRoot, name), destination, home)
-		} else if err := os.WriteFile(destination, read(t, filepath.Join(sourceRoot, name)), 0600); err != nil {
-			t.Fatal(err)
-		}
+		t.Run("checkout_file/"+name, func(t *testing.T) {
+			destination := filepath.Join(root, name)
+			if name == "mise.toml" {
+				isolatedMiseConfig(t, filepath.Join(sourceRoot, name), destination, home)
+			} else if err := os.WriteFile(destination, read(t, filepath.Join(sourceRoot, name)), 0600); err != nil {
+				t.Fatal(err)
+			}
+		})
 	}
 	env = append(env, "MISE_TRUSTED_CONFIG_PATHS="+root+string(os.PathListSeparator)+home, "WAKATIME_API_KEY=test-key", "GRAFANA_CLOUD_API_KEY=test-token '$HOME $(false)")
-	command(t, root, env, "mise", "dot", "apply")
+	applyOutput := command(t, root, env, "mise", "dot", "apply")
 	biome := filepath.Join(home, ".config/biome/biome.json")
 	if runtime.GOOS == "darwin" {
 		biome = filepath.Join(home, "Library/Application Support/biome/biome.json")
@@ -162,7 +164,13 @@ func TestDeployment(t *testing.T) {
 			}
 			return nil
 		})
-		t.Fatalf("Biome config was not deployed to %s; files under isolated home: %v", filepath.ToSlash(strings.TrimPrefix(biome, home+string(os.PathSeparator))), deployed)
+		var biomeOutput []string
+		for _, line := range strings.Split(applyOutput, "\n") {
+			if strings.Contains(strings.ToLower(line), "biome") {
+				biomeOutput = append(biomeOutput, strings.TrimSpace(line))
+			}
+		}
+		t.Fatalf("Biome config was not deployed to %s; files under isolated home: %v; mise output: %v", filepath.ToSlash(strings.TrimPrefix(biome, home+string(os.PathSeparator))), deployed, biomeOutput)
 	}
 	var config struct {
 		Formatter struct {
@@ -206,9 +214,15 @@ func TestDeployment(t *testing.T) {
 	}
 	command(t, root, env, "mise", "dot", "apply")
 	for path, want := range before {
-		if !bytes.Equal(read(t, path), want) {
-			t.Fatalf("repeat apply changed %s", filepath.Base(path))
+		rel, err := filepath.Rel(home, path)
+		if err != nil {
+			t.Fatal(err)
 		}
+		t.Run("repeat_apply/"+filepath.ToSlash(rel), func(t *testing.T) {
+			if !bytes.Equal(read(t, path), want) {
+				t.Fatalf("repeat apply changed %s", filepath.Base(path))
+			}
+		})
 	}
 	command(t, root, env, "mise", "tasks", "ls")
 	command(t, root, env, "mise", "bootstrap", "repos", "apply", "--dry-run")
@@ -230,14 +244,23 @@ func TestLocalValuesSurviveApply(t *testing.T) {
 	}
 	env = append(env, "MISE_TRUSTED_CONFIG_PATHS="+checkout+string(os.PathListSeparator)+home)
 	command(t, checkout, env, "mise", "config", "set", "--file", local, "--type", "string", "vars.ghq_root", "D:/source repos")
-	for _, value := range []string{"keep@example.com", "keep-key", "KEEP_SETTING = \"yes\"", "# Machine secrets remain local"} {
-		contains(t, local, value)
+	for _, tc := range []struct{ name, value string }{
+		{name: "email", value: "keep@example.com"},
+		{name: "api_key", value: "keep-key"},
+		{name: "environment", value: "KEEP_SETTING = \"yes\""},
+		{name: "comment", value: "# Machine secrets remain local"},
+	} {
+		t.Run("preserves_"+tc.name, func(t *testing.T) {
+			contains(t, local, tc.value)
+		})
 	}
-	for range 2 {
-		command(t, checkout, env, "mise", "dot", "apply")
-		if runtime.GOOS != "windows" {
-			contains(t, filepath.Join(home, ".config/git/config"), "D:/source repos")
-		}
+	for _, step := range []string{"first_apply", "repeat_apply"} {
+		t.Run(step, func(t *testing.T) {
+			command(t, checkout, env, "mise", "dot", "apply")
+			if runtime.GOOS != "windows" {
+				contains(t, filepath.Join(home, ".config/git/config"), "D:/source repos")
+			}
+		})
 	}
 }
 func TestBiomeConfig(t *testing.T) {
@@ -289,13 +312,14 @@ func TestBiomeConfig(t *testing.T) {
 func TestPlatformSources(t *testing.T) {
 	root := repository(t)
 	// Let mise validate and resolve every platform's declared source mapping.
-	for _, platform := range []string{"linux", "macos", "windows"} {
-		config := string(read(t, filepath.Join(root, "mise.toml")))
-		if !strings.Contains(config, `os = "`+platform+`"`) {
-			t.Fatalf("missing platform %s", platform)
-		}
-	}
 	config := string(read(t, filepath.Join(root, "mise.toml")))
+	for _, platform := range []string{"linux", "macos", "windows"} {
+		t.Run("platform/"+platform, func(t *testing.T) {
+			if !strings.Contains(config, `os = "`+platform+`"`) {
+				t.Fatalf("missing platform %s", platform)
+			}
+		})
+	}
 	for _, line := range strings.Split(config, "\n") {
 		marker := `source = "`
 		index := strings.Index(line, marker)
@@ -303,13 +327,17 @@ func TestPlatformSources(t *testing.T) {
 			continue
 		}
 		source := strings.SplitN(line[index+len(marker):], `"`, 2)[0]
-		info, err := os.Stat(filepath.Join(root, source))
-		if err != nil || info.IsDir() {
-			t.Fatalf("missing declared source %s", source)
+		t.Run("source/"+filepath.ToSlash(source), func(t *testing.T) {
+			info, err := os.Stat(filepath.Join(root, source))
+			if err != nil || info.IsDir() {
+				t.Fatalf("missing declared source %s", source)
+			}
+		})
+	}
+	t.Run("windows_preserves_main_git_configuration", func(t *testing.T) {
+		gitconfig := strings.SplitN(strings.SplitN(config, "[dotfiles.\"gitconfig\"]", 2)[1], "[dotfiles.biome]", 2)[0]
+		if strings.Contains(gitconfig, `os = "windows"`) {
+			t.Fatal("Windows main Git configuration must be preserved")
 		}
-	}
-	gitconfig := strings.SplitN(strings.SplitN(config, "[dotfiles.\"gitconfig\"]", 2)[1], "[dotfiles.biome]", 2)[0]
-	if strings.Contains(gitconfig, `os = "windows"`) {
-		t.Fatal("Windows main Git configuration must be preserved")
-	}
+	})
 }
