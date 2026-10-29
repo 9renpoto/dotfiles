@@ -47,6 +47,30 @@ jobs:
           sh -n initialize.sh devcontainer-setup.sh scripts/integrate.sh scripts/setup-git-credentials.sh
           bash -n scripts/sync-skills.sh
 
+  windows-native:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install mise
+        run: |
+          winget install --id jdx.mise --exact --accept-package-agreements --accept-source-agreements
+          if ($LASTEXITCODE -ne 0) { throw 'mise installation failed' }
+          $userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
+          $machinePath = [Environment]::GetEnvironmentVariable('Path', 'Machine')
+          $env:Path = "$machinePath;$userPath;$env:Path"
+          $misePath = (Get-Command mise.exe -ErrorAction Stop).Source
+          Split-Path -Parent $misePath | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+        shell: pwsh
+      - name: Trust repository configuration
+        run: mise trust
+      - name: Install Go
+        run: mise install go
+      - name: Test on Windows
+        run: mise exec -- go test ./...
+
   deploy-pages:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: validate
