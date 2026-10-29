@@ -22,6 +22,18 @@ if (-not (Get-Command mise -ErrorAction SilentlyContinue)) {
   if ($LASTEXITCODE -ne 0) { throw 'mise installation failed' }
   Update-ProcessPath
 }
+$minimumVersionMatch = [regex]::Match(
+  (Get-Content (Join-Path $PSScriptRoot 'mise.toml') -Raw),
+  '(?m)^min_version\s*=\s*"([^"]+)"'
+)
+if (-not $minimumVersionMatch.Success) { throw 'mise minimum version was not found' }
+$minimumVersion = $minimumVersionMatch.Groups[1].Value
+$installedVersion = ((& mise --version) -split '\s+')[0]
+if ($LASTEXITCODE -ne 0) { throw 'Failed to read the installed mise version' }
+if ([version]::Parse($installedVersion) -lt [version]::Parse($minimumVersion)) {
+  & mise self-update --yes --force --no-plugins $minimumVersion
+  if ($LASTEXITCODE -ne 0) { throw "Failed to update mise to $minimumVersion" }
+}
 & mise trust
 if ($LASTEXITCODE -ne 0) { throw 'mise trust failed' }
 
