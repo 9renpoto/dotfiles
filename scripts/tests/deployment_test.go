@@ -122,6 +122,23 @@ func TestDeployment(t *testing.T) {
 	if runtime.GOOS == "windows" {
 		biome = filepath.Join(home, "AppData/Roaming/biome/config/biome.json")
 	}
+	if _, err := os.Stat(biome); err != nil {
+		var deployed []string
+		_ = filepath.WalkDir(home, func(path string, entry fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if !entry.IsDir() {
+				rel, err := filepath.Rel(home, path)
+				if err != nil {
+					return err
+				}
+				deployed = append(deployed, filepath.ToSlash(rel))
+			}
+			return nil
+		})
+		t.Fatalf("Biome config was not deployed to %s; files under isolated home: %v", filepath.ToSlash(strings.TrimPrefix(biome, home+string(os.PathSeparator))), deployed)
+	}
 	var config struct {
 		Formatter struct {
 			IndentWidth int `json:"indentWidth"`
