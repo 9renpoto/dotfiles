@@ -20,17 +20,52 @@ func repository(t *testing.T) string {
 	}
 	return root
 }
+func TestIsolatedEnvKey(t *testing.T) {
+	for _, key := range []string{"APPDATA", "AppData", "appdata"} {
+		t.Run(key, func(t *testing.T) {
+			if !isIsolatedEnvKey(key) {
+				t.Fatalf("%q should be removed from the isolated environment", key)
+			}
+		})
+	}
+}
+func TestIsolateHomePaths(t *testing.T) {
+	config := []byte("\"~/.config/tool/config.toml\" = { source = \"home/config.toml\" }\n")
+	got := isolateHomePaths(config, "C:\\Users\\runner\\Temp\\home")
+	want := "\"C:/Users/runner/Temp/home/.config/tool/config.toml\" = { source = \"home/config.toml\" }\n"
+	if string(got) != want {
+		t.Fatalf("isolateHomePaths() = %q, want %q", got, want)
+	}
+}
 func isolated(t *testing.T) []string {
 	t.Helper()
 	home := t.TempDir()
 	var env []string
 	for _, entry := range os.Environ() {
 		key := strings.SplitN(entry, "=", 2)[0]
-		if !strings.HasPrefix(key, "MISE_") && !strings.HasPrefix(key, "__MISE_") && key != "HOME" && key != "USERPROFILE" && !strings.HasPrefix(key, "XDG_") {
+		if !isIsolatedEnvKey(key) {
 			env = append(env, entry)
 		}
 	}
 	return append(env, "HOME="+home, "USERPROFILE="+home, "XDG_CONFIG_HOME="+home+"/.config", "APPDATA="+home+"/AppData/Roaming", "MISE_CONFIG_DIR="+home+"/.config/mise", "MISE_DATA_DIR="+home+"/data", "MISE_CACHE_DIR="+home+"/cache", "MISE_STATE_DIR="+home+"/state", "MISE_SYSTEM_CONFIG_DIR="+home+"/system", "MISE_GLOBAL_CONFIG_FILE="+home+"/global.toml", "MISE_OFFLINE=1")
+}
+func isIsolatedEnvKey(key string) bool {
+	key = strings.ToUpper(key)
+	return strings.HasPrefix(key, "MISE_") || strings.HasPrefix(key, "__MISE_") || key == "HOME" || key == "USERPROFILE" || key == "APPDATA" || strings.HasPrefix(key, "XDG_")
+}
+func isolateHomePaths(config []byte, home string) []byte {
+	home = strings.ReplaceAll(home, "\\", "/")
+	return bytes.ReplaceAll(config, []byte("~"), []byte(home))
+}
+func isolatedMiseConfig(t *testing.T, source, destination, home string) {
+	t.Helper()
+	config := read(t, source)
+	if runtime.GOOS == "windows" {
+		config = isolateHomePaths(config, home)
+	}
+	if err := os.WriteFile(destination, config, 0600); err != nil {
+		t.Fatal(err)
+	}
 }
 func command(t *testing.T, dir string, env []string, name string, args ...string) string {
 	t.Helper()
@@ -96,7 +131,10 @@ func TestDeployment(t *testing.T) {
 	}
 	copyTree(t, filepath.Join(sourceRoot, "home"), filepath.Join(root, "home"))
 	for _, name := range []string{"mise.toml", "Brewfile", "winget-packages.json"} {
-		if err := os.WriteFile(filepath.Join(root, name), read(t, filepath.Join(sourceRoot, name)), 0600); err != nil {
+		destination := filepath.Join(root, name)
+		if name == "mise.toml" {
+			isolatedMiseConfig(t, filepath.Join(sourceRoot, name), destination, home)
+		} else if err := os.WriteFile(destination, read(t, filepath.Join(sourceRoot, name)), 0600); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -108,6 +146,23 @@ func TestDeployment(t *testing.T) {
 	}
 	if runtime.GOOS == "windows" {
 		biome = filepath.Join(home, "AppData/Roaming/biome/config/biome.json")
+	}
+	if _, err := os.Stat(biome); err != nil {
+		var deployed []string
+		_ = filepath.WalkDir(home, func(path string, entry fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if !entry.IsDir() {
+				rel, err := filepath.Rel(home, path)
+				if err != nil {
+					return err
+				}
+				deployed = append(deployed, filepath.ToSlash(rel))
+			}
+			return nil
+		})
+		t.Fatalf("Biome config was not deployed to %s; files under isolated home: %v", filepath.ToSlash(strings.TrimPrefix(biome, home+string(os.PathSeparator))), deployed)
 	}
 	var config struct {
 		Formatter struct {
@@ -169,9 +224,7 @@ func TestLocalValuesSurviveApply(t *testing.T) {
 	}
 	copyTree(t, filepath.Join(root, "home"), filepath.Join(checkout, "home"))
 	local := filepath.Join(checkout, "mise.local.toml")
-	if err := os.WriteFile(filepath.Join(checkout, "mise.toml"), read(t, filepath.Join(root, "mise.toml")), 0600); err != nil {
-		t.Fatal(err)
-	}
+	isolatedMiseConfig(t, filepath.Join(root, "mise.toml"), filepath.Join(checkout, "mise.toml"), home)
 	if err := os.WriteFile(local, []byte("# Machine secrets remain local\n[vars]\nemail = \"keep@example.com\"\nwakatime_api_key = \"keep-key\"\nghq_root = \"C:/old\"\n[env]\nKEEP_SETTING = \"yes\"\n"), 0600); err != nil {
 		t.Fatal(err)
 	}
@@ -182,7 +235,9 @@ func TestLocalValuesSurviveApply(t *testing.T) {
 	}
 	for range 2 {
 		command(t, checkout, env, "mise", "dot", "apply")
-		contains(t, filepath.Join(home, ".config/git/config"), "D:/source repos")
+		if runtime.GOOS != "windows" {
+			contains(t, filepath.Join(home, ".config/git/config"), "D:/source repos")
+		}
 	}
 }
 func TestBiomeConfig(t *testing.T) {

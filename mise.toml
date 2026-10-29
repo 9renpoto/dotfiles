@@ -79,9 +79,9 @@ depends = ["integrate"]
 run = 'go test ./...'
 
 [bootstrap.hooks]
-pre-packages = { run = "mise exec -- go run ./cmd/dotfiles packages", run_windows = "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-winget-packages.ps1" }
+pre-packages = { run = "mise exec -- go run ./cmd/dotfiles packages", run_windows = "mise exec -- go run ./cmd/dotfiles packages" }
 
 [tasks.packages]
 description = "Install packages from the platform manifest"
 run = "mise exec -- go run ./cmd/dotfiles packages"
-run_windows = "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-winget-packages.ps1"
+run_windows = "mise exec -- go run ./cmd/dotfiles packages"
