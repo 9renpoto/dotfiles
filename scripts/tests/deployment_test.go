@@ -140,7 +140,7 @@ func TestDeployment(t *testing.T) {
 			}
 		})
 	}
-	env = append(env, "MISE_TRUSTED_CONFIG_PATHS="+root+string(os.PathListSeparator)+home, "WAKATIME_API_KEY=test-key", "GRAFANA_CLOUD_API_KEY=test-token '$HOME $(false)")
+	env = append(env, "MISE_TRUSTED_CONFIG_PATHS="+root+string(os.PathListSeparator)+home, "GRAFANA_CLOUD_API_KEY=test-token '$HOME $(false)")
 	applyOutput := command(t, root, env, "mise", "dot", "apply")
 	biome := filepath.Join(home, ".config/biome/biome.json")
 	if runtime.GOOS == "darwin" {
@@ -183,11 +183,10 @@ func TestDeployment(t *testing.T) {
 	if config.Formatter.IndentWidth != 2 {
 		t.Fatal("unexpected indent width")
 	}
-	contains(t, filepath.Join(home, ".wakatime.cfg"), "test-key")
 	contains(t, filepath.Join(home, ".config/alloy/config.env"), "test-token")
 	if runtime.GOOS != "windows" {
 		contains(t, filepath.Join(home, ".gitconfig"), "~/.config/git/config")
-		info, err := os.Stat(filepath.Join(home, ".wakatime.cfg"))
+		info, err := os.Stat(filepath.Join(home, ".config/alloy/config.env"))
 		if err != nil || info.Mode().Perm() != 0600 {
 			t.Fatal("secret permissions", err)
 		}
@@ -239,14 +238,13 @@ func TestLocalValuesSurviveApply(t *testing.T) {
 	copyTree(t, filepath.Join(root, "home"), filepath.Join(checkout, "home"))
 	local := filepath.Join(checkout, "mise.local.toml")
 	isolatedMiseConfig(t, filepath.Join(root, "mise.toml"), filepath.Join(checkout, "mise.toml"), home)
-	if err := os.WriteFile(local, []byte("# Machine secrets remain local\n[vars]\nemail = \"keep@example.com\"\nwakatime_api_key = \"keep-key\"\nghq_root = \"C:/old\"\n[env]\nKEEP_SETTING = \"yes\"\n"), 0600); err != nil {
+	if err := os.WriteFile(local, []byte("# Machine secrets remain local\n[vars]\nemail = \"keep@example.com\"\nghq_root = \"C:/old\"\n[env]\nKEEP_SETTING = \"yes\"\n"), 0600); err != nil {
 		t.Fatal(err)
 	}
 	env = append(env, "MISE_TRUSTED_CONFIG_PATHS="+checkout+string(os.PathListSeparator)+home)
 	command(t, checkout, env, "mise", "config", "set", "--file", local, "--type", "string", "vars.ghq_root", "D:/source repos")
 	for _, tc := range []struct{ name, value string }{
 		{name: "email", value: "keep@example.com"},
-		{name: "api_key", value: "keep-key"},
 		{name: "environment", value: "KEEP_SETTING = \"yes\""},
 		{name: "comment", value: "# Machine secrets remain local"},
 	} {

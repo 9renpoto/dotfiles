@@ -172,10 +172,6 @@ func runWindowsInitialize(ctx context.Context, root string, args []string, outpu
 		cmd := exec.CommandContext(ctx, name, commandArgs...)
 		data, err := cmd.CombinedOutput()
 		if len(data) > 0 {
-			secret := os.Getenv("WAKATIME_API_KEY")
-			if secret != "" {
-				data = []byte(strings.ReplaceAll(string(data), secret, "[REDACTED]"))
-			}
 			_, _ = output.Write(data)
 		}
 		return data, err
