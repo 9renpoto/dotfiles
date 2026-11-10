@@ -4,7 +4,6 @@ min_version = "2026.10.19"
 email = ""
 ghq_root = "~/src"
 editor = "nvim"
-wakatime_api_key = ""
 grafana_url = ""
 grafana_username = ""
 grafana_api_key = ""
@@ -45,7 +44,6 @@ codex = "latest"
 "~/.config/starship.toml" = { source = "home/.config/starship.toml", mode = "copy" }
 "~/.default-cargo-crates" = { source = "home/.default-cargo-crates", mode = "copy" }
 "~/.tmux.conf" = { source = "home/.tmux.conf", mode = "copy" }
-"~/.wakatime.cfg" = { source = "home/.wakatime.cfg.tera", mode = "template", permissions = "0600" }
 "~/.zsh_plugins.txt" = { source = "home/.zsh_plugins.txt", mode = "copy" }
 "~/.zshrc" = { source = "home/.zshrc", mode = "copy" }
 

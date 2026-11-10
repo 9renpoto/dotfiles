@@ -64,9 +64,6 @@
           "PackageIdentifier": "Starship.Starship"
         },
         {
-          "PackageIdentifier": "Wakatime.CLIWakatime"
-        },
-        {
           "PackageIdentifier": "x-motemen.ghq"
         }
       ],

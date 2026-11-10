@@ -35,8 +35,6 @@ installation, installs the PowerShell 5.1/7 shared-profile loaders without
 replacing custom profiles, and synchronizes the ghq root with the default WSL
 distribution. The ghq root is saved in `mise.local.toml`, preserving other local
 values, so ordinary `mise run apply` keeps using it. Options: `-SkipPackages`, `-SkipApply`, `-GhqRoot D:\src`.
-`-ConfigureWakaTime` reads a hidden key for this invocation only. Store it in
-local configuration to persist it.
 
 `mise bootstrap` installs Homebrew packages from `Brewfile` through a pre-packages
 hook (or imports `winget-packages.json` on Windows) and natively manages
@@ -68,15 +66,15 @@ Homebrew パッケージは `Brewfile`、Windows パッケージは
 
 ### Local configuration and secrets
 
-Rotate WakaTime and Grafana credentials with their providers and configure the
+Rotate Grafana credentials with their providers and configure the
 new values; setup does not import existing credentials or local settings.
 Copy `mise.local.toml.example` to `mise.local.toml`, then `chmod 600 mise.local.toml`
 on Unix. Use your Windows account's private checkout and restrict access with
 Windows ACLs. This file is ignored by Git and must not be committed or copied
-into a shared container. WakaTime and Grafana output files use mode 0600 on
+into a shared container. Grafana output files use mode 0600 on
 Unix; mise does not enforce POSIX permissions on Windows.
 
-Environment variables `WAKATIME_API_KEY` and `GRAFANA_CLOUD_API_KEY` can override
+Environment variable `GRAFANA_CLOUD_API_KEY` can override
 the local keys. Missing optional keys produce empty configuration values.
 Other values, including Git email, ghq root and Grafana endpoint, live under
 `[vars]`. Templates use Tera, with `os()` for branching. Target variants select
@@ -120,7 +118,7 @@ recorded by this setup are eligible for removal. Personal Codex skills live in
 
 端末固有の値と新しく発行した認証情報は `mise.local.toml` の `[vars]` に設定します。
 このファイルはコミットせず、Unix では権限を 0600 にします。
-`WAKATIME_API_KEY` と `GRAFANA_CLOUD_API_KEY` はローカルのキーを上書きできます。
+`GRAFANA_CLOUD_API_KEY` はローカルのキーを上書きできます。
 設定元の `home/` を編集し、チェックアウト内で `mise run apply` を実行します。
 配置先の直接編集は次回の適用で上書きされる可能性があります。
 競合は確認してから必要に応じて `mise dot apply --force` で解消します。
