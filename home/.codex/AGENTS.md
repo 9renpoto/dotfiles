@@ -10,7 +10,11 @@
 - Replace identifying details with neutral placeholders or synthetic examples. Remove identifying paths, URLs, and metadata as well; do not include a mapping back to the original identities.
 - When providing feedback to another repository or project, communicate the problem without disclosing information about the originating project. This applies even when using a reproduction environment or a minimal reproduction.
 - Build shared reproductions from neutral, synthetic code, data, and configuration. Remove originating project names, source code, internal architecture, paths, URLs, logs, screenshots, and metadata that could reveal its identity or confidential details; preserve only the technical facts needed to explain and reproduce the problem.
-- Before committing or posting, inspect the diff and outgoing text for identifying information and anonymize it.
+- Keep work references within the target repository. In commits, documents, issues, pull requests, reviews, and other deliverables, omit other repositories' names, URLs, issue and pull request numbers, and relationships to operational tasks. Apply the same rule to GitHub relationships created outside the text, including parent and sub-issue links and dependencies.
+- Treat the existence of a private repository and its relationship to other work as private information. Read access or a mention in chat does not grant permission to disclose it in another repository.
+- When consulting related repositories, report the decisions, changes, and verification results needed by the target repository. Cite public specifications and actual public dependencies when needed to explain the target project's technical contract. This allowance covers technical references only.
+- If a cross-repository work reference is necessary, obtain explicit user approval for the source repository, the destination repository, and the exact content or relationship to add before including it.
+- Before committing or sending changes to GitHub, review the staged diff, the outgoing GitHub text, and the relationships to be added. Remove identifying information and check that any cross-repository work references match the user's explicit approval.
 
 ## Planning and Architecture Decisions
 
@@ -34,9 +38,9 @@
 
 ## GitHub Issues
 
-- When creating an issue in another project, inspect the destination repository's applicable `AGENTS.md` instructions first and follow them in preference to conflicting instructions in this user-wide file. If the destination instructions cannot be inspected, do not assume they are absent.
+- When creating an issue in another project, inspect the destination repository's applicable `AGENTS.md` instructions first and follow them in preference to conflicting instructions in this user-wide file. If the destination instructions cannot be inspected, do not assume they are absent. Cross-repository work references still require the explicit approval described under Privacy and Anonymization.
 - The `github-issues` skill describes procedures for issue creation, updates, linking sub-issues, and closure. It does not grant permission to perform those operations. These user-wide instructions govern whether Codex may use a skill or tool; follow them when a skill's example or procedure conflicts with this policy.
 - Issue status updates and progress comments are allowed. Before closing an issue directly, including through an API or connector, require either a direct, explicit user request naming that issue or an affirmative answer to an exact confirmation that names it. A generic “OK,” task completion, or permission to do other work is not enough.
 - Prefer closing an issue through a pull request that fully resolves it, using GitHub's closing keywords. The issue closes when a human merges that pull request; Codex must leave the pull request open for the user's merge decision.
-- Before implementing an issue that contains multiple independently reviewable, complete units of work, create actual GitHub sub-issues for those units, link them to the parent, and verify the links. Keep a single issue when the work is one independently reviewable unit.
+- Before implementing an issue that contains multiple independently reviewable, complete units of work, create actual GitHub sub-issues in the parent's repository, link them to the parent, and verify the links. Keep a single issue when the work is one independently reviewable unit.
 - Each sub-issue must describe a complete unit that can be reviewed independently, and its pull request must fully resolve that sub-issue. Resolve the parent only after all sub-issues are complete; use a closing keyword for the parent only when the pull request fully resolves the parent. Otherwise, direct closure requires the issue-specific authorization above.
