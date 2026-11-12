@@ -34,6 +34,7 @@
 
 ## GitHub Issues
 
+- When creating an issue in another project, inspect the destination repository's applicable `AGENTS.md` instructions first and follow them in preference to conflicting instructions in this user-wide file. If the destination instructions cannot be inspected, do not assume they are absent.
 - The `github-issues` skill describes procedures for issue creation, updates, linking sub-issues, and closure. It does not grant permission to perform those operations. These user-wide instructions govern whether Codex may use a skill or tool; follow them when a skill's example or procedure conflicts with this policy.
 - Issue status updates and progress comments are allowed. Before closing an issue directly, including through an API or connector, require either a direct, explicit user request naming that issue or an affirmative answer to an exact confirmation that names it. A generic “OK,” task completion, or permission to do other work is not enough.
 - Prefer closing an issue through a pull request that fully resolves it, using GitHub's closing keywords. The issue closes when a human merges that pull request; Codex must leave the pull request open for the user's merge decision.
