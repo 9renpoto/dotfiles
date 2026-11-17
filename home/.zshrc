@@ -52,7 +52,12 @@ fi
 
 # Modern CLI tools
 eval "$(starship init zsh)"
-eval "$(mise activate zsh)"
+if [ -d "$HOME/.cargo/bin" ]; then
+  export PATH="$HOME/.cargo/bin:$PATH"
+fi
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+fi
 eval "$(direnv hook zsh)"
 
 # fzf integration (Ctrl+R: history, Ctrl+T: files, Alt+C: cd)

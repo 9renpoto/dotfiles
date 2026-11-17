@@ -19,6 +19,8 @@ under `home/`; machine-specific values stay in untracked local configuration.
 
 Requires **mise 2026.10.19 or newer**, Git, and the platform build toolchain
 (Rust/Cargo and C/C++ tools for hk). Install Homebrew on macOS/Linux first.
+Install mise with the [official installer](https://mise.jdx.dev/installing-mise.html);
+`Brewfile` does not manage it. Rust is provided by Homebrew's `rustup`.
 
 Clone this repository, review `mise.toml`, and configure local values and newly
 issued secrets as described under [local configuration and secrets](#local-configuration-and-secrets)
@@ -53,6 +55,8 @@ are invoked by `mise run packages` and the bootstrap pre-packages hook.
 
 macOS、Linux/WSL、Windows の設定を mise で管理します。mise 2026.10.19 以降、
 Git、hk のビルド環境が必要です。macOS/Linux では Homebrew も先に導入します。
+mise は公式インストーラーで導入します（`Brewfile` では管理しません）。
+Rust は Homebrew の `rustup` で導入します。
 設定とパッケージ一覧を確認し、ローカル設定を用意してから `mise trust` と
 `./initialize.sh` を実行します。Windows は PowerShell から `./initialize.ps1` を
 実行します。既存の PowerShell プロファイルは保持されます。
