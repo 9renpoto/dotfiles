@@ -4,19 +4,13 @@
     {
       "Packages": [
         {
-          "PackageIdentifier": "Alacritty.Alacritty"
-        },
-        {
-          "PackageIdentifier": "Amazon.AWSCLI"
+          "PackageIdentifier": "Google.Antigravity"
         },
         {
           "PackageIdentifier": "Bitwarden.Bitwarden"
         },
         {
-          "PackageIdentifier": "BurntSushi.ripgrep.MSVC"
-        },
-        {
-          "PackageIdentifier": "eza-community.eza"
+          "PackageIdentifier": "OpenAI.ChatGPT"
         },
         {
           "PackageIdentifier": "Git.Git"
@@ -25,22 +19,10 @@
           "PackageIdentifier": "GitHub.cli"
         },
         {
-          "PackageIdentifier": "Google.Chrome"
-        },
-        {
           "PackageIdentifier": "jdx.mise"
         },
         {
-          "PackageIdentifier": "jqlang.jq"
-        },
-        {
-          "PackageIdentifier": "junegunn.fzf"
-        },
-        {
           "PackageIdentifier": "Microsoft.PowerShell"
-        },
-        {
-          "PackageIdentifier": "Microsoft.VisualStudioCode"
         },
         {
           "PackageIdentifier": "Microsoft.WindowsTerminal"
@@ -53,12 +35,6 @@
         },
         {
           "PackageIdentifier": "9PFXXSHC64H3"
-        },
-        {
-          "PackageIdentifier": "sharkdp.bat"
-        },
-        {
-          "PackageIdentifier": "sharkdp.fd"
         },
         {
           "PackageIdentifier": "Starship.Starship"
