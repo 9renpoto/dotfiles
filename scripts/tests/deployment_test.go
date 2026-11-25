@@ -37,6 +37,32 @@ func TestIsolateHomePaths(t *testing.T) {
 		t.Fatalf("isolateHomePaths() = %q, want %q", got, want)
 	}
 }
+
+func TestPackageManifestsIncludeAntigravityDesktop(t *testing.T) {
+	if !strings.Contains(string(read(t, filepath.Join(repository(t), "Brewfile"))), "cask 'antigravity'") {
+		t.Fatal("Brewfile does not include the Antigravity desktop cask")
+	}
+
+	var manifest struct {
+		Sources []struct {
+			Packages []struct {
+				PackageIdentifier string
+			}
+		}
+	}
+	if err := json.Unmarshal(read(t, filepath.Join(repository(t), "winget-packages.json")), &manifest); err != nil {
+		t.Fatal(err)
+	}
+	for _, source := range manifest.Sources {
+		for _, pkg := range source.Packages {
+			if pkg.PackageIdentifier == "Google.Antigravity" {
+				return
+			}
+		}
+	}
+	t.Fatal("winget-packages.json does not include the Antigravity desktop package")
+}
+
 func isolated(t *testing.T) []string {
 	t.Helper()
 	home := t.TempDir()
