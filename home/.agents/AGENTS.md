@@ -1,4 +1,4 @@
-# User-wide Codex instructions
+# User-wide agent instructions
 
 - Prefer the desired long-term design over preserving compatibility. When a breaking change is appropriate, explain its impact and migration path.
 - Develop with TDD: write a failing test first, implement the smallest change that makes it pass, then refactor. Do not require this mechanically for changes that do not affect behavior, such as documentation-only edits.
@@ -39,8 +39,8 @@
 ## GitHub Issues
 
 - When creating an issue in another project, inspect the destination repository's applicable `AGENTS.md` instructions first and follow them in preference to conflicting instructions in this user-wide file. If the destination instructions cannot be inspected, do not assume they are absent. Cross-repository work references still require the explicit approval described under Privacy and Anonymization.
-- The `github-issues` skill describes procedures for issue creation, updates, linking sub-issues, and closure. It does not grant permission to perform those operations. These user-wide instructions govern whether Codex may use a skill or tool; follow them when a skill's example or procedure conflicts with this policy.
+- The `github-issues` skill describes procedures for issue creation, updates, linking sub-issues, and closure. It does not grant permission to perform those operations. These user-wide instructions govern whether the agent may use a skill or tool; follow them when a skill's example or procedure conflicts with this policy.
 - Issue status updates and progress comments are allowed. Before closing an issue directly, including through an API or connector, require either a direct, explicit user request naming that issue or an affirmative answer to an exact confirmation that names it. A generic “OK,” task completion, or permission to do other work is not enough.
-- Prefer closing an issue through a pull request that fully resolves it, using GitHub's closing keywords. The issue closes when a human merges that pull request; Codex must leave the pull request open for the user's merge decision.
+- Prefer closing an issue through a pull request that fully resolves it, using GitHub's closing keywords. The issue closes when a human merges that pull request; the agent must leave the pull request open for the user's merge decision.
 - Before implementing an issue that contains multiple independently reviewable, complete units of work, create actual GitHub sub-issues in the parent's repository, link them to the parent, and verify the links. Keep a single issue when the work is one independently reviewable unit.
 - Each sub-issue must describe a complete unit that can be reviewed independently, and its pull request must fully resolve that sub-issue. Resolve the parent only after all sub-issues are complete; use a closing keyword for the parent only when the pull request fully resolves the parent. Otherwise, direct closure requires the issue-specific authorization above.
