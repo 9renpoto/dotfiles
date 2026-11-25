@@ -184,6 +184,19 @@ func TestDeployment(t *testing.T) {
 		t.Fatal("unexpected indent width")
 	}
 	contains(t, filepath.Join(home, ".config/alloy/config.env"), "test-token")
+	sharedInstructions := read(t, filepath.Join(root, "home/.agents/AGENTS.md"))
+	lowerInstructions := strings.ToLower(string(sharedInstructions))
+	for _, forbidden := range []string{"codex", "antigravity"} {
+		if strings.Contains(lowerInstructions, forbidden) {
+			t.Fatalf("shared user-wide instructions must not contain agent-specific term %q", forbidden)
+		}
+	}
+	for _, target := range []string{".codex/AGENTS.md", ".gemini/config/AGENTS.md"} {
+		deployed := read(t, filepath.Join(home, target))
+		if !bytes.Equal(deployed, sharedInstructions) {
+			t.Fatalf("%s does not match shared user-wide instructions", target)
+		}
+	}
 	if runtime.GOOS != "windows" {
 		contains(t, filepath.Join(home, ".gitconfig"), "~/.config/git/config")
 		info, err := os.Stat(filepath.Join(home, ".config/alloy/config.env"))

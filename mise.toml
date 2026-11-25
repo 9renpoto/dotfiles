@@ -26,7 +26,7 @@ codex = "latest"
 "~/.agents/skills/github-review-responder/agents/openai.yaml" = { source = "home/.agents/skills/github-review-responder/agents/openai.yaml", mode = "copy" }
 "~/.agents/skills/review-preflight/SKILL.md" = { source = "home/.agents/skills/review-preflight/SKILL.md", mode = "copy" }
 "~/.bashrc" = { source = "home/.bashrc", mode = "copy" }
-"~/.codex/AGENTS.md" = { source = "home/.codex/AGENTS.md", mode = "copy" }
+"~/.codex/AGENTS.md" = { source = "home/.agents/AGENTS.md", mode = "copy" }
 "~/.config/alacritty/alacritty.toml" = { source = "home/.config/alacritty/alacritty.toml", mode = "copy" }
 "~/.config/alacritty/dracula.toml" = { source = "home/.config/alacritty/dracula.toml", mode = "copy" }
 "~/.config/alloy/config.alloy" = { source = "home/.config/alloy/config.alloy", mode = "copy" }
@@ -43,6 +43,7 @@ codex = "latest"
 "~/.config/powershell/profile.ps1" = { source = "home/.config/powershell/profile.ps1", mode = "copy" }
 "~/.config/starship.toml" = { source = "home/.config/starship.toml", mode = "copy" }
 "~/.default-cargo-crates" = { source = "home/.default-cargo-crates", mode = "copy" }
+"~/.gemini/config/AGENTS.md" = { source = "home/.agents/AGENTS.md", mode = "copy" }
 "~/.tmux.conf" = { source = "home/.tmux.conf", mode = "copy" }
 "~/.zsh_plugins.txt" = { source = "home/.zsh_plugins.txt", mode = "copy" }
 "~/.zshrc" = { source = "home/.zshrc", mode = "copy" }
